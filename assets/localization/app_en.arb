@@ -1,7 +1,12 @@
 {
-  "appTitle" : "UKM Blood Donation App",
+  "appTitle" : "Blood Donation Admin Interface",
   "@appTitle": {
     "description": "The title of the application"
+  },
+
+  "navHelp": "Help",
+  "@navHelp": {
+    "description": "Navigation Bar Help Menu Title"
   },
 
 
