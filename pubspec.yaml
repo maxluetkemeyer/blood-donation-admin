@@ -1,0 +1,48 @@
+name: blooddonation_admin
+description: Admin interface to access the backend of the blood donation
+
+publish_to: 'none'
+
+version: 1.0.0
+
+environment:
+  sdk: ">=2.15.0-178.0.dev <3.0.0"
+
+dependencies:
+  # Infrastructure
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+
+  # Basic
+  cupertino_icons: ^1.0.2
+  flutter_riverpod: ^0.14.0+3
+  shared_preferences: ^2.0.8
+  http: ^0.13.3
+  google_fonts: ^2.1.0
+  
+
+dev_dependencies:
+  # Dynamic Tests
+  integration_test:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+  test: any
+
+  # Static Tests
+  flutter_lints: ^1.0.4
+
+
+flutter:
+  uses-material-design: true
+
+  # Enable generation of localized Strings from arb files.
+  generate: true
+
+  assets:
+    - assets/
+    - assets/images/
+    - assets/localization/
