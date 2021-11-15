@@ -1,5 +1,5 @@
-import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_week_view/flutter_week_view.dart';
 
 class Overview extends StatefulWidget {
   const Overview({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class _OverviewState extends State<Overview> {
     return Row(
       children: [
         Flexible(
-          flex: 2,
+          flex: 4,
           fit: FlexFit.tight,
           child: Container(
             color: Colors.amber,
@@ -44,14 +44,52 @@ class _OverviewState extends State<Overview> {
           ),
         ),
         Flexible(
-          flex: 1,
+          flex: 2,
           fit: FlexFit.tight,
           child: Container(
             color: Colors.green,
             //Column Widget in Future
             child: DayView(
-              backgroundColor: Colors.blue,
-              timeLineWidth: width * 0.04,
+              date: now,
+              // This fixes some dragging bugs
+              userZoomable: false,
+              minimumTime: const HourMinute(hour: 5),
+              //Use this to scroll the widget correct to appointment
+              //initialTime: ,
+              style: DayViewStyle.fromDate(
+                date: now,
+
+                // Change to secondary color
+                currentTimeCircleColor: Colors.pink,
+              ),
+
+              events: [
+                FlutterWeekViewEvent(
+                  title: 'An event 2',
+                  description: 'A description 2',
+                  start: date.add(const Duration(hours: 14)),
+                  end: date.add(const Duration(hours: 17)),
+                ),
+                FlutterWeekViewEvent(
+                  title: 'An event 3',
+                  description: 'A description 3',
+                  start: date.add(const Duration(hours: 14, minutes: 0)),
+                  end: date.add(const Duration(hours: 15)),
+                  backgroundColor: Colors.red,
+                ),
+                FlutterWeekViewEvent(
+                  title: 'An event 4',
+                  description: 'A description 4',
+                  start: date.add(const Duration(hours: 20)),
+                  end: date.add(const Duration(hours: 21)),
+                ),
+                FlutterWeekViewEvent(
+                  title: 'An event 5',
+                  description: 'A description 5',
+                  start: date.add(const Duration(hours: 20)),
+                  end: date.add(const Duration(hours: 21)),
+                ),
+              ],
             ),
           ),
         ),

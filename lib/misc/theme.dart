@@ -10,4 +10,5 @@ ThemeData lightTheme = ThemeData(
   ),
 );
 
-ThemeData darkTheme = ThemeData.dark();
+//ThemeData darkTheme = ThemeData.dark();
+ThemeData darkTheme = lightTheme;
