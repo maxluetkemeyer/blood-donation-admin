@@ -1,4 +1,4 @@
-import 'package:calendar_view/calendar_view.dart';
+import 'package:blooddonation_admin/widgets/day_view/day_view_widget.dart';
 import 'package:flutter/material.dart';
 
 class Planner extends StatefulWidget {
@@ -18,10 +18,15 @@ class _PlannerState extends State<Planner> {
 
   @override
   Widget build(BuildContext context) {
-    return const WeekView(
-      backgroundColor: Colors.blue,
-      timeLineWidth: 100,
-      
+    return DayView(
+      events: [
+        CoolCalendarEvent(
+          child: const SizedBox(),
+          initTopMultiplier: 16,
+          initHeightMultiplier: 20,
+          backgroundColor: Colors.blue,
+        ),
+      ],
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:blooddonation_admin/dashboard/dashboard_view.dart';
 import 'package:blooddonation_admin/help/help_view.dart';
-import 'package:blooddonation_admin/overview/overview_view_copy.dart';
+import 'package:blooddonation_admin/overview/overview_view.dart';
 import 'package:blooddonation_admin/planner/planner_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -58,7 +58,10 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: screens[screenIndex],
+      body: Padding(
+        padding: const EdgeInsets.only(top: 2),
+        child: screens[screenIndex],
+      ),
     );
   }
 }

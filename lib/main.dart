@@ -1,5 +1,5 @@
+import 'package:blooddonation_admin/home/home_view.dart';
 import 'package:blooddonation_admin/misc/theme.dart';
-import 'package:blooddonation_admin/widgets/day_view/tester.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -30,7 +30,7 @@ class App extends StatelessWidget {
         child: child!,
       ),
       locale: const Locale("de"),
-      home: const Tester(),
+      home: const Home(),
     );
   }
 }

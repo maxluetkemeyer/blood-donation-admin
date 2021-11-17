@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 
 import 'drag_resize_event_widget.dart';
@@ -10,21 +8,29 @@ class DayView extends StatefulWidget {
 
   final List<CoolCalendarEvent> events;
 
-  final Color backgroundColor = Colors.blue.shade200;
-  final Color timeLineColor = Colors.amber.shade200;
-  final Color dividerColor = Colors.black;
-  final Color eventGridColor = Colors.green.shade200;
+  final Color backgroundColor;
+  final Color timeLineColor;
+  final Color dividerColor;
+  final Color eventGridColor;
 
-  final double discreteStepSize = 30;
-  final Color lineColorFullHour = Colors.black54;
-  final Color eventGridLineColorFullHour = Colors.black54;
-  final Color eventGridLineColorHalfHour = Colors.black38;
+  final double discreteStepSize;
+  final Color lineColorFullHour;
+  final Color eventGridLineColorFullHour;
+  final Color eventGridLineColorHalfHour;
 
   DayView({
     Key? key,
     this.timeLineFlex = 1,
     this.eventGridFlex = 10,
     this.events = const [],
+    this.backgroundColor = Colors.white,
+    this.timeLineColor = Colors.white,
+    this.dividerColor = Colors.black,
+    this.eventGridColor = Colors.lightBlueAccent,
+    this.discreteStepSize = 30,
+    this.lineColorFullHour = Colors.black54,
+    this.eventGridLineColorFullHour = Colors.black38,
+    this.eventGridLineColorHalfHour = Colors.transparent,
   }) : super(key: key);
 
   @override
@@ -32,11 +38,19 @@ class DayView extends StatefulWidget {
 }
 
 class _DayViewState extends State<DayView> {
+  ScrollController scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: scrollController,
       child: Container(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.only(
+          bottom: 10,
+          left: 5,
+          right: 10,
+          top: 10,
+        ),
         color: widget.backgroundColor,
         child: Row(
           children: [
@@ -91,7 +105,7 @@ class _DayViewState extends State<DayView> {
             rowIndex: event.rowIndex,
             backgroundColor: event.backgroundColor,
             ballDecoration: event.ballDecoration,
-            onChange: event.onChange,
+            onChange: event.onChange ?? (_, __) {},
             child: event.child,
           ),
         ),
@@ -155,7 +169,7 @@ class CoolCalendarEvent {
   final int rowIndex;
   final Color backgroundColor;
   final BoxDecoration ballDecoration;
-  final Function(double start, double end) onChange;
+  final Function(double start, double end)? onChange;
 
   CoolCalendarEvent({
     required this.child,
@@ -167,6 +181,6 @@ class CoolCalendarEvent {
       color: Colors.white,
       shape: BoxShape.circle,
     ),
-    required this.onChange,
+    this.onChange,
   });
 }

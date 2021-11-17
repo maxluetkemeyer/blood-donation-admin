@@ -23,6 +23,32 @@ class Tester extends StatelessWidget {
             ),
             onChange: (start, end) => print("start $start, end $end"),
           ),
+          CoolCalendarEvent(
+            initHeightMultiplier: 4,
+            initTopMultiplier: 16,
+            rowIndex: 1,
+            backgroundColor: Theme.of(context).primaryColor,
+            ballDecoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.6),
+              shape: BoxShape.circle,
+            ),
+            child: const Center(
+              child: Text("Hey"),
+            ),
+          ),
+          CoolCalendarEvent(
+            initHeightMultiplier: 4,
+            initTopMultiplier: 16,
+            rowIndex: 2,
+            backgroundColor: Theme.of(context).primaryColor,
+            ballDecoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.6),
+              shape: BoxShape.circle,
+            ),
+            child: const Center(
+              child: Text("Hey"),
+            ),
+          ),
         ],
       ),
     );
