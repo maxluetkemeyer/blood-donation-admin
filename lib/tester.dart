@@ -1,4 +1,4 @@
-import 'package:blooddonation_admin/widgets/day_view/day_view_widget.dart';
+import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_widget.dart';
 import 'package:flutter/material.dart';
 
 class Tester extends StatelessWidget {
@@ -7,7 +7,17 @@ class Tester extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DayView(
+      body: CoolCalendar(
+        discreteStepSize: 24,
+        headerTitles: [
+          "Montag",
+          "Dienstag",
+          "Mittwoch",
+          "Donnerstag",
+          "Freitag",
+          "Samstag",
+          "Sonntag",
+        ],
         events: [
           CoolCalendarEvent(
             initHeightMultiplier: 4,

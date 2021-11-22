@@ -5,7 +5,8 @@
   },
 
   "navDashboard": "Dashboard",
-  "navAppointments": "Requests",
+  "navCalendar": "Calendar",
+  "navRequests": "Requests",
   "navPlanner": "Planner",
   "navHelp": "Help"
 

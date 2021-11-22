@@ -1,16 +1,20 @@
+// ignore_for_file: unnecessary_statements
+
 import 'package:blooddonation_admin/home/home_view.dart';
 import 'package:blooddonation_admin/misc/theme.dart';
-import 'package:calendar_view/calendar_view.dart';
+import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
-  runApp(
-    CalendarControllerProvider(
-      controller: EventController(),
-      child: const App(),
-    ),
-  );
+  WidgetsFlutterBinding.ensureInitialized();
+  //BackendService.instance;
+  CalendarService.instance;
+  addTestAppointments();
+  addTestAppointments();
+  addTestRequests();
+
+  runApp(App());
 }
 
 class App extends StatelessWidget {
