@@ -19,7 +19,7 @@ class _PlannerState extends State<Planner> {
   @override
   Widget build(BuildContext context) {
     return CoolCalendar(
-      headerTitles: [
+      headerTitles: const [
         "Montag",
         "Dienstag",
         "Mittwoch",
@@ -33,20 +33,26 @@ class _PlannerState extends State<Planner> {
           child: const SizedBox(),
           initTopMultiplier: 16,
           initHeightMultiplier: 20,
-          backgroundColor: Colors.blue,
+          decoration: const BoxDecoration(
+            color: Colors.blue,
+          ),
         ),
         CoolCalendarEvent(
           child: const SizedBox(),
           initTopMultiplier: 16,
           initHeightMultiplier: 24,
-          backgroundColor: Colors.blue,
+          decoration: const BoxDecoration(
+            color: Colors.blue,
+          ),
           rowIndex: 2,
         ),
         CoolCalendarEvent(
           child: const SizedBox(),
           initTopMultiplier: 16,
           initHeightMultiplier: 20,
-          backgroundColor: Colors.blue,
+          decoration: const BoxDecoration(
+            color: Colors.blue,
+          ),
           rowIndex: 3,
         ),
       ],

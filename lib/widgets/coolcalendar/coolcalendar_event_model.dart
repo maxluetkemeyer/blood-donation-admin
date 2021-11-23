@@ -5,7 +5,8 @@ class CoolCalendarEvent {
   final int initTopMultiplier;
   final int initHeightMultiplier;
   final int rowIndex;
-  final Color backgroundColor;
+  final Decoration decoration;
+  final Decoration decorationHover;
   final BoxDecoration ballDecoration;
   final Function(double start, double end)? onChange;
   final bool dragging;
@@ -14,7 +15,8 @@ class CoolCalendarEvent {
     required this.child,
     required this.initTopMultiplier,
     required this.initHeightMultiplier,
-    required this.backgroundColor,
+    this.decoration = const BoxDecoration(),
+    this.decorationHover = const BoxDecoration(),
     this.rowIndex = 0,
     this.ballDecoration = const BoxDecoration(
       color: Colors.white,

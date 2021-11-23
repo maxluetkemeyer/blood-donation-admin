@@ -9,7 +9,7 @@ class Tester extends StatelessWidget {
     return Scaffold(
       body: CoolCalendar(
         discreteStepSize: 24,
-        headerTitles: [
+        headerTitles: const [
           "Montag",
           "Dienstag",
           "Mittwoch",
@@ -23,7 +23,9 @@ class Tester extends StatelessWidget {
             initHeightMultiplier: 4,
             initTopMultiplier: 16,
             rowIndex: 0,
-            backgroundColor: Theme.of(context).primaryColor,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+            ),
             ballDecoration: BoxDecoration(
               color: Colors.white.withOpacity(0.6),
               shape: BoxShape.circle,
@@ -37,7 +39,9 @@ class Tester extends StatelessWidget {
             initHeightMultiplier: 4,
             initTopMultiplier: 16,
             rowIndex: 1,
-            backgroundColor: Theme.of(context).primaryColor,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+            ),
             ballDecoration: BoxDecoration(
               color: Colors.white.withOpacity(0.6),
               shape: BoxShape.circle,
@@ -50,7 +54,9 @@ class Tester extends StatelessWidget {
             initHeightMultiplier: 4,
             initTopMultiplier: 16,
             rowIndex: 2,
-            backgroundColor: Theme.of(context).primaryColor,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+            ),
             ballDecoration: BoxDecoration(
               color: Colors.white.withOpacity(0.6),
               shape: BoxShape.circle,

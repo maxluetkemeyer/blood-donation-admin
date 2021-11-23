@@ -97,9 +97,9 @@ class BarChartSample1State extends State<BarChartSample1> {
           colors: isTouched ? [Colors.lightBlue.shade300] : [barColor],
           width: width,
           borderSide: isTouched
-              ? BorderSide(color: Colors.white, width: 2)
+              ? const BorderSide(color: Colors.white, width: 2)
               : const BorderSide(color: Colors.white, width: 0),
-          borderRadius: BorderRadius.all(Radius.circular(4)),
+          borderRadius: const BorderRadius.all(Radius.circular(4)),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
             y: 20,

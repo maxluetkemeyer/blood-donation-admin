@@ -35,24 +35,24 @@ void addTestAppointments() {
   Appointment a1 = Appointment(
     id: "0",
     start: DateTime.now(),
-    duration: Duration(hours: 1),
+    duration: const Duration(hours: 1),
   );
   Appointment a2 = Appointment(
     id: "1",
     start: DateTime.now(),
-    duration: Duration(hours: 1),
+    duration: const Duration(hours: 1),
   );
   Appointment a3 = Appointment(
     id: "2",
     start: DateTime.now(),
-    duration: Duration(hours: 1),
+    duration: const Duration(hours: 1),
   );
   Appointment a4 = Appointment(
     id: "3",
     start: DateTime.now(),
-    duration: Duration(hours: 1),
+    duration: const Duration(hours: 1),
   );
-  a4.start = a4.start.add(Duration(hours: -2));
+  a4.start = a4.start.add(const Duration(hours: -2));
 
   cs.addAppointment(a1);
   cs.addAppointment(a2);
@@ -66,12 +66,12 @@ void addTestRequests() {
   Appointment a1 = Appointment(
     id: "99",
     start: DateTime.now(),
-    duration: Duration(hours: 1),
+    duration: const Duration(hours: 1),
   );
   Appointment a2 = Appointment(
     id: "98",
     start: DateTime.now(),
-    duration: Duration(hours: 1),
+    duration: const Duration(hours: 1),
   );
 
   Request r1 = Request(appointment: a1, issued: DateTime.now());

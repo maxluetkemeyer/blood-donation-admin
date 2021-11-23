@@ -11,6 +11,11 @@ class Appointment {
 
   @override
   String toString() {
-    return "Appointment " + id + " " + start.toString() + " " + duration.toString();
+    return "Appointment " +
+        id +
+        " " +
+        start.toString() +
+        " " +
+        duration.toString();
   }
 }

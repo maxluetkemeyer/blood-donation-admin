@@ -43,7 +43,9 @@ class CoolCalendar extends StatefulWidget {
   /// Textstyle of the header title.
   final TextStyle headerTextStyle;
 
-  CoolCalendar({
+  final ScrollController? scrollController;
+
+  const CoolCalendar({
     Key? key,
     this.events = const [],
     this.backgroundColor = Colors.white,
@@ -57,6 +59,7 @@ class CoolCalendar extends StatefulWidget {
     this.headerTitleDecoration = const BoxDecoration(),
     this.headerTextStyle = const TextStyle(),
     this.timeLineWidth = 50,
+    this.scrollController,
   }) : super(key: key);
 
   @override
@@ -64,8 +67,6 @@ class CoolCalendar extends StatefulWidget {
 }
 
 class _CoolCalendarState extends State<CoolCalendar> {
-  ScrollController scrollController = ScrollController();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -76,9 +77,9 @@ class _CoolCalendarState extends State<CoolCalendar> {
           header(),
           Expanded(
             child: SingleChildScrollView(
-              controller: scrollController,
+              controller: widget.scrollController ?? ScrollController(),
               child: Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   bottom: 10,
                   left: 5,
                   right: 10,
@@ -112,11 +113,11 @@ class _CoolCalendarState extends State<CoolCalendar> {
   }
 
   Widget header() {
-    if (widget.headerTitles.length == 0) {
-      return SizedBox();
+    if (widget.headerTitles.isEmpty) {
+      return const SizedBox();
     }
 
-    return Container(
+    return SizedBox(
       height: 30,
       child: Row(
         children: [
@@ -158,7 +159,8 @@ class _CoolCalendarState extends State<CoolCalendar> {
             initHeightMultiplier: event.initHeightMultiplier,
             initTopMultiplier: event.initTopMultiplier,
             rowIndex: event.rowIndex,
-            backgroundColor: event.backgroundColor,
+            decoration: event.decoration,
+            decorationHover: event.decorationHover,
             ballDecoration: event.ballDecoration,
             onChange: event.onChange ?? (_, __) {},
             width: widget.eventGridEventWidth,
@@ -177,7 +179,7 @@ class _CoolCalendarState extends State<CoolCalendar> {
           width: double.infinity,
           height: widget.discreteStepSize,
           child: Transform.translate(
-            offset: Offset(0, -8),
+            offset: const Offset(0, -8),
             child: Text(text),
           ),
         );

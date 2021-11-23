@@ -5,6 +5,7 @@ import 'package:blooddonation_admin/misc/theme.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +15,11 @@ void main() {
   addTestAppointments();
   addTestRequests();
 
-  runApp(App());
+  runApp(
+    const ProviderScope(
+      child: App(),
+    ),
+  );
 }
 
 class App extends StatelessWidget {

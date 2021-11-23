@@ -7,6 +7,6 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BarChartSample1();
+    return const BarChartSample1();
   }
 }

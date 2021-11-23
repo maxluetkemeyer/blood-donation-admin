@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class CoolCalendarEventWidget extends StatefulWidget {
   final Widget child;
   final Function(double start, double end) onChange;
-  final Color backgroundColor;
+  final Decoration decoration;
+  final Decoration decorationHover;
 
   final double discreteStepSize;
   final int initHeightMultiplier;
@@ -21,7 +22,8 @@ class CoolCalendarEventWidget extends StatefulWidget {
     required this.initHeightMultiplier,
     required this.initTopMultiplier,
     required this.rowIndex,
-    required this.backgroundColor,
+    required this.decoration,
+    required this.decorationHover,
     this.child = const SizedBox(),
     this.ballDiameter = 20.0,
     required this.width,
@@ -38,6 +40,7 @@ class CoolCalendarEventWidget extends StatefulWidget {
 class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
   late double height;
   late double top;
+  bool onHover = false;
 
   double cumulativeDy = 0;
   double cumulativeDx = 0;
@@ -58,11 +61,21 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
         Positioned(
           top: top,
           left: widget.width * widget.rowIndex,
-          child: Container(
-            height: height,
-            width: widget.width,
-            color: widget.backgroundColor,
-            child: widget.child,
+          child: MouseRegion(
+            onEnter: (_) => setState(() {
+              onHover = true;
+            }),
+            onExit: (_) => setState(() {
+              onHover = false;
+            }),
+            cursor: SystemMouseCursors.click,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: height,
+              width: widget.width,
+              decoration: onHover ? widget.decorationHover : widget.decoration,
+              child: widget.child,
+            ),
           ),
         ),
         // ###################################### Top controll
@@ -111,7 +124,7 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
                   ),
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         // ###################################### Bottom controll
         widget.dragging
             ? Positioned(
@@ -149,7 +162,7 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
                   ),
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         // ###################################### Dragger
         widget.dragging
             ? Positioned(
@@ -184,7 +197,7 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
                   ),
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
       ],
     );
   }
