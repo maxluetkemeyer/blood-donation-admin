@@ -5,6 +5,7 @@ class CoolCalendarEventWidget extends StatefulWidget {
   final Function(double start, double end) onChange;
   final Decoration decoration;
   final Decoration decorationHover;
+  final bool animated;
 
   final double discreteStepSize;
   final int initHeightMultiplier;
@@ -13,7 +14,7 @@ class CoolCalendarEventWidget extends StatefulWidget {
   final int rowIndex;
 
   final double ballDiameter;
-  final BoxDecoration ballDecoration;
+  final Decoration ballDecoration;
   final bool dragging;
 
   const CoolCalendarEventWidget({
@@ -30,6 +31,7 @@ class CoolCalendarEventWidget extends StatefulWidget {
     required this.ballDecoration,
     required this.onChange,
     required this.dragging,
+    required this.animated,
   }) : super(key: key);
 
   @override
@@ -69,13 +71,21 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
               onHover = false;
             }),
             cursor: SystemMouseCursors.click,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              height: height,
-              width: widget.width,
-              decoration: onHover ? widget.decorationHover : widget.decoration,
-              child: widget.child,
-            ),
+            child: widget.animated
+                ? AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    height: height,
+                    width: widget.width,
+                    decoration:
+                        onHover ? widget.decorationHover : widget.decoration,
+                    child: widget.child,
+                  )
+                : Container(
+                    height: height,
+                    width: widget.width,
+                    decoration: widget.decoration,
+                    child: widget.child,
+                  ),
           ),
         ),
         // ###################################### Top controll

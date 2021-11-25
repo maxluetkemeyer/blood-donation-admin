@@ -1,12 +1,13 @@
+import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import 'package:blooddonation_admin/requests/request_tile.dart';
-import 'package:blooddonation_admin/services/appointment_model.dart';
+import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
-import 'package:blooddonation_admin/services/request_model.dart';
+import 'package:blooddonation_admin/models/request_model.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_widget.dart';
 
 class Requests extends ConsumerWidget {
@@ -76,6 +77,7 @@ class Requests extends ConsumerWidget {
                   eventGridLineColorHalfHour: Colors.transparent,
                   discreteStepSize: 34,
                   eventGridEventWidth: width * 0.03,
+                  animated: true,
                   events: buildEvents(openAppointment),
                 ),
               ),

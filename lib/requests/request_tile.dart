@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:blooddonation_admin/providers.dart';
-import 'package:blooddonation_admin/services/appointment_model.dart';
+import 'package:blooddonation_admin/models/appointment_model.dart';
 
 class RequestTile extends ConsumerWidget {
   final Appointment appointment;

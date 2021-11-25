@@ -7,7 +7,7 @@ class CoolCalendarEvent {
   final int rowIndex;
   final Decoration decoration;
   final Decoration decorationHover;
-  final BoxDecoration ballDecoration;
+  final Decoration ballDecoration;
   final Function(double start, double end)? onChange;
   final bool dragging;
 
@@ -25,4 +25,28 @@ class CoolCalendarEvent {
     this.onChange,
     this.dragging = true,
   });
+
+  CoolCalendarEvent copyWith({
+    Widget? child,
+    int? initTopMultiplier,
+    int? initHeightMultiplier,
+    Decoration? decoration,
+    Decoration? decorationHover,
+    int? rowIndex,
+    Decoration? ballDecoration,
+    Function(double start, double end)? onChange,
+    bool? dragging,
+  }) {
+    return CoolCalendarEvent(
+      child: child ?? this.child,
+      initTopMultiplier: initTopMultiplier ?? this.initTopMultiplier,
+      initHeightMultiplier: initHeightMultiplier ?? this.initHeightMultiplier,
+      ballDecoration: ballDecoration ?? this.ballDecoration,
+      decoration: decoration ?? this.decoration,
+      decorationHover: decorationHover ?? this.decorationHover,
+      dragging: dragging ?? this.dragging,
+      onChange: onChange ?? this.onChange,
+      rowIndex: rowIndex ?? this.rowIndex,
+    );
+  }
 }

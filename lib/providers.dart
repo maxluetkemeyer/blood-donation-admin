@@ -1,4 +1,4 @@
-import 'package:blooddonation_admin/services/appointment_model.dart';
+import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final requestTileOpenProvider = StateProvider<Appointment>((ref) {

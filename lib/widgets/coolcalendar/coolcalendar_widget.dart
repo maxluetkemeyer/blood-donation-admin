@@ -34,16 +34,14 @@ class CoolCalendar extends StatefulWidget {
   /// Width of events in the event grid.
   final double eventGridEventWidth;
 
-  /// List of header titels, which will be shown over the calendar.
-  final List<String> headerTitles;
+  /// List of header widgets, which will be shown over the calendar.
+  final List<Widget> headerTitles;
 
   /// Decoration of every header title box.
   final Decoration headerTitleDecoration;
 
-  /// Textstyle of the header title.
-  final TextStyle headerTextStyle;
-
   final ScrollController? scrollController;
+  final bool animated;
 
   const CoolCalendar({
     Key? key,
@@ -57,9 +55,9 @@ class CoolCalendar extends StatefulWidget {
     this.eventGridEventWidth = 220,
     this.headerTitles = const [],
     this.headerTitleDecoration = const BoxDecoration(),
-    this.headerTextStyle = const TextStyle(),
     this.timeLineWidth = 50,
     this.scrollController,
+    this.animated = false,
   }) : super(key: key);
 
   @override
@@ -117,25 +115,19 @@ class _CoolCalendarState extends State<CoolCalendar> {
       return const SizedBox();
     }
 
-    return SizedBox(
-      height: 30,
-      child: Row(
-        children: [
-          SizedBox(
-            width: widget.timeLineWidth + 5,
+    return Row(
+      children: [
+        SizedBox(
+          width: widget.timeLineWidth + 5,
+        ),
+        for (var item in widget.headerTitles)
+          Container(
+            decoration: widget.headerTitleDecoration,
+            alignment: Alignment.center,
+            width: widget.eventGridEventWidth,
+            child: item,
           ),
-          for (var item in widget.headerTitles)
-            Container(
-              decoration: widget.headerTitleDecoration,
-              alignment: Alignment.center,
-              width: widget.eventGridEventWidth,
-              child: Text(
-                item,
-                style: widget.headerTextStyle,
-              ),
-            ),
-        ],
-      ),
+      ],
     );
   }
 
@@ -165,6 +157,7 @@ class _CoolCalendarState extends State<CoolCalendar> {
             onChange: event.onChange ?? (_, __) {},
             width: widget.eventGridEventWidth,
             dragging: event.dragging,
+            animated: widget.animated,
             child: event.child,
           ),
         ),

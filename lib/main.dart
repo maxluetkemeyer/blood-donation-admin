@@ -3,6 +3,8 @@
 import 'package:blooddonation_admin/home/home_view.dart';
 import 'package:blooddonation_admin/misc/theme.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
+import 'package:blooddonation_admin/services/settings_service.dart';
+import 'package:blooddonation_admin/tester.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +16,8 @@ void main() {
   addTestAppointments();
   addTestAppointments();
   addTestRequests();
+  SettingsService.instance;
+  addTestPlannerEvents();
 
   runApp(
     const ProviderScope(
