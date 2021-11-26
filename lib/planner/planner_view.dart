@@ -59,6 +59,10 @@ class _PlannerState extends State<Planner> {
                           },
                         ),
                       ),
+                      const SizedBox(
+                        width: 200,
+                      ),
+                      const Text("Dauer eines Blutspendetermins: 1 Stunde"),
                       const Expanded(
                         child: SizedBox(),
                       ),
@@ -183,15 +187,6 @@ class _PlannerState extends State<Planner> {
         );
       }
     }
-    /*
-    cce.copyWith(
-            rowIndex: i,
-            onChange: (start, end) {
-              setState(() {
-                changed = true;
-              });
-            },
-          ),*/
 
     return events;
   }

@@ -14,7 +14,6 @@ void main() {
   //BackendService.instance;
   CalendarService.instance;
   addTestAppointments();
-  addTestAppointments();
   addTestRequests();
   SettingsService.instance;
   addTestPlannerEvents();

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CoolCalendarEventWidget extends StatefulWidget {
   final Widget child;
   final Function(double start, double end) onChange;
+  final Function onTap;
   final Decoration decoration;
   final Decoration decorationHover;
   final bool animated;
@@ -32,6 +33,7 @@ class CoolCalendarEventWidget extends StatefulWidget {
     required this.onChange,
     required this.dragging,
     required this.animated,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -71,21 +73,24 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
               onHover = false;
             }),
             cursor: SystemMouseCursors.click,
-            child: widget.animated
-                ? AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    height: height,
-                    width: widget.width,
-                    decoration:
-                        onHover ? widget.decorationHover : widget.decoration,
-                    child: widget.child,
-                  )
-                : Container(
-                    height: height,
-                    width: widget.width,
-                    decoration: widget.decoration,
-                    child: widget.child,
-                  ),
+            child: GestureDetector(
+              onTap: () => widget.onTap(),
+              child: widget.animated
+                  ? AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      height: height,
+                      width: widget.width,
+                      decoration:
+                          onHover ? widget.decorationHover : widget.decoration,
+                      child: widget.child,
+                    )
+                  : Container(
+                      height: height,
+                      width: widget.width,
+                      decoration: widget.decoration,
+                      child: widget.child,
+                    ),
+            ),
           ),
         ),
         // ###################################### Top controll

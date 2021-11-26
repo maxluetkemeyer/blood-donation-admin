@@ -10,6 +10,7 @@ class CoolCalendarEvent {
   final Decoration ballDecoration;
   final Function(double start, double end)? onChange;
   final bool dragging;
+  final Function? onTap;
 
   CoolCalendarEvent({
     required this.child,
@@ -24,6 +25,7 @@ class CoolCalendarEvent {
     ),
     this.onChange,
     this.dragging = true,
+    this.onTap,
   });
 
   CoolCalendarEvent copyWith({

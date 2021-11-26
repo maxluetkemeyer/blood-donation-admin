@@ -1,11 +1,15 @@
 import 'appointment_model.dart';
 
 class Request {
+  String id;
+  DateTime created;
+  String status;
   Appointment appointment;
-  DateTime issued;
 
   Request({
+    required this.id,
+    required this.created,
+    required this.status,
     required this.appointment,
-    required this.issued,
   });
 }

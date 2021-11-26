@@ -155,6 +155,7 @@ class _CoolCalendarState extends State<CoolCalendar> {
             decorationHover: event.decorationHover,
             ballDecoration: event.ballDecoration,
             onChange: event.onChange ?? (_, __) {},
+            onTap: event.onTap ?? () {},
             width: widget.eventGridEventWidth,
             dragging: event.dragging,
             animated: widget.animated,

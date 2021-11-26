@@ -1,5 +1,7 @@
+import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/models/capacity_model.dart';
+import 'package:blooddonation_admin/models/person_model.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/models/request_model.dart';
 import 'package:blooddonation_admin/services/settings_service.dart';
@@ -75,11 +77,22 @@ void addTestAppointments() {
     id: "0",
     start: DateTime.now(),
     duration: const Duration(hours: 1),
+    person: Person(
+      id: "-1",
+      birthday: DateTime.now(),
+      gender: "male",
+      name: "Hans",
+    ),
   );
   Appointment a2 = Appointment(
     id: "1",
     start: DateTime.now(),
     duration: const Duration(hours: 1),
+    person: Person(
+      id: "-3",
+      birthday: DateTime.now(),
+      name: "Alina",
+    ),
   );
   Appointment a3 = Appointment(
     id: "2",
@@ -106,6 +119,12 @@ void addTestRequests() {
     id: "99",
     start: DateTime.now(),
     duration: const Duration(hours: 1),
+    person: Person(
+      id: "af",
+      birthday: DateTime.now(),
+      gender: "diverse",
+      name: "Lukas",
+    ),
   );
   Appointment a2 = Appointment(
     id: "98",
@@ -113,8 +132,13 @@ void addTestRequests() {
     duration: const Duration(hours: 1),
   );
 
-  Request r1 = Request(appointment: a1, issued: DateTime.now());
-  Request r2 = Request(appointment: a2, issued: DateTime.now());
+  Request r1 = Request(
+      appointment: a1, created: DateTime.now(), id: '-1', status: 'pending');
+  Request r2 = Request(
+      appointment: a2, created: DateTime.now(), id: '-1', status: 'pending');
+
+  a1.request = r1;
+  a2.request = r2;
 
   cs.requests.add(r1);
   cs.requests.add(r2);
@@ -142,5 +166,17 @@ void addTestPlannerEvents() {
         start: DateTime(2021, 11, 25, 08),
         duration: const Duration(hours: 4),
         chairs: 10),
+  );
+
+  ss.addCapacity(
+    Capacity(
+      start: extractDay(
+        DateTime.now(),
+      ).add(
+        const Duration(hours: 8),
+      ),
+      duration: const Duration(hours: 14),
+      chairs: 8,
+    ),
   );
 }
