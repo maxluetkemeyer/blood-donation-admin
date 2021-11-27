@@ -75,7 +75,10 @@ class Requests extends ConsumerWidget {
                   eventGridColor: const Color.fromRGBO(227, 245, 255, 1),
                   eventGridLineColorFullHour: Colors.black38.withOpacity(0.2),
                   eventGridLineColorHalfHour: Colors.transparent,
-                  discreteStepSize: 34,
+                  discreteStepSize: 30,
+                  scrollController: ScrollController(
+                    initialScrollOffset: 12 * 30,
+                  ),
                   eventGridEventWidth: width * 0.03,
                   animated: true,
                   events: buildEvents(openAppointment),

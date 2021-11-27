@@ -36,6 +36,7 @@ class _HomeState extends State<Home> {
             }),
             icon: const Icon(Icons.home_rounded),
             label: Text(AppLocalizations.of(context)!.navDashboard),
+            style: screenIndex == 0 ? _buttonSelectedStyle : null,
           ),
           TextButton.icon(
             onPressed: () => setState(() {
@@ -43,6 +44,7 @@ class _HomeState extends State<Home> {
             }),
             icon: const Icon(Icons.table_chart),
             label: Text(AppLocalizations.of(context)!.navRequests),
+            style: screenIndex == 1 ? _buttonSelectedStyle : null,
           ),
           TextButton.icon(
             onPressed: () => setState(() {
@@ -50,6 +52,7 @@ class _HomeState extends State<Home> {
             }),
             icon: const Icon(Icons.calendar_today_rounded),
             label: Text(AppLocalizations.of(context)!.navCalendar),
+            style: screenIndex == 2 ? _buttonSelectedStyle : null,
           ),
           TextButton.icon(
             onPressed: () => setState(() {
@@ -57,6 +60,7 @@ class _HomeState extends State<Home> {
             }),
             icon: const Icon(Icons.schedule),
             label: Text(AppLocalizations.of(context)!.navPlanner),
+            style: screenIndex == 3 ? _buttonSelectedStyle : null,
           ),
           TextButton.icon(
             onPressed: () => setState(() {
@@ -64,6 +68,7 @@ class _HomeState extends State<Home> {
             }),
             icon: const Icon(Icons.help),
             label: Text(AppLocalizations.of(context)!.navHelp),
+            style: screenIndex == 4 ? _buttonSelectedStyle : null,
           ),
         ],
       ),
@@ -74,3 +79,8 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+ButtonStyle _buttonSelectedStyle = ButtonStyle(
+  backgroundColor:
+      MaterialStateProperty.all(const Color.fromRGBO(233, 240, 243, 1)),
+);

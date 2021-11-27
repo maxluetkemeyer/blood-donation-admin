@@ -24,4 +24,21 @@ class CalendarService {
       calendar[day.toString()] = [appointment];
     }
   }
+
+  List<Appointment> getAppointmentsPerDay(DateTime day) {
+    if (calendar.containsKey(day.toString())) {
+      return calendar[day.toString()];
+    }
+
+    return [];
+  }
+
+  List<Request> getRequestsPerDay(DateTime day) {
+    var fruits = ['apples', 'oranges', 'bananas'];
+    fruits.where((f) => f.startsWith('a')).toList(); //apples
+
+    return requests
+        .where((r) => extractDay(r.appointment.start).isAtSameMomentAs(day))
+        .toList();
+  }
 }

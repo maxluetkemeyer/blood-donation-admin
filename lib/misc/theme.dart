@@ -4,7 +4,7 @@ const Color _primaryColor = Color.fromRGBO(11, 72, 116, 1);
 
 ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: const Color.fromARGB(255, 242, 242, 247),
-  primarySwatch: _createMaterialColor(_primaryColor),
+  primarySwatch: createMaterialColor(_primaryColor),
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.white,
     foregroundColor: _primaryColor,
@@ -14,7 +14,7 @@ ThemeData lightTheme = ThemeData(
 //ThemeData darkTheme = ThemeData.dark();
 ThemeData darkTheme = lightTheme;
 
-MaterialColor _createMaterialColor(Color color) {
+MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];
   final swatch = <int, Color>{};
   final int r = color.red, g = color.green, b = color.blue;

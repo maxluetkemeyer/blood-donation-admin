@@ -78,7 +78,6 @@ void addTestAppointments() {
     start: DateTime.now(),
     duration: const Duration(hours: 1),
     person: Person(
-      id: "-1",
       birthday: DateTime.now(),
       gender: "male",
       name: "Hans",
@@ -89,7 +88,6 @@ void addTestAppointments() {
     start: DateTime.now(),
     duration: const Duration(hours: 1),
     person: Person(
-      id: "-3",
       birthday: DateTime.now(),
       name: "Alina",
     ),
@@ -120,9 +118,8 @@ void addTestRequests() {
     start: DateTime.now(),
     duration: const Duration(hours: 1),
     person: Person(
-      id: "af",
       birthday: DateTime.now(),
-      gender: "diverse",
+      gender: "male",
       name: "Lukas",
     ),
   );

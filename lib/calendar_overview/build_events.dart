@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/models/capacity_model.dart';
 import 'package:blooddonation_admin/providers.dart';
@@ -15,14 +14,14 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay(DateTime day, WidgetRef ref) {
   List<int> rows = List.generate(48, (index) => 0);
 
   List<Appointment> appointments =
-      CalendarService.instance.calendar[extractDay(DateTime.now()).toString()];
-  List<Appointment> requestAppointments = CalendarService.instance.requests
+      CalendarService.instance.getAppointmentsPerDay(day);
+
+  List<Appointment> requestAppointments = CalendarService.instance
+      .getRequestsPerDay(day)
       .map((request) => request.appointment)
       .toList();
   List<Capacity> dayCapacities =
       SettingsService.instance.getCapacitiesPerDay(day);
-
-  print(dayCapacities.map((e) => e.start));
 
   for (Appointment appointment in appointments) {
     int topStep = appointment.start.hour * 2;
@@ -164,7 +163,6 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay(DateTime day, WidgetRef ref) {
               ),
             ),
             onTap: () {
-
               //provider selected appointment
               ref
                   .read(calendarOverviewSelectedAppointmentProvider.state)
