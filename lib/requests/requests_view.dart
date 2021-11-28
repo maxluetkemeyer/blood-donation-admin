@@ -1,3 +1,4 @@
+import 'package:blooddonation_admin/calendar_overview/build_events.dart';
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/providers.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class Requests extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // ignore: unused_local_variable
     Appointment openAppointment = ref.watch(requestTileOpenProvider.state).state;
     double width = MediaQuery.of(context).size.width;
 
@@ -80,7 +82,8 @@ class Requests extends ConsumerWidget {
                   ),
                   eventGridEventWidth: width * 0.03,
                   animated: true,
-                  events: buildEvents(openAppointment),
+                  //events: buildEvents(openAppointment),
+                  events: calendarBuildEventsOfDay(day: extractDay(DateTime.now()), ref: ref),
                 ),
               ),
             ],

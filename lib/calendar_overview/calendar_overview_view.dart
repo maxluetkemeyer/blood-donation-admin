@@ -21,9 +21,7 @@ class _CalendarOverviewState extends ConsumerState<CalendarOverview> {
 
   @override
   Widget build(BuildContext context) {
-    print("rebuild calendar overview");
-
-    Appointment? appointment = ref.watch(calendarOverviewSelectedAppointmentProvider.state).state;
+    Appointment appointment = ref.watch(calendarOverviewSelectedAppointmentProvider.state).state;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,11 +30,15 @@ class _CalendarOverviewState extends ConsumerState<CalendarOverview> {
           fit: FlexFit.tight,
           flex: 2,
           child: CoolCalendar(
+            key: GlobalKey(),
             discreteStepSize: 30,
             scrollController: ScrollController(
-              initialScrollOffset: 12 * 30,
+              initialScrollOffset: 14 * 30,
             ),
-            events: calendarBuildEventsOfDay(_selectedDay, ref),
+            events: calendarBuildEventsOfDay(
+              day: _selectedDay,
+              ref: ref,
+            ),
             eventGridEventWidth: 70,
             animated: true,
           ),
@@ -64,21 +66,22 @@ class _CalendarOverviewState extends ConsumerState<CalendarOverview> {
                       _selectedDay = focusedDay.toLocal().add(const Duration(hours: -1));
                     });
                     //clear appointment details
-                    ref.read(calendarOverviewSelectedAppointmentProvider.state).state = null;
+                    ref.read(calendarOverviewSelectedAppointmentProvider.state).state = EmptyAppointment();
                   },
                   onDaySelected: (selectedDay, focusedDay) {
                     setState(() {
                       _selectedDay = selectedDay.toLocal().add(const Duration(hours: -1));
                     });
                     // clear appointment details
-                    ref.read(calendarOverviewSelectedAppointmentProvider.state).state = null;
+                    ref.read(calendarOverviewSelectedAppointmentProvider.state).state = EmptyAppointment();
                   },
                   selectedDayPredicate: (day) {
                     return isSameDay(_selectedDay, day);
                   },
                 ),
                 const Divider(),
-                CalendarSidebar(
+                CalendarSidebarDetails(
+                  key: GlobalKey(),
                   appointment: appointment,
                 ),
               ],

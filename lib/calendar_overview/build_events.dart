@@ -9,73 +9,29 @@ import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_event_mode
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-List<CoolCalendarEvent> calendarBuildEventsOfDay(DateTime day, WidgetRef ref) {
+List<CoolCalendarEvent> calendarBuildEventsOfDay({
+  required DateTime day,
+  required WidgetRef ref,
+}) {
   List<CoolCalendarEvent> events = [];
   List<int> rows = List.generate(48, (index) => 0);
 
-  List<Appointment> appointments = CalendarService.instance.getAppointmentsPerDay(day);
+  void _addToEvents({
+    required List<Appointment> appointments,
+    required String text,
+    required BoxDecoration decoration,
+    required BoxDecoration decorationHover,
+  }) {
+    for (Appointment appointment in appointments) {
+      int topStep = appointment.start.hour * 2;
+      int durationSteps = (appointment.duration.inMinutes / 30).ceil();
 
-  List<Appointment> requestAppointments = CalendarService.instance.getRequestsPerDay(day).map((request) => request.appointment).toList();
-  List<Capacity> dayCapacities = SettingsService.instance.getCapacitiesPerDay(day);
-
-  for (Appointment appointment in appointments) {
-    int topStep = appointment.start.hour * 2;
-    int durationSteps = (appointment.duration.inMinutes / 30).ceil();
-
-    events.add(
-      CoolCalendarEvent(
-        child: const Center(
-          child: Text(
-            "VBS",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        initTopMultiplier: topStep,
-        initHeightMultiplier: durationSteps,
-        rowIndex: rows[topStep],
-        dragging: false,
-        decoration: BoxDecoration(
-          color: const Color.fromRGBO(11, 72, 116, 1),
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            width: 1,
-            color: Colors.black26,
-          ),
-        ),
-        decorationHover: BoxDecoration(
-          color: const Color.fromRGBO(90, 160, 213, 1),
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            width: 1,
-            color: Colors.white,
-          ),
-        ),
-        onTap: () {
-          //provider selected appointment
-          ref.read(calendarOverviewSelectedAppointmentProvider.state).state = appointment;
-        },
-      ),
-    );
-
-    rows[topStep]++;
-    for (int i = topStep + 1; i < topStep + durationSteps; i++) {
-      rows[i]++;
-    }
-  }
-
-  for (Appointment appointment in requestAppointments) {
-    int topStep = appointment.start.hour * 2;
-    int durationSteps = (appointment.duration.inMinutes / 30).ceil();
-
-    events.add(
-      CoolCalendarEvent(
-          child: const Center(
+      events.add(
+        CoolCalendarEvent(
+          child: Center(
             child: Text(
-              "VBS",
-              style: TextStyle(
+              text,
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -85,33 +41,75 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay(DateTime day, WidgetRef ref) {
           initHeightMultiplier: durationSteps,
           rowIndex: rows[topStep],
           dragging: false,
-          decoration: BoxDecoration(
-            color: const Color.fromRGBO(180, 209, 228, 1),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              width: 1,
-              color: Colors.black26,
-            ),
-          ),
-          decorationHover: BoxDecoration(
-            color: const Color.fromRGBO(90, 160, 213, 1),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              width: 1,
-              color: Colors.white,
-            ),
-          ),
+          decoration: decoration,
+          decorationHover: decorationHover,
           onTap: () {
-            //provider selected appointment
             ref.read(calendarOverviewSelectedAppointmentProvider.state).state = appointment;
-          }),
-    );
+          },
+        ),
+      );
 
-    rows[topStep]++;
-    for (int i = topStep + 1; i < topStep + durationSteps; i++) {
-      rows[i]++;
+      rows[topStep]++;
+      for (int i = topStep + 1; i < topStep + durationSteps; i++) {
+        rows[i]++;
+      }
     }
   }
+
+  //#############################################################################################################################
+
+  List<Appointment> appointments = CalendarService.instance.getAppointmentsPerDay(day);
+
+  _addToEvents(
+    appointments: appointments,
+    text: "VBS",
+    decoration: BoxDecoration(
+      color: const Color.fromRGBO(11, 72, 116, 1),
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(
+        width: 1,
+        color: Colors.black26,
+      ),
+    ),
+    decorationHover: BoxDecoration(
+      color: const Color.fromRGBO(90, 160, 213, 1),
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(
+        width: 1,
+        color: Colors.white,
+      ),
+    ),
+  );
+
+  //#############################################################################################################################
+
+  List<Appointment> requestAppointments = CalendarService.instance.getRequestsPerDay(day).map((request) => request.appointment).toList();
+
+  _addToEvents(
+    appointments: requestAppointments,
+    text: "Req",
+    decoration: BoxDecoration(
+      color: const Color.fromRGBO(180, 209, 228, 1),
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(
+        width: 1,
+        color: Colors.black26,
+      ),
+    ),
+    decorationHover: BoxDecoration(
+      color: const Color.fromRGBO(90, 160, 213, 1),
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(
+        width: 1,
+        color: Colors.white,
+      ),
+    ),
+  );
+
+  //#############################################################################################################################
+
+  List<Appointment> mockAppointments = [];
+  List<Capacity> dayCapacities = SettingsService.instance.getCapacitiesPerDay(day);
 
   for (int i = 0; i < 24; i++) {
     DateTime aktuell = day.add(Duration(hours: i));
@@ -130,40 +128,36 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay(DateTime day, WidgetRef ref) {
     for (int j = 0; j < inCapacity!.chairs; j++) {
       if (j < rows[i * 2]) continue;
 
-      events.add(
-        CoolCalendarEvent(
-            child: const SizedBox(),
-            initTopMultiplier: i * 2,
-            initHeightMultiplier: 2,
-            rowIndex: j,
-            dragging: false,
-            decoration: BoxDecoration(
-              color: const Color.fromRGBO(242, 249, 250, 0.1),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                width: 1,
-                color: Colors.black26,
-              ),
-            ),
-            decorationHover: BoxDecoration(
-              color: const Color.fromRGBO(242, 249, 250, 0.8),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                width: 2,
-                color: Colors.white,
-              ),
-            ),
-            onTap: () {
-              //provider selected appointment
-              ref.read(calendarOverviewSelectedAppointmentProvider.state).state = Appointment(
-                id: Random.secure().toString(),
-                start: aktuell,
-                duration: const Duration(hours: 1),
-              );
-            }),
+      mockAppointments.add(
+        Appointment(
+          id: Random.secure().toString(),
+          start: aktuell,
+          duration: const Duration(hours: 1),
+        ),
       );
     }
   }
+
+  _addToEvents(
+    appointments: mockAppointments,
+    text: "",
+    decoration: BoxDecoration(
+      color: const Color.fromRGBO(242, 249, 250, 0.1),
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(
+        width: 1,
+        color: Colors.black26,
+      ),
+    ),
+    decorationHover: BoxDecoration(
+      color: const Color.fromRGBO(242, 249, 250, 0.8),
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(
+        width: 2,
+        color: Colors.white,
+      ),
+    ),
+  );
 
   return events;
 }

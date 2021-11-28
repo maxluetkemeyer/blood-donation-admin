@@ -21,3 +21,12 @@ class Appointment {
     return "Appointment " + id + " " + start.toString() + " " + duration.toString();
   }
 }
+
+class EmptyAppointment extends Appointment {
+  EmptyAppointment()
+      : super(
+          id: "-1",
+          start: DateTime(0),
+          duration: const Duration(),
+        );
+}

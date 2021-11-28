@@ -122,6 +122,8 @@ class _PlannerState extends State<Planner> {
   List<Widget> buildHeaders() {
     List<String> days = const ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "sonntag"];
 
+    //int weekday = DateTime.now().weekday;
+
     List<Widget> headers = [];
 
     for (String day in days) {
@@ -133,8 +135,17 @@ class _PlannerState extends State<Planner> {
               height: 10,
             ),
             ElevatedButton(
-              onPressed: () {},
               child: const Text("Zeitslot hinzufügen"),
+              onPressed: () {
+                SettingsService.instance.addCapacity(
+                  Capacity(
+                    start: DateTime.now(),
+                    duration: const Duration(hours: 2),
+                    chairs: 4,
+                  ),
+                );
+                setState(() {});
+              },
             ),
             const SizedBox(
               height: 10,
@@ -162,6 +173,19 @@ class _PlannerState extends State<Planner> {
             initHeightMultiplier: (capacity.duration.inMinutes / 30).ceil(),
             rowIndex: i,
             onChange: (start, end) {
+              capacity.start = DateTime(
+                capacity.start.year,
+                capacity.start.month,
+                capacity.start.day,
+                (start / 2).round(),
+              );
+              DateTime endDate = DateTime(
+                capacity.start.year,
+                capacity.start.month,
+                capacity.start.day,
+                (end / 2).round(),
+              );
+              capacity.duration = endDate.difference(capacity.start);
               setState(() {
                 changed = true;
               });

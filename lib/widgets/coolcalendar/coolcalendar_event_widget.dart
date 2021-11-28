@@ -97,7 +97,7 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
                 top: top - widget.ballDiameter / 2,
                 left: widget.width * widget.rowIndex + widget.width / 2 - widget.ballDiameter / 2,
                 child: _Dragger(
-                  onEnd: (_) => widget.onChange(top, top + height),
+                  onEnd: (_) => widget.onChange(top/widget.discreteStepSize, (top + height)/widget.discreteStepSize),
                   onDrag: (dx, dy) {
                     cumulativeDy -= dy;
                     if (cumulativeDy >= widget.discreteStepSize) {
@@ -137,8 +137,9 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
             ? Positioned(
                 top: top + height - widget.ballDiameter / 2,
                 left: widget.width * widget.rowIndex + widget.width / 2 - widget.ballDiameter / 2,
+                
                 child: _Dragger(
-                  onEnd: (_) => widget.onChange(top, top + height),
+                  onEnd: (_) => widget.onChange(top/widget.discreteStepSize, (top + height)/widget.discreteStepSize),
                   onDrag: (dx, dy) {
                     cumulativeDy += dy;
 
@@ -170,7 +171,7 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
                 top: top + 0.5 * widget.ballDiameter,
                 left: widget.width * widget.rowIndex,
                 child: _Dragger(
-                  onEnd: (_) => widget.onChange(top, top + height),
+                  onEnd: (_) => widget.onChange(top/widget.discreteStepSize, (top + height)/widget.discreteStepSize),
                   onDrag: (dx, dy) {
                     cumulativeDy -= dy;
                     if (cumulativeDy >= widget.discreteStepSize) {

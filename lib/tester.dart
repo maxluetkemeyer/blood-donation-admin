@@ -130,7 +130,7 @@ void addTestRequests() {
   );
 
   Request r1 = Request(appointment: a1, created: DateTime.now(), id: '-1', status: 'pending');
-  Request r2 = Request(appointment: a2, created: DateTime.now(), id: '-1', status: 'pending');
+  Request r2 = Request(appointment: a2, created: DateTime.now(), id: '2', status: 'pending');
 
   a1.request = r1;
   a2.request = r2;

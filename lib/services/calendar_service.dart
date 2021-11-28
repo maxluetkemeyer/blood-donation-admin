@@ -6,7 +6,7 @@ import '../models/appointment_model.dart';
 class CalendarService {
   static final CalendarService instance = CalendarService._privateConstructor();
 
-  List<Request> requests = [];
+  List<Request> requests = []; //remove in future
   Map calendar = <String, List<Appointment>>{};
 
   CalendarService._privateConstructor() {
