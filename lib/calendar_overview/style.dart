@@ -28,8 +28,7 @@ HeaderStyle calendarHeaderStyle(BuildContext context) => const HeaderStyle(
 CalendarBuilders calendarBuilder = CalendarBuilders(
   defaultBuilder: (context, day, focusedDay) {
     day = day.toLocal().add(const Duration(hours: -1));
-    int appointments =
-        CalendarService.instance.getAppointmentsPerDay(day).length;
+    int appointments = CalendarService.instance.getAppointmentsPerDay(day).length;
 
     Color bgColor;
     if (appointments > 0) {

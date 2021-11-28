@@ -20,8 +20,7 @@ class RequestTile extends ConsumerWidget {
     return GestureDetector(
       onTap: () {
         if (ref.watch(requestTileOpenProvider.state).state == appointment) {
-          ref.watch(requestTileOpenProvider.state).state = Appointment(
-              id: "-1", start: DateTime(0), duration: const Duration());
+          ref.watch(requestTileOpenProvider.state).state = Appointment(id: "-1", start: DateTime(0), duration: const Duration());
         } else {
           ref.watch(requestTileOpenProvider.state).state = appointment;
         }
@@ -41,8 +40,7 @@ class RequestTile extends ConsumerWidget {
           secondChild: RequestTileOpen(
             appointment: appointment,
           ),
-          crossFadeState:
-              isOpen ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+          crossFadeState: isOpen ? CrossFadeState.showSecond : CrossFadeState.showFirst,
           duration: const Duration(
             milliseconds: 200,
           ),

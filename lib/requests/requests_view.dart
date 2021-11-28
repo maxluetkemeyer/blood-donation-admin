@@ -15,8 +15,7 @@ class Requests extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Appointment openAppointment =
-        ref.watch(requestTileOpenProvider.state).state;
+    Appointment openAppointment = ref.watch(requestTileOpenProvider.state).state;
     double width = MediaQuery.of(context).size.width;
 
     return Row(
@@ -92,8 +91,7 @@ class Requests extends ConsumerWidget {
   }
 
   List<CoolCalendarEvent> buildEvents(Appointment openAppointment) {
-    List<Appointment> appointments = CalendarService
-        .instance.calendar[extractDay(DateTime.now()).toString()];
+    List<Appointment> appointments = CalendarService.instance.calendar[extractDay(DateTime.now()).toString()];
 
     List<CoolCalendarEvent> events = [];
 
@@ -157,8 +155,7 @@ class Requests extends ConsumerWidget {
           child: Center(
             child: Text(
               openAppointment.id,
-              style: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold),
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
           initTopMultiplier: topStep,

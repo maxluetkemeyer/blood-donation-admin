@@ -37,8 +37,6 @@ class CalendarService {
     var fruits = ['apples', 'oranges', 'bananas'];
     fruits.where((f) => f.startsWith('a')).toList(); //apples
 
-    return requests
-        .where((r) => extractDay(r.appointment.start).isAtSameMomentAs(day))
-        .toList();
+    return requests.where((r) => extractDay(r.appointment.start).isAtSameMomentAs(day)).toList();
   }
 }

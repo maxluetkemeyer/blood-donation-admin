@@ -81,6 +81,5 @@ class _HomeState extends State<Home> {
 }
 
 ButtonStyle _buttonSelectedStyle = ButtonStyle(
-  backgroundColor:
-      MaterialStateProperty.all(const Color.fromRGBO(233, 240, 243, 1)),
+  backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(233, 240, 243, 1)),
 );

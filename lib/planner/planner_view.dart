@@ -42,8 +42,7 @@ class _PlannerState extends State<Planner> {
                         child: TableCalendar(
                           focusedDay: monday,
                           firstDay: getMonday(DateTime.now()),
-                          lastDay: getMonday(DateTime.now())
-                              .add(const Duration(days: 56)),
+                          lastDay: getMonday(DateTime.now()).add(const Duration(days: 56)),
                           calendarFormat: CalendarFormat.week,
                           startingDayOfWeek: StartingDayOfWeek.monday,
                           headerStyle: const HeaderStyle(
@@ -79,8 +78,7 @@ class _PlannerState extends State<Planner> {
                       child: TableCalendar(
                         focusedDay: monday,
                         firstDay: getMonday(DateTime.now()),
-                        lastDay: getMonday(DateTime.now())
-                            .add(const Duration(days: 56)),
+                        lastDay: getMonday(DateTime.now()).add(const Duration(days: 56)),
                         calendarFormat: CalendarFormat.week,
                         startingDayOfWeek: StartingDayOfWeek.monday,
                         daysOfWeekVisible: false,
@@ -122,15 +120,7 @@ class _PlannerState extends State<Planner> {
   }
 
   List<Widget> buildHeaders() {
-    List<String> days = const [
-      "Montag",
-      "Dienstag",
-      "Mittwoch",
-      "Donnerstag",
-      "Freitag",
-      "Samstag",
-      "sonntag"
-    ];
+    List<String> days = const ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "sonntag"];
 
     List<Widget> headers = [];
 
@@ -163,8 +153,7 @@ class _PlannerState extends State<Planner> {
     List<CoolCalendarEvent> events = [];
 
     for (int i = 0; i < 7; i++) {
-      List<Capacity> dayEvents =
-          ss.getCapacitiesPerDay(monday.add(Duration(days: i)));
+      List<Capacity> dayEvents = ss.getCapacitiesPerDay(monday.add(Duration(days: i)));
 
       for (Capacity capacity in dayEvents) {
         events.add(

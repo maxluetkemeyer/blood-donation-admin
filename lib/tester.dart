@@ -129,10 +129,8 @@ void addTestRequests() {
     duration: const Duration(hours: 1),
   );
 
-  Request r1 = Request(
-      appointment: a1, created: DateTime.now(), id: '-1', status: 'pending');
-  Request r2 = Request(
-      appointment: a2, created: DateTime.now(), id: '-1', status: 'pending');
+  Request r1 = Request(appointment: a1, created: DateTime.now(), id: '-1', status: 'pending');
+  Request r2 = Request(appointment: a2, created: DateTime.now(), id: '-1', status: 'pending');
 
   a1.request = r1;
   a2.request = r2;
@@ -145,24 +143,15 @@ void addTestPlannerEvents() {
   SettingsService ss = SettingsService.instance;
 
   ss.addCapacity(
-    Capacity(
-        start: DateTime(2021, 11, 22, 08),
-        duration: const Duration(hours: 4),
-        chairs: 10),
+    Capacity(start: DateTime(2021, 11, 22, 08), duration: const Duration(hours: 4), chairs: 10),
   );
 
   ss.addCapacity(
-    Capacity(
-        start: DateTime(2021, 11, 24, 09),
-        duration: const Duration(hours: 6),
-        chairs: 10),
+    Capacity(start: DateTime(2021, 11, 24, 09), duration: const Duration(hours: 6), chairs: 10),
   );
 
   ss.addCapacity(
-    Capacity(
-        start: DateTime(2021, 11, 25, 08),
-        duration: const Duration(hours: 4),
-        chairs: 10),
+    Capacity(start: DateTime(2021, 11, 25, 08), duration: const Duration(hours: 4), chairs: 10),
   );
 
   ss.addCapacity(

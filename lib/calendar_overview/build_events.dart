@@ -13,15 +13,10 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay(DateTime day, WidgetRef ref) {
   List<CoolCalendarEvent> events = [];
   List<int> rows = List.generate(48, (index) => 0);
 
-  List<Appointment> appointments =
-      CalendarService.instance.getAppointmentsPerDay(day);
+  List<Appointment> appointments = CalendarService.instance.getAppointmentsPerDay(day);
 
-  List<Appointment> requestAppointments = CalendarService.instance
-      .getRequestsPerDay(day)
-      .map((request) => request.appointment)
-      .toList();
-  List<Capacity> dayCapacities =
-      SettingsService.instance.getCapacitiesPerDay(day);
+  List<Appointment> requestAppointments = CalendarService.instance.getRequestsPerDay(day).map((request) => request.appointment).toList();
+  List<Capacity> dayCapacities = SettingsService.instance.getCapacitiesPerDay(day);
 
   for (Appointment appointment in appointments) {
     int topStep = appointment.start.hour * 2;
@@ -60,8 +55,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay(DateTime day, WidgetRef ref) {
         ),
         onTap: () {
           //provider selected appointment
-          ref.read(calendarOverviewSelectedAppointmentProvider.state).state =
-              appointment;
+          ref.read(calendarOverviewSelectedAppointmentProvider.state).state = appointment;
         },
       ),
     );
@@ -109,8 +103,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay(DateTime day, WidgetRef ref) {
           ),
           onTap: () {
             //provider selected appointment
-            ref.read(calendarOverviewSelectedAppointmentProvider.state).state =
-                appointment;
+            ref.read(calendarOverviewSelectedAppointmentProvider.state).state = appointment;
           }),
     );
 
@@ -126,9 +119,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay(DateTime day, WidgetRef ref) {
     Capacity? inCapacity;
 
     for (Capacity capacity in dayCapacities) {
-      if ((aktuell.isAfter(capacity.start) ||
-              aktuell.isAtSameMomentAs(capacity.start)) &&
-          aktuell.isBefore(capacity.start.add(capacity.duration))) {
+      if ((aktuell.isAfter(capacity.start) || aktuell.isAtSameMomentAs(capacity.start)) && aktuell.isBefore(capacity.start.add(capacity.duration))) {
         paint = true;
         inCapacity = capacity;
       }
@@ -164,9 +155,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay(DateTime day, WidgetRef ref) {
             ),
             onTap: () {
               //provider selected appointment
-              ref
-                  .read(calendarOverviewSelectedAppointmentProvider.state)
-                  .state = Appointment(
+              ref.read(calendarOverviewSelectedAppointmentProvider.state).state = Appointment(
                 id: Random.secure().toString(),
                 start: aktuell,
                 duration: const Duration(hours: 1),

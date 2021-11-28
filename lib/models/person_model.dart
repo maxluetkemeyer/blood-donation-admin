@@ -9,4 +9,3 @@ class Person {
     this.gender,
   });
 }
-

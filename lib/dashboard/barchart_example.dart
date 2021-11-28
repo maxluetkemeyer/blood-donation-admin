@@ -32,8 +32,7 @@ class BarChartSample1State extends State<BarChartSample1> {
       child: AspectRatio(
         aspectRatio: 2,
         child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
           color: Colors.blue.shade50,
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -44,20 +43,14 @@ class BarChartSample1State extends State<BarChartSample1> {
               children: <Widget>[
                 const Text(
                   'Blutspenden',
-                  style: TextStyle(
-                      color: Color(0xff0f4a3c),
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Color(0xff0f4a3c), fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
                 const Text(
                   'Diese Woche',
-                  style: TextStyle(
-                      color: Color(0xff379982),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Color(0xff379982), fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 38,
@@ -96,9 +89,7 @@ class BarChartSample1State extends State<BarChartSample1> {
           y: isTouched ? y + 0.5 : y,
           colors: isTouched ? [Colors.lightBlue.shade300] : [barColor],
           width: width,
-          borderSide: isTouched
-              ? const BorderSide(color: Colors.white, width: 2)
-              : const BorderSide(color: Colors.white, width: 0),
+          borderSide: isTouched ? const BorderSide(color: Colors.white, width: 2) : const BorderSide(color: Colors.white, width: 0),
           borderRadius: const BorderRadius.all(Radius.circular(4)),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
@@ -185,9 +176,7 @@ class BarChartSample1State extends State<BarChartSample1> {
             }),
         touchCallback: (FlTouchEvent event, barTouchResponse) {
           setState(() {
-            if (!event.isInterestedForInteractions ||
-                barTouchResponse == null ||
-                barTouchResponse.spot == null) {
+            if (!event.isInterestedForInteractions || barTouchResponse == null || barTouchResponse.spot == null) {
               touchedIndex = -1;
               return;
             }
@@ -201,8 +190,7 @@ class BarChartSample1State extends State<BarChartSample1> {
         topTitles: SideTitles(showTitles: false),
         bottomTitles: SideTitles(
           showTitles: true,
-          getTextStyles: (context, value) => const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+          getTextStyles: (context, value) => const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
           margin: 16,
           getTitles: (double value) {
             switch (value.toInt()) {
