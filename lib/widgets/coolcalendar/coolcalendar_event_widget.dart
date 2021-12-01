@@ -92,112 +92,108 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
           ),
         ),
         // ###################################### Top controll
-        widget.dragging
-            ? Positioned(
-                top: top - widget.ballDiameter / 2,
-                left: widget.width * widget.rowIndex + widget.width / 2 - widget.ballDiameter / 2,
-                child: _Dragger(
-                  onEnd: (_) => widget.onChange(top/widget.discreteStepSize, (top + height)/widget.discreteStepSize),
-                  onDrag: (dx, dy) {
-                    cumulativeDy -= dy;
-                    if (cumulativeDy >= widget.discreteStepSize) {
-                      setState(() {
-                        cumulativeDy = 0;
+        if (widget.dragging)
+          Positioned(
+            top: top - widget.ballDiameter / 2,
+            left: widget.width * widget.rowIndex + widget.width / 2 - widget.ballDiameter / 2,
+            child: _Dragger(
+              onEnd: (_) => widget.onChange(top / widget.discreteStepSize, (top + height) / widget.discreteStepSize),
+              onDrag: (dx, dy) {
+                cumulativeDy -= dy;
+                if (cumulativeDy >= widget.discreteStepSize) {
+                  setState(() {
+                    cumulativeDy = 0;
 
-                        var newHeight = height + widget.discreteStepSize;
-                        height = newHeight > widget.discreteStepSize ? newHeight : widget.discreteStepSize;
-                        if (newHeight < widget.discreteStepSize) return;
+                    var newHeight = height + widget.discreteStepSize;
+                    height = newHeight > widget.discreteStepSize ? newHeight : widget.discreteStepSize;
+                    if (newHeight < widget.discreteStepSize) return;
 
-                        var newTop = top - widget.discreteStepSize;
-                        top = newTop > 0 ? newTop : 0;
-                      });
-                    } else if (cumulativeDy <= -widget.discreteStepSize) {
-                      setState(() {
-                        cumulativeDy = 0;
+                    var newTop = top - widget.discreteStepSize;
+                    top = newTop > 0 ? newTop : 0;
+                  });
+                } else if (cumulativeDy <= -widget.discreteStepSize) {
+                  setState(() {
+                    cumulativeDy = 0;
 
-                        var newHeight = height - widget.discreteStepSize;
-                        height = newHeight > widget.discreteStepSize ? newHeight : widget.discreteStepSize;
-                        if (newHeight < widget.discreteStepSize) return;
+                    var newHeight = height - widget.discreteStepSize;
+                    height = newHeight > widget.discreteStepSize ? newHeight : widget.discreteStepSize;
+                    if (newHeight < widget.discreteStepSize) return;
 
-                        var newTop = top + widget.discreteStepSize;
-                        top = newTop > 0 ? newTop : 0;
-                      });
-                    }
-                  },
-                  child: Container(
-                    width: widget.ballDiameter,
-                    height: widget.ballDiameter,
-                    decoration: widget.ballDecoration,
-                  ),
-                ),
-              )
-            : const SizedBox(),
+                    var newTop = top + widget.discreteStepSize;
+                    top = newTop > 0 ? newTop : 0;
+                  });
+                }
+              },
+              child: Container(
+                width: widget.ballDiameter,
+                height: widget.ballDiameter,
+                decoration: widget.ballDecoration,
+              ),
+            ),
+          ),
         // ###################################### Bottom controll
-        widget.dragging
-            ? Positioned(
-                top: top + height - widget.ballDiameter / 2,
-                left: widget.width * widget.rowIndex + widget.width / 2 - widget.ballDiameter / 2,
-                
-                child: _Dragger(
-                  onEnd: (_) => widget.onChange(top/widget.discreteStepSize, (top + height)/widget.discreteStepSize),
-                  onDrag: (dx, dy) {
-                    cumulativeDy += dy;
+        if (widget.dragging)
+          Positioned(
+            top: top + height - widget.ballDiameter / 2,
+            left: widget.width * widget.rowIndex + widget.width / 2 - widget.ballDiameter / 2,
+            child: _Dragger(
+              onEnd: (_) => widget.onChange(top / widget.discreteStepSize, (top + height) / widget.discreteStepSize),
+              onDrag: (dx, dy) {
+                cumulativeDy += dy;
 
-                    if (cumulativeDy >= widget.discreteStepSize) {
-                      setState(() {
-                        var newHeight = height + widget.discreteStepSize;
-                        height = newHeight > widget.discreteStepSize ? newHeight : widget.discreteStepSize;
-                        cumulativeDy = 0;
-                      });
-                    } else if (cumulativeDy <= -widget.discreteStepSize) {
-                      setState(() {
-                        var newHeight = height - widget.discreteStepSize;
-                        height = newHeight > widget.discreteStepSize ? newHeight : widget.discreteStepSize;
-                        cumulativeDy = 0;
-                      });
-                    }
-                  },
-                  child: Container(
-                    width: widget.ballDiameter,
-                    height: widget.ballDiameter,
-                    decoration: widget.ballDecoration,
-                  ),
-                ),
-              )
-            : const SizedBox(),
+                if (cumulativeDy >= widget.discreteStepSize) {
+                  setState(() {
+                    var newHeight = height + widget.discreteStepSize;
+                    height = newHeight > widget.discreteStepSize ? newHeight : widget.discreteStepSize;
+                    cumulativeDy = 0;
+                  });
+                } else if (cumulativeDy <= -widget.discreteStepSize) {
+                  setState(() {
+                    var newHeight = height - widget.discreteStepSize;
+                    height = newHeight > widget.discreteStepSize ? newHeight : widget.discreteStepSize;
+                    cumulativeDy = 0;
+                  });
+                }
+              },
+              child: Container(
+                width: widget.ballDiameter,
+                height: widget.ballDiameter,
+                decoration: widget.ballDecoration,
+              ),
+            ),
+          ),
         // ###################################### Dragger
-        widget.dragging
-            ? Positioned(
-                top: top + 0.5 * widget.ballDiameter,
-                left: widget.width * widget.rowIndex,
-                child: _Dragger(
-                  onEnd: (_) => widget.onChange(top/widget.discreteStepSize, (top + height)/widget.discreteStepSize),
-                  onDrag: (dx, dy) {
-                    cumulativeDy -= dy;
-                    if (cumulativeDy >= widget.discreteStepSize) {
-                      setState(() {
-                        var newTop = top - widget.discreteStepSize;
-                        top = newTop > 0 ? newTop : 0;
+        if (widget.dragging)
+          Positioned(
+            top: top + 0.5 * widget.ballDiameter,
+            left: widget.width * widget.rowIndex,
+            child: _Dragger(
+              onEnd: (_) => widget.onChange(top / widget.discreteStepSize, (top + height) / widget.discreteStepSize),
+              onDrag: (dx, dy) {
+                cumulativeDy -= dy;
+                if (cumulativeDy >= widget.discreteStepSize) {
+                  setState(() {
+                    var newTop = top - widget.discreteStepSize;
+                    top = newTop > 0 ? newTop : 0;
 
-                        cumulativeDy = 0;
-                      });
-                    } else if (cumulativeDy <= -widget.discreteStepSize) {
-                      setState(() {
-                        var newTop = top + widget.discreteStepSize;
-                        top = newTop > 0 ? newTop : 0;
+                    cumulativeDy = 0;
+                  });
+                } else if (cumulativeDy <= -widget.discreteStepSize) {
+                  setState(() {
+                    var newTop = top + widget.discreteStepSize;
+                    top = newTop > 0 ? newTop : 0;
 
-                        cumulativeDy = 0;
-                      });
-                    }
-                  },
-                  child: Container(
-                    color: Colors.transparent,
-                    height: (height - 1 * widget.ballDiameter) > 0 ? height - 1 * widget.ballDiameter : 0,
-                    width: widget.width,
-                  ),
-                ),
-              )
-            : const SizedBox(),
+                    cumulativeDy = 0;
+                  });
+                }
+              },
+              child: Container(
+                color: Colors.transparent,
+                height: (height - 1 * widget.ballDiameter) > 0 ? height - 1 * widget.ballDiameter : 0,
+                width: widget.width,
+              ),
+            ),
+          ),
       ],
     );
   }

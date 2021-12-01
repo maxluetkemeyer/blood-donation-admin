@@ -1,12 +1,10 @@
 import 'package:blooddonation_admin/misc/utils.dart';
-import 'package:blooddonation_admin/models/request_model.dart';
 
 import '../models/appointment_model.dart';
 
 class CalendarService {
   static final CalendarService instance = CalendarService._privateConstructor();
 
-  List<Request> requests = []; //remove in future
   Map calendar = <String, List<Appointment>>{};
 
   CalendarService._privateConstructor() {
@@ -25,6 +23,18 @@ class CalendarService {
     }
   }
 
+  void updateAppointment(Appointment appointment) {
+    calendar.forEach((key, value) {
+      for (Appointment appointmentAtDay in value) {
+        if (appointmentAtDay.id == appointment.id) {
+          print("found");
+          appointmentAtDay = appointment;
+          return;
+        }
+      }
+    });
+  }
+
   List<Appointment> getAppointmentsPerDay(DateTime day) {
     if (calendar.containsKey(day.toString())) {
       return calendar[day.toString()];
@@ -33,10 +43,17 @@ class CalendarService {
     return [];
   }
 
-  List<Request> getRequestsPerDay(DateTime day) {
-    var fruits = ['apples', 'oranges', 'bananas'];
-    fruits.where((f) => f.startsWith('a')).toList(); //apples
+  List<Appointment> getRequests() {
+    List<Appointment> appointments = [];
 
-    return requests.where((r) => extractDay(r.appointment.start).isAtSameMomentAs(day)).toList();
+    calendar.forEach((key, value) {
+      for (Appointment appointment in value) {
+        if (appointment.request != null && appointment.request!.status != "accepted") {
+          appointments.add(appointment);
+        }
+      }
+    });
+
+    return appointments;
   }
 }

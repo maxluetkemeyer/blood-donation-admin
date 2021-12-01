@@ -65,7 +65,7 @@ class _PlannerState extends State<Planner> {
                       const Expanded(
                         child: SizedBox(),
                       ),
-                      changed ? saveButton() : const SizedBox(),
+                      if (changed) saveButton(),
                     ],
                   );
                 }
@@ -92,7 +92,7 @@ class _PlannerState extends State<Planner> {
                     const Expanded(
                       child: SizedBox(),
                     ),
-                    changed ? saveButton() : const SizedBox(),
+                    if (changed) saveButton(),
                   ],
                 );
               },

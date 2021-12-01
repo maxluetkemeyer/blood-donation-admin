@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/models/capacity_model.dart';
 import 'package:blooddonation_admin/providers.dart';
@@ -17,42 +15,40 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
   List<int> rows = List.generate(48, (index) => 0);
 
   void _addToEvents({
-    required List<Appointment> appointments,
+    required Appointment appointment,
     required String text,
     required BoxDecoration decoration,
     required BoxDecoration decorationHover,
   }) {
-    for (Appointment appointment in appointments) {
-      int topStep = appointment.start.hour * 2;
-      int durationSteps = (appointment.duration.inMinutes / 30).ceil();
+    int topStep = appointment.start.hour * 2;
+    int durationSteps = (appointment.duration.inMinutes / 30).ceil();
 
-      events.add(
-        CoolCalendarEvent(
-          child: Center(
-            child: Text(
-              text,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+    events.add(
+      CoolCalendarEvent(
+        child: Center(
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          initTopMultiplier: topStep,
-          initHeightMultiplier: durationSteps,
-          rowIndex: rows[topStep],
-          dragging: false,
-          decoration: decoration,
-          decorationHover: decorationHover,
-          onTap: () {
-            ref.read(calendarOverviewSelectedAppointmentProvider.state).state = appointment;
-          },
         ),
-      );
+        initTopMultiplier: topStep,
+        initHeightMultiplier: durationSteps,
+        rowIndex: rows[topStep],
+        dragging: false,
+        decoration: decoration,
+        decorationHover: decorationHover,
+        onTap: () {
+          ref.read(calendarOverviewSelectedAppointmentProvider.state).state = appointment;
+        },
+      ),
+    );
 
-      rows[topStep]++;
-      for (int i = topStep + 1; i < topStep + durationSteps; i++) {
-        rows[i]++;
-      }
+    rows[topStep]++;
+    for (int i = topStep + 1; i < topStep + durationSteps; i++) {
+      rows[i]++;
     }
   }
 
@@ -60,51 +56,54 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
 
   List<Appointment> appointments = CalendarService.instance.getAppointmentsPerDay(day);
 
-  _addToEvents(
-    appointments: appointments,
-    text: "VBS",
-    decoration: BoxDecoration(
+  for (Appointment appointment in appointments) {
+    BoxDecoration decoration = BoxDecoration(
       color: const Color.fromRGBO(11, 72, 116, 1),
       borderRadius: BorderRadius.circular(8),
       border: Border.all(
         width: 1,
         color: Colors.black26,
       ),
-    ),
-    decorationHover: BoxDecoration(
+    );
+
+    BoxDecoration decorationHover = BoxDecoration(
       color: const Color.fromRGBO(90, 160, 213, 1),
       borderRadius: BorderRadius.circular(8),
       border: Border.all(
         width: 1,
         color: Colors.white,
       ),
-    ),
-  );
+    );
 
-  //#############################################################################################################################
+    String text = "VBS";
 
-  List<Appointment> requestAppointments = CalendarService.instance.getRequestsPerDay(day).map((request) => request.appointment).toList();
+    if (appointment.request != null && appointment.request!.status != "accepted") {
+      decoration = BoxDecoration(
+        color: const Color.fromRGBO(180, 209, 228, 1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          width: 1,
+          color: Colors.black26,
+        ),
+      );
+      decorationHover = BoxDecoration(
+        color: const Color.fromRGBO(90, 160, 213, 1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          width: 1,
+          color: Colors.white,
+        ),
+      );
+      text = "Req";
+    }
 
-  _addToEvents(
-    appointments: requestAppointments,
-    text: "Req",
-    decoration: BoxDecoration(
-      color: const Color.fromRGBO(180, 209, 228, 1),
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(
-        width: 1,
-        color: Colors.black26,
-      ),
-    ),
-    decorationHover: BoxDecoration(
-      color: const Color.fromRGBO(90, 160, 213, 1),
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(
-        width: 1,
-        color: Colors.white,
-      ),
-    ),
-  );
+    _addToEvents(
+      appointment: appointment,
+      text: text,
+      decoration: decoration,
+      decorationHover: decorationHover,
+    );
+  }
 
   //#############################################################################################################################
 
@@ -130,7 +129,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
 
       mockAppointments.add(
         Appointment(
-          id: Random.secure().toString(),
+          id: "-1",
           start: aktuell,
           duration: const Duration(hours: 1),
         ),
@@ -138,26 +137,28 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
     }
   }
 
-  _addToEvents(
-    appointments: mockAppointments,
-    text: "",
-    decoration: BoxDecoration(
-      color: const Color.fromRGBO(242, 249, 250, 0.1),
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(
-        width: 1,
-        color: Colors.black26,
+  for (Appointment appointment in mockAppointments) {
+    _addToEvents(
+      appointment: appointment,
+      text: "",
+      decoration: BoxDecoration(
+        color: const Color.fromRGBO(242, 249, 250, 0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          width: 1,
+          color: Colors.black26,
+        ),
       ),
-    ),
-    decorationHover: BoxDecoration(
-      color: const Color.fromRGBO(242, 249, 250, 0.8),
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(
-        width: 2,
-        color: Colors.white,
+      decorationHover: BoxDecoration(
+        color: const Color.fromRGBO(242, 249, 250, 0.8),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          width: 2,
+          color: Colors.white,
+        ),
       ),
-    ),
-  );
+    );
+  }
 
   return events;
 }

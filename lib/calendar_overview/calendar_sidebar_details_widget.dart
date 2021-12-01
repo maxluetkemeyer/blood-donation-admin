@@ -63,7 +63,14 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
     personBirthdayController.text = widget.appointment.person?.birthday.toString() ?? "";
     personGenderController.text = widget.appointment.person?.gender ?? "";
 
-    if (widget.appointment is EmptyAppointment) return const SizedBox();
+    if (widget.appointment is EmptyAppointment) {
+      return const Text(
+        "Nothing selected",
+        style: TextStyle(
+          color: Colors.black54,
+        ),
+      );
+    }
 
     return Column(
       children: [
@@ -73,18 +80,35 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
             width: double.infinity,
             child: CupertinoButton.filled(
               onPressed: () {
-                Appointment newAppointment = Appointment(
-                  id: "dssfqremsd",
-                  start: widget.appointment.start,
-                  duration: widget.appointment.duration,
-                  person: Person(
-                    birthday: DateTime.parse(personBirthdayController.text),
-                    gender: personGenderController.text,
-                    name: personNameController.text,
+                if (widget.appointment.id == "-1") {
+                  //later: Send to backend and recieve new appointment
+                  CalendarService.instance.addAppointment(
+                    Appointment(
+                      id: DateTime.now().toString(),
+                      start: widget.appointment.start,
+                      duration: widget.appointment.duration,
+                      person: Person(
+                        birthday: DateTime.parse(personBirthdayController.text),
+                        gender: personGenderController.text,
+                        name: personNameController.text,
+                      ),
+                    ),
+                  );
+                }
+
+                CalendarService.instance.updateAppointment(
+                  Appointment(
+                    id: widget.appointment.id,
+                    start: widget.appointment.start,
+                    duration: widget.appointment.duration,
+                    person: Person(
+                      birthday: DateTime.parse(personBirthdayController.text),
+                      gender: personGenderController.text,
+                      name: personNameController.text,
+                    ),
+                    request: widget.appointment.request,
                   ),
                 );
-
-                CalendarService.instance.addAppointment(newAppointment);
 
                 personEdited = false;
                 edited = false;
@@ -95,64 +119,63 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
               child: const Text("Save changes"),
             ),
           ),
-        widget.appointment.request != null
-            ? CupertinoFormSection.insetGrouped(
-                header: const Text("Request"),
-                footer: const Divider(),
-                margin: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  color: requestColor(widget.appointment.request!.status),
+        if (widget.appointment.request != null)
+          CupertinoFormSection.insetGrouped(
+            header: const Text("Request"),
+            footer: const Divider(),
+            margin: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              color: requestColor(widget.appointment.request!.status),
+            ),
+            children: [
+              CupertinoFormRow(
+                prefix: const Text("Created"),
+                child: CupertinoTextFormFieldRow(
+                  controller: requestCreatedController,
                 ),
-                children: [
-                  CupertinoFormRow(
-                    prefix: const Text("Created"),
-                    child: CupertinoTextFormFieldRow(
-                      controller: requestCreatedController,
+              ),
+              CupertinoFormRow(
+                prefix: const Text("Status"),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30, right: 10),
+                  child: DropdownButtonFormField<String>(
+                    value: widget.appointment.request!.status,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
                     ),
-                  ),
-                  CupertinoFormRow(
-                    prefix: const Text("Status"),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 30, right: 10),
-                      child: DropdownButtonFormField<String>(
-                        value: widget.appointment.request!.status,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                        items: const [
-                          DropdownMenuItem(
-                            value: "pending",
-                            child: Text("Pending"),
-                          ),
-                          DropdownMenuItem(
-                            value: "accepted",
-                            child: Text("Accepted"),
-                          ),
-                          DropdownMenuItem(
-                            value: "declined",
-                            child: Text("Declined"),
-                          ),
-                        ],
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                        ),
-                        onChanged: (value) {
-                          if (value != null) {
-                            //aufwendiger musst appointment updaten + backend etc.
-                            widget.appointment.request!.status = value;
-                          }
-                          setState(() {
-                            edited = true;
-                          });
-                        },
+                    items: const [
+                      DropdownMenuItem(
+                        value: "pending",
+                        child: Text("Pending"),
                       ),
+                      DropdownMenuItem(
+                        value: "accepted",
+                        child: Text("Accepted"),
+                      ),
+                      DropdownMenuItem(
+                        value: "declined",
+                        child: Text("Declined"),
+                      ),
+                    ],
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
                     ),
+                    onChanged: (value) {
+                      if (value != null) {
+                        //aufwendiger musst appointment updaten + backend etc.
+                        widget.appointment.request!.status = value;
+                      }
+                      setState(() {
+                        edited = true;
+                      });
+                    },
                   ),
-                ],
-              )
-            : const SizedBox(),
+                ),
+              ),
+            ],
+          ),
         CupertinoFormSection.insetGrouped(
           header: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -103,11 +103,22 @@ void addTestAppointments() {
     duration: const Duration(hours: 1),
   );
   a4.start = a4.start.add(const Duration(hours: -2));
+  Appointment a5 = Appointment(
+    id: "4",
+    start: extractDay(DateTime.now()).add(
+      const Duration(
+        days: 10,
+        hours: 12,
+      ),
+    ),
+    duration: const Duration(hours: 1),
+  );
 
   cs.addAppointment(a1);
   cs.addAppointment(a2);
   cs.addAppointment(a3);
   cs.addAppointment(a4);
+  cs.addAppointment(a5);
 }
 
 void addTestRequests() {
@@ -122,36 +133,39 @@ void addTestRequests() {
       gender: "male",
       name: "Lukas",
     ),
+    request: Request(
+      created: DateTime.now(),
+      status: 'pending',
+    ),
   );
+
   Appointment a2 = Appointment(
     id: "98",
     start: DateTime.now(),
     duration: const Duration(hours: 1),
+    request: Request(
+      created: DateTime.now(),
+      status: 'pending',
+    ),
   );
 
-  Request r1 = Request(appointment: a1, created: DateTime.now(), id: '-1', status: 'pending');
-  Request r2 = Request(appointment: a2, created: DateTime.now(), id: '2', status: 'pending');
-
-  a1.request = r1;
-  a2.request = r2;
-
-  cs.requests.add(r1);
-  cs.requests.add(r2);
+  cs.addAppointment(a1);
+  cs.addAppointment(a2);
 }
 
 void addTestPlannerEvents() {
   SettingsService ss = SettingsService.instance;
 
   ss.addCapacity(
-    Capacity(start: DateTime(2021, 11, 22, 08), duration: const Duration(hours: 4), chairs: 10),
+    Capacity(start: DateTime(2021, 11, 29, 08), duration: const Duration(hours: 4), chairs: 10),
   );
 
   ss.addCapacity(
-    Capacity(start: DateTime(2021, 11, 24, 09), duration: const Duration(hours: 6), chairs: 10),
+    Capacity(start: DateTime(2021, 12, 02, 09), duration: const Duration(hours: 6), chairs: 10),
   );
 
   ss.addCapacity(
-    Capacity(start: DateTime(2021, 11, 25, 08), duration: const Duration(hours: 4), chairs: 10),
+    Capacity(start: DateTime(2021, 12, 03, 08), duration: const Duration(hours: 4), chairs: 10),
   );
 
   ss.addCapacity(

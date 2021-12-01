@@ -41,6 +41,7 @@ class _CalendarOverviewState extends ConsumerState<CalendarOverview> {
             ),
             eventGridEventWidth: 70,
             animated: true,
+            eventGridColor: const Color.fromRGBO(227, 245, 255, 1),
           ),
         ),
         Flexible(

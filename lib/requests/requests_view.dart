@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:blooddonation_admin/requests/request_tile.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
-import 'package:blooddonation_admin/models/request_model.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_widget.dart';
 
 class Requests extends ConsumerWidget {
@@ -179,12 +178,12 @@ class Requests extends ConsumerWidget {
   List<Widget> buildRequests() {
     List<Widget> requests = [];
 
-    for (Request request in CalendarService.instance.requests) {
-      Appointment appointment = request.appointment;
+    List<Appointment> appointmentsWithOpenRequest = CalendarService.instance.getRequests();
 
+    for (Appointment appointmentWithOpenRequest in appointmentsWithOpenRequest) {
       requests.add(
         RequestTile(
-          appointment: appointment,
+          appointment: appointmentWithOpenRequest,
         ),
       );
     }
