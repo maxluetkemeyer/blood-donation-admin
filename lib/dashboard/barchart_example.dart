@@ -42,14 +42,14 @@ class BarChartSample1State extends State<BarChartSample1> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 const Text(
-                  'Blutspenden',
+                  'Blood donations',
                   style: TextStyle(color: Color(0xff0f4a3c), fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
                 const Text(
-                  'Diese Woche',
+                  'This week',
                   style: TextStyle(color: Color(0xff379982), fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(

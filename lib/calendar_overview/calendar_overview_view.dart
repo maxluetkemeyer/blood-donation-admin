@@ -51,7 +51,7 @@ class _CalendarOverviewState extends ConsumerState<CalendarOverview> {
             child: Column(
               children: [
                 TableCalendar(
-                  locale: "de",
+                  //locale: "de",
                   weekendDays: const [DateTime.saturday, DateTime.sunday],
                   currentDay: _selectedDay,
                   calendarFormat: CalendarFormat.month,

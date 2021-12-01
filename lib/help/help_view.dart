@@ -5,6 +5,9 @@ class Help extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      alignment: Alignment.center,
+      child: const Text("Help"),
+    );
   }
 }

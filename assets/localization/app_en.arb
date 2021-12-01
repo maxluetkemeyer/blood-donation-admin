@@ -4,11 +4,29 @@
     "description": "The title of the application"
   },
 
+  "saveChanges": "Save changes",
+  "request": "Request",
+  "created": "Created",
+  "status": "Status",
+  "pending": "Pending",
+  "accepted": "Accepted",
+  "declined": "Declined",
+  "appointment": "Appointment",
+  "delete": "Delete",
+  "start": "Start",
+  "duration": "Duration",
+  "person": "Person",
+  "edit": "Edit",
+  "name": "Name",
+  "birthday": "Birthday",
+  "gender": "Gender",
+
   "navDashboard": "Dashboard",
   "navCalendar": "Calendar",
   "navRequests": "Requests",
   "navPlanner": "Planner",
-  "navHelp": "Help"
+  "navHelp": "Help",
 
-
+  "calendarSidebarNothingSelected": "Nothing selected"
+  
 }

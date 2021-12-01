@@ -3,6 +3,7 @@ import 'package:blooddonation_admin/providers.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -64,9 +65,9 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
     personGenderController.text = widget.appointment.person?.gender ?? "";
 
     if (widget.appointment is EmptyAppointment) {
-      return const Text(
-        "Nothing selected",
-        style: TextStyle(
+      return Text(
+        AppLocalizations.of(context)!.calendarSidebarNothingSelected,
+        style: const TextStyle(
           color: Colors.black54,
         ),
       );
@@ -116,12 +117,12 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                 //clear appointment details
                 ref.read(calendarOverviewSelectedAppointmentProvider.state).state = EmptyAppointment();
               },
-              child: const Text("Save changes"),
+              child: Text(AppLocalizations.of(context)!.saveChanges),
             ),
           ),
         if (widget.appointment.request != null)
           CupertinoFormSection.insetGrouped(
-            header: const Text("Request"),
+            header: Text(AppLocalizations.of(context)!.request),
             footer: const Divider(),
             margin: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -130,13 +131,13 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
             ),
             children: [
               CupertinoFormRow(
-                prefix: const Text("Created"),
+                prefix: Text(AppLocalizations.of(context)!.created),
                 child: CupertinoTextFormFieldRow(
                   controller: requestCreatedController,
                 ),
               ),
               CupertinoFormRow(
-                prefix: const Text("Status"),
+                prefix: Text(AppLocalizations.of(context)!.status),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30, right: 10),
                   child: DropdownButtonFormField<String>(
@@ -145,18 +146,18 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                       color: Colors.black,
                       fontSize: 16,
                     ),
-                    items: const [
+                    items: [
                       DropdownMenuItem(
                         value: "pending",
-                        child: Text("Pending"),
+                        child: Text(AppLocalizations.of(context)!.pending),
                       ),
                       DropdownMenuItem(
                         value: "accepted",
-                        child: Text("Accepted"),
+                        child: Text(AppLocalizations.of(context)!.accepted),
                       ),
                       DropdownMenuItem(
                         value: "declined",
-                        child: Text("Declined"),
+                        child: Text(AppLocalizations.of(context)!.declined),
                       ),
                     ],
                     decoration: const InputDecoration(
@@ -180,11 +181,11 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
           header: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Appointment"),
+              Text(AppLocalizations.of(context)!.appointment),
               TextButton(
                 onPressed: () => print("todo delete"),
                 child: Text(
-                  "Delete",
+                  AppLocalizations.of(context)!.delete,
                   style: TextStyle(color: Colors.red.shade300),
                 ),
               ),
@@ -194,14 +195,14 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
           margin: const EdgeInsets.all(12),
           children: [
             CupertinoFormRow(
-              prefix: const Text("Start"),
+              prefix: Text(AppLocalizations.of(context)!.start),
               child: CupertinoTextFormFieldRow(
                 enabled: false,
                 controller: appointmentStartController,
               ),
             ),
             CupertinoFormRow(
-              prefix: const Text("Duration"),
+              prefix: Text(AppLocalizations.of(context)!.duration),
               child: CupertinoTextFormFieldRow(
                 enabled: false,
                 controller: appointmentDurationController,
@@ -213,27 +214,27 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
           header: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Person"),
+              Text(AppLocalizations.of(context)!.person),
               TextButton(
                 onPressed: () => setState(() {
                   personEdited = true;
                   edited = true;
                 }),
-                child: const Text("Edit"),
+                child: Text(AppLocalizations.of(context)!.edit),
               ),
             ],
           ),
           margin: const EdgeInsets.all(12),
           children: [
             CupertinoFormRow(
-              prefix: const Text("Name"),
+              prefix: Text(AppLocalizations.of(context)!.name),
               child: CupertinoTextFormFieldRow(
                 controller: personNameController,
                 enabled: personEdited,
               ),
             ),
             CupertinoFormRow(
-              prefix: const Text("Birthday"),
+              prefix: Text(AppLocalizations.of(context)!.birthday),
               child: CupertinoTextFormFieldRow(
                 controller: personBirthdayController,
                 enabled: personEdited,
@@ -248,7 +249,7 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
               ),
             ),
             CupertinoFormRow(
-              prefix: const Text("Gender"),
+              prefix: Text(AppLocalizations.of(context)!.gender),
               child: CupertinoTextFormFieldRow(
                 controller: personGenderController,
                 enabled: personEdited,
