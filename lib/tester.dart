@@ -157,15 +157,15 @@ void addTestPlannerEvents() {
   SettingsService ss = SettingsService.instance;
 
   ss.addCapacity(
-    Capacity(start: DateTime(2021, 11, 29, 08), duration: const Duration(hours: 4), chairs: 10),
+    Capacity(start: DateTime(2021, 12, 06, 08), duration: const Duration(hours: 4), chairs: 10),
   );
 
   ss.addCapacity(
-    Capacity(start: DateTime(2021, 12, 02, 09), duration: const Duration(hours: 6), chairs: 10),
+    Capacity(start: DateTime(2021, 12, 09, 09), duration: const Duration(hours: 6), chairs: 10),
   );
 
   ss.addCapacity(
-    Capacity(start: DateTime(2021, 12, 03, 08), duration: const Duration(hours: 4), chairs: 10),
+    Capacity(start: DateTime(2021, 12, 10, 08), duration: const Duration(hours: 4), chairs: 10),
   );
 
   ss.addCapacity(

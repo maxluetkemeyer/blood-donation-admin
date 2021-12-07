@@ -103,9 +103,10 @@ class _PlannerState extends State<Planner> {
         Expanded(
           child: CoolCalendar(
             discreteStepSize: 20,
+            eventGridColor: const Color.fromRGBO(140, 208, 247, 1),
             headerTitles: buildHeaders(),
             headerTitleDecoration: const BoxDecoration(
-              color: Colors.amber,
+              color: Color.fromRGBO(227, 245, 255, 1),
               border: Border(
                 right: BorderSide(
                   width: 1,
@@ -190,8 +191,8 @@ class _PlannerState extends State<Planner> {
                 changed = true;
               });
             },
-            decoration: BoxDecoration(
-              color: Colors.lightGreen.shade300,
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(237, 152, 42, 1),
             ),
             child: Center(
               child: Text(capacity.chairs.toString() + " Stühle"),
