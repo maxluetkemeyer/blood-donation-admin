@@ -1,6 +1,6 @@
 import 'package:blooddonation_admin/calendar_overview/build_events.dart';
 import 'package:blooddonation_admin/misc/utils.dart';
-import 'package:blooddonation_admin/providers.dart';
+import 'package:blooddonation_admin/misc/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';

@@ -3,7 +3,7 @@ import 'package:blooddonation_admin/calendar_overview/calendar_sidebar_details_w
 import 'package:blooddonation_admin/calendar_overview/style.dart';
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
-import 'package:blooddonation_admin/providers.dart';
+import 'package:blooddonation_admin/misc/providers.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

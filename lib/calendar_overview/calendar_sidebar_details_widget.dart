@@ -1,5 +1,5 @@
 import 'package:blooddonation_admin/models/person_model.dart';
-import 'package:blooddonation_admin/providers.dart';
+import 'package:blooddonation_admin/misc/providers.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
