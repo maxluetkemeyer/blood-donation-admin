@@ -1,14 +1,16 @@
+import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/models/capacity_model.dart';
-import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/settings_service.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_event_model.dart';
 import 'package:flutter/material.dart';
 
-List<CoolCalendarEvent> calendarBuildEventsOfDay({
-  required DateTime day,
+List<CoolCalendarEvent> requestBuildEventsOfDay({
+  required Appointment requestedAppointment,
 }) {
+  if (requestedAppointment is EmptyAppointment) return [];
+
   List<CoolCalendarEvent> events = [];
   List<int> rows = List.generate(48, (index) => 0);
 
@@ -38,9 +40,6 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
         dragging: false,
         decoration: decoration,
         decorationHover: decorationHover,
-        onTap: () {
-          ProviderService.instance.container.read(calendarOverviewSelectedAppointmentProvider.state).state = appointment;
-        },
       ),
     );
 
@@ -52,9 +51,11 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
 
   //#############################################################################################################################
 
-  List<Appointment> appointments = CalendarService.instance.getAppointmentsPerDay(day);
+  List<Appointment> appointments = CalendarService.instance.getAppointmentsPerDay(requestedAppointment.start);
 
   for (Appointment appointment in appointments) {
+    if (appointment.id == requestedAppointment.id) continue;
+
     BoxDecoration decoration = BoxDecoration(
       color: const Color.fromRGBO(11, 72, 116, 1),
       borderRadius: BorderRadius.circular(8),
@@ -105,11 +106,34 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
 
   //#############################################################################################################################
 
+  _addToEvents(
+    appointment: requestedAppointment,
+    text: requestedAppointment.id,
+    decoration: BoxDecoration(
+      color: Colors.green,
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(
+        width: 1,
+        color: Colors.black26,
+      ),
+    ),
+    decorationHover: BoxDecoration(
+      color: Colors.greenAccent,
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(
+        width: 1,
+        color: Colors.white,
+      ),
+    ),
+  );
+
+  //#############################################################################################################################
+
   List<Appointment> mockAppointments = [];
-  List<Capacity> dayCapacities = SettingsService.instance.getCapacitiesPerDay(day);
+  List<Capacity> dayCapacities = SettingsService.instance.getCapacitiesPerDay(requestedAppointment.start);
 
   for (int i = 0; i < 24; i++) {
-    DateTime aktuell = day.add(Duration(hours: i));
+    DateTime aktuell = extractDay(requestedAppointment.start).add(Duration(hours: i));
     bool paint = false;
     Capacity? inCapacity;
 

@@ -5,70 +5,6 @@ import 'package:blooddonation_admin/models/person_model.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/models/request_model.dart';
 import 'package:blooddonation_admin/services/settings_service.dart';
-import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_widget.dart';
-import 'package:flutter/material.dart';
-
-class Tester extends StatelessWidget {
-  const Tester({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: CoolCalendar(
-        discreteStepSize: 24,
-        headerTitles: const [Text("Montag")],
-        events: [
-          CoolCalendarEvent(
-            initHeightMultiplier: 4,
-            initTopMultiplier: 16,
-            rowIndex: 0,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-            ),
-            ballDecoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.6),
-              shape: BoxShape.circle,
-            ),
-            child: const Center(
-              child: Text("Hey"),
-            ),
-            onChange: (start, end) => print("start $start, end $end"),
-          ),
-          CoolCalendarEvent(
-            initHeightMultiplier: 4,
-            initTopMultiplier: 16,
-            rowIndex: 1,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-            ),
-            ballDecoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.6),
-              shape: BoxShape.circle,
-            ),
-            child: const Center(
-              child: Text("Hey"),
-            ),
-          ),
-          CoolCalendarEvent(
-            initHeightMultiplier: 4,
-            initTopMultiplier: 16,
-            rowIndex: 2,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-            ),
-            ballDecoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.6),
-              shape: BoxShape.circle,
-            ),
-            child: const Center(
-              child: Text("Hey"),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 void addTestAppointments() {
   CalendarService cs = CalendarService.instance;
@@ -126,7 +62,7 @@ void addTestRequests() {
 
   Appointment a1 = Appointment(
     id: "99",
-    start: DateTime.now(),
+    start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour + 2)),
     duration: const Duration(hours: 1),
     person: Person(
       birthday: DateTime.now(),
@@ -141,6 +77,21 @@ void addTestRequests() {
 
   Appointment a2 = Appointment(
     id: "98",
+    start: DateTime.now().add(const Duration(hours: 24)),
+    duration: const Duration(hours: 1),
+    person: Person(
+      birthday: DateTime.now(),
+      gender: "male",
+      name: "Jonas",
+    ),
+    request: Request(
+      created: DateTime.now().add(const Duration(hours: -24)),
+      status: 'pending',
+    ),
+  );
+
+  Appointment a3 = Appointment(
+    id: "97",
     start: DateTime.now(),
     duration: const Duration(hours: 1),
     request: Request(
@@ -149,8 +100,25 @@ void addTestRequests() {
     ),
   );
 
+  Appointment a4 = Appointment(
+    id: "96",
+    start: DateTime.now().add(const Duration(hours: 48)),
+    duration: const Duration(hours: 1),
+    person: Person(
+      birthday: DateTime.now(),
+      gender: "female",
+      name: "Julia",
+    ),
+    request: Request(
+      created: DateTime.now().add(const Duration(hours: -24)),
+      status: 'pending',
+    ),
+  );
+
   cs.addAppointment(a1);
   cs.addAppointment(a2);
+  cs.addAppointment(a3);
+  cs.addAppointment(a4);
 }
 
 void addTestPlannerEvents() {

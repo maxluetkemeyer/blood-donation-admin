@@ -48,3 +48,16 @@ CalendarBuilders calendarBuilder = CalendarBuilders(
     );
   },
 );
+
+Color requestColor(String status) {
+  switch (status) {
+    case "pending":
+      return Colors.amber.shade200;
+    case "accepted":
+      return Colors.lightGreen.shade200;
+    case "declined":
+      return Colors.deepOrange;
+    default:
+      return Colors.white;
+  }
+}

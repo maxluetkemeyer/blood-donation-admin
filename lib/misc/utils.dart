@@ -7,3 +7,4 @@ DateTime getMonday(DateTime dateTime) => extractDay(dateTime).add(
 DateTime extractDay(DateTime dateTime) {
   return DateTime(dateTime.year, dateTime.month, dateTime.day);
 }
+

@@ -1,13 +1,15 @@
-import 'package:blooddonation_admin/requests/request_tile_closed_widget.dart';
-import 'package:blooddonation_admin/requests/request_tile_open_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:blooddonation_admin/misc/providers.dart';
+import 'package:blooddonation_admin/services/provider/providers.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
+
+import 'request_tile_closed_widget.dart';
+import 'request_tile_open_widget.dart';
 
 class RequestTile extends ConsumerWidget {
   final Appointment appointment;
+
   const RequestTile({
     Key? key,
     required this.appointment,
@@ -20,7 +22,7 @@ class RequestTile extends ConsumerWidget {
     return GestureDetector(
       onTap: () {
         if (ref.watch(requestTileOpenProvider.state).state == appointment) {
-          ref.watch(requestTileOpenProvider.state).state = Appointment(id: "-1", start: DateTime(0), duration: const Duration());
+          ref.watch(requestTileOpenProvider.state).state = EmptyAppointment();
         } else {
           ref.watch(requestTileOpenProvider.state).state = appointment;
         }
@@ -47,5 +49,22 @@ class RequestTile extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+Widget genderIcon(String gender) {
+  switch (gender) {
+    case "male":
+      return const Icon(
+        Icons.male,
+        size: 20,
+      );
+    case "female":
+      return const Icon(
+        Icons.female,
+        size: 20,
+      );
+    default:
+      return Text(gender);
   }
 }

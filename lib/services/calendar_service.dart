@@ -25,10 +25,11 @@ class CalendarService {
 
   void updateAppointment(Appointment appointment) {
     calendar.forEach((key, value) {
-      for (Appointment appointmentAtDay in value) {
+      for (int i = 0; i < value.length; i++) {
+        Appointment appointmentAtDay = value[i];
         if (appointmentAtDay.id == appointment.id) {
           print("found");
-          appointmentAtDay = appointment;
+          value[i] = appointment;
           return;
         }
       }
@@ -36,6 +37,9 @@ class CalendarService {
   }
 
   List<Appointment> getAppointmentsPerDay(DateTime day) {
+    // ignore: parameter_assignments
+    day = extractDay(day);
+
     if (calendar.containsKey(day.toString())) {
       return calendar[day.toString()];
     }
@@ -43,15 +47,26 @@ class CalendarService {
     return [];
   }
 
-  List<Appointment> getRequests() {
+  List<Appointment> getRequests({required bool today}) {
     List<Appointment> appointments = [];
 
-    calendar.forEach((key, value) {
-      for (Appointment appointment in value) {
-        if (appointment.request != null && appointment.request!.status != "accepted") {
+    calendar.forEach((dayString, appointmentsAtDay) {
+      if (today && dayString != extractDay(DateTime.now()).toString()) return;
+      if (!today && dayString == extractDay(DateTime.now()).toString()) return;
+
+      for (Appointment appointment in appointmentsAtDay) {
+        if (appointment.request != null && appointment.request!.status == "pending") {
           appointments.add(appointment);
         }
       }
+    });
+
+    appointments.sort((appointment1, appointment2) {
+      if (appointment1.request!.created.isBefore(appointment2.request!.created)) {
+        return -1;
+      }
+
+      return 1;
     });
 
     return appointments;

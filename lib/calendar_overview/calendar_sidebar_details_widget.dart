@@ -1,5 +1,6 @@
+import 'package:blooddonation_admin/calendar_overview/style.dart';
 import 'package:blooddonation_admin/models/person_model.dart';
-import 'package:blooddonation_admin/misc/providers.dart';
+import 'package:blooddonation_admin/services/provider/providers.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,8 +96,9 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                       ),
                     ),
                   );
+                  print("add");
                 }
-
+                print(CalendarService.instance.calendar);
                 CalendarService.instance.updateAppointment(
                   Appointment(
                     id: widget.appointment.id,
@@ -110,6 +112,7 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                     request: widget.appointment.request,
                   ),
                 );
+                print(CalendarService.instance.calendar);
 
                 personEdited = false;
                 edited = false;
@@ -166,6 +169,7 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                     onChanged: (value) {
                       if (value != null) {
                         //aufwendiger musst appointment updaten + backend etc.
+                        //Bug: Das Objekt darf noch nicht geupdated werden!
                         widget.appointment.request!.status = value;
                       }
                       setState(() {
@@ -259,18 +263,5 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
         ),
       ],
     );
-  }
-
-  Color requestColor(String status) {
-    switch (status) {
-      case "pending":
-        return Colors.amber.shade200;
-      case "accepted":
-        return Colors.lightGreen.shade200;
-      case "declined":
-        return Colors.deepOrange;
-      default:
-        return Colors.white;
-    }
   }
 }

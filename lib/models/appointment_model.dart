@@ -18,7 +18,28 @@ class Appointment {
 
   @override
   String toString() {
-    return "Appointment " + id + " " + start.toString() + " " + duration.toString();
+    String requestS = "";
+    if (request != null) {
+      requestS = request!.status;
+    }
+
+    return "Appointment " + id + " " + start.toString() + " " + duration.toString() + " " + requestS;
+  }
+
+  Appointment copyWith({
+    String? id,
+    DateTime? start,
+    Duration? duration,
+    Request? request,
+    Person? person,
+  }) {
+    return Appointment(
+      id: id ?? this.id,
+      start: start ?? this.start,
+      duration: duration ?? this.duration,
+      request: request ?? this.request,
+      person: person ?? this.person,
+    );
   }
 }
 

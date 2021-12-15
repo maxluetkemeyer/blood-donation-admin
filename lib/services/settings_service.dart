@@ -10,9 +10,12 @@ class SettingsService {
     print("Starting Settings Service");
   }
 
-  List<Capacity> getCapacitiesPerDay(DateTime dateTime) {
-    if (capacities.containsKey(dateTime.toString())) {
-      return capacities[dateTime.toString()];
+  List<Capacity> getCapacitiesPerDay(DateTime day) {
+    // ignore: parameter_assignments
+    day = extractDay(day);
+
+    if (capacities.containsKey(day.toString())) {
+      return capacities[day.toString()];
     }
 
     return [];
