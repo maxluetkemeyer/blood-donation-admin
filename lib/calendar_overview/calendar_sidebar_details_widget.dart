@@ -1,4 +1,5 @@
 import 'package:blooddonation_admin/calendar_overview/style.dart';
+import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/person_model.dart';
 import 'package:blooddonation_admin/services/provider/providers.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
@@ -90,7 +91,7 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                       start: widget.appointment.start,
                       duration: widget.appointment.duration,
                       person: Person(
-                        birthday: DateTime.parse(personBirthdayController.text),
+                        birthday: DateTime.tryParse(personBirthdayController.text),
                         gender: personGenderController.text,
                         name: personNameController.text,
                       ),
@@ -105,7 +106,7 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                     start: widget.appointment.start,
                     duration: widget.appointment.duration,
                     person: Person(
-                      birthday: DateTime.parse(personBirthdayController.text),
+                      birthday: DateTime.tryParse(personBirthdayController.text),
                       gender: personGenderController.text,
                       name: personNameController.text,
                     ),
@@ -123,76 +124,117 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
               child: Text(AppLocalizations.of(context)!.saveChanges),
             ),
           ),
-        if (widget.appointment.request != null)
-          CupertinoFormSection.insetGrouped(
-            header: Text(AppLocalizations.of(context)!.request),
-            footer: const Divider(),
-            margin: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: requestColor(widget.appointment.request!.status),
-            ),
-            children: [
-              CupertinoFormRow(
-                prefix: Text(AppLocalizations.of(context)!.created),
-                child: CupertinoTextFormFieldRow(
-                  controller: requestCreatedController,
+        widget.appointment.request != null
+            ? CupertinoFormSection.insetGrouped(
+                header: Text(AppLocalizations.of(context)!.request),
+                footer: const Divider(),
+                margin: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  color: requestColor(widget.appointment.request!.status),
                 ),
-              ),
-              CupertinoFormRow(
-                prefix: Text(AppLocalizations.of(context)!.status),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 10),
-                  child: DropdownButtonFormField<String>(
-                    value: widget.appointment.request!.status,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
+                children: [
+                  CupertinoFormRow(
+                    prefix: Text(AppLocalizations.of(context)!.created),
+                    child: CupertinoTextFormFieldRow(
+                      controller: requestCreatedController,
                     ),
-                    items: [
-                      DropdownMenuItem(
-                        value: "pending",
-                        child: Text(AppLocalizations.of(context)!.pending),
-                      ),
-                      DropdownMenuItem(
-                        value: "accepted",
-                        child: Text(AppLocalizations.of(context)!.accepted),
-                      ),
-                      DropdownMenuItem(
-                        value: "declined",
-                        child: Text(AppLocalizations.of(context)!.declined),
-                      ),
-                    ],
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                    ),
-                    onChanged: (value) {
-                      if (value != null) {
-                        //aufwendiger musst appointment updaten + backend etc.
-                        //Bug: Das Objekt darf noch nicht geupdated werden!
-                        widget.appointment.request!.status = value;
-                      }
-                      setState(() {
-                        edited = true;
-                      });
-                    },
                   ),
+                  CupertinoFormRow(
+                    prefix: Text(AppLocalizations.of(context)!.status),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 30, right: 10),
+                      child: DropdownButtonFormField<String>(
+                        value: widget.appointment.request!.status,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                        items: [
+                          DropdownMenuItem(
+                            value: "pending",
+                            child: Text(AppLocalizations.of(context)!.pending),
+                          ),
+                          DropdownMenuItem(
+                            value: "accepted",
+                            child: Text(AppLocalizations.of(context)!.accepted),
+                          ),
+                          DropdownMenuItem(
+                            value: "declined",
+                            child: Text(AppLocalizations.of(context)!.declined),
+                          ),
+                        ],
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                        onChanged: (value) {
+                          if (value != null) {
+                            //aufwendiger musst appointment updaten + backend etc.
+                            //Bug: Das Objekt darf noch nicht geupdated werden!
+                            widget.appointment.request!.status = value;
+                          }
+                          setState(() {
+                            edited = true;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : CupertinoFormSection.insetGrouped(
+                header: const Text("Request"),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Colors.transparent,
                 ),
+                children: const [
+                  Text("Manueller Termin"),
+                ],
               ),
-            ],
-          ),
         CupertinoFormSection.insetGrouped(
           header: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(AppLocalizations.of(context)!.appointment),
-              TextButton(
-                onPressed: () => print("todo delete"),
-                child: Text(
-                  AppLocalizations.of(context)!.delete,
-                  style: TextStyle(color: Colors.red.shade300),
+              if (widget.appointment.id != "-1")
+                TextButton(
+                  onPressed: () => showCupertinoDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (context) => CupertinoAlertDialog(
+                      title: const Text("Termin löschen? Dies kann nicht Rückgängig gemacht werden!"),
+                      content: Column(
+                        children: [
+                          Text(widget.appointment.person?.name ?? ""),
+                          Text(dayWithTimeString(widget.appointment.start)),
+                        ],
+                      ),
+                      actions: [
+                        CupertinoDialogAction(
+                          isDefaultAction: true,
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text("Abbruch"),
+                        ),
+                        CupertinoDialogAction(
+                          isDestructiveAction: true,
+                          onPressed: () {
+                            CalendarService.instance.removeAppointment(widget.appointment);
+                            //clear appointment details
+                            ref.read(calendarOverviewSelectedAppointmentProvider.state).state = EmptyAppointment();
+
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Löschen"),
+                        ),
+                      ],
+                    ),
+                  ),
+                  child: Text(
+                    AppLocalizations.of(context)!.delete,
+                    style: TextStyle(color: Colors.red.shade300),
+                  ),
                 ),
-              ),
             ],
           ),
           footer: const Divider(),

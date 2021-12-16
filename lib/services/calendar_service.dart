@@ -36,6 +36,19 @@ class CalendarService {
     });
   }
 
+  void removeAppointment(Appointment appointment) {
+    calendar.forEach((key, value) {
+      for (int i = 0; i < value.length; i++) {
+        Appointment appointmentAtDay = value[i];
+        if (appointmentAtDay.id == appointment.id) {
+          print("found");
+          value.removeAt(i);
+          return;
+        }
+      }
+    });
+  }
+
   List<Appointment> getAppointmentsPerDay(DateTime day) {
     // ignore: parameter_assignments
     day = extractDay(day);

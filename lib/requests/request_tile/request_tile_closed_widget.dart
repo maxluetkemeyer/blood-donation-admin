@@ -1,6 +1,6 @@
+import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'request_tile.dart';
 
@@ -20,10 +20,14 @@ class RequestTileClosed extends StatelessWidget {
         padding: const EdgeInsets.all(18.0),
         child: Row(
           children: [
-            SelectableText(DateFormat("dd.MM.yyyy").format(appointment.start) + " um " + DateFormat("hh:mm").format(appointment.start)),
-            const SizedBox(width: 30),
-            SelectableText(appointment.person?.name ?? ""),
-            const SizedBox(width: 30),
+            SizedBox(
+              width: 170,
+              child: SelectableText(dayWithTimeString(appointment.start)),
+            ),
+            SizedBox(
+              width: 120,
+              child: SelectableText(appointment.person?.name ?? ""),
+            ),
             genderIcon(appointment.person?.gender ?? ""),
             const Expanded(
               child: Align(
@@ -36,6 +40,4 @@ class RequestTileClosed extends StatelessWidget {
       ),
     );
   }
-
-  
 }

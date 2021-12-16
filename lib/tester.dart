@@ -4,14 +4,14 @@ import 'package:blooddonation_admin/models/capacity_model.dart';
 import 'package:blooddonation_admin/models/person_model.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/models/request_model.dart';
-import 'package:blooddonation_admin/services/settings_service.dart';
+import 'package:blooddonation_admin/services/capacity_service.dart';
 
 void addTestAppointments() {
   CalendarService cs = CalendarService.instance;
 
   Appointment a1 = Appointment(
     id: "0",
-    start: DateTime.now(),
+    start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour)),
     duration: const Duration(hours: 1),
     person: Person(
       birthday: DateTime.now(),
@@ -21,7 +21,7 @@ void addTestAppointments() {
   );
   Appointment a2 = Appointment(
     id: "1",
-    start: DateTime.now(),
+    start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour)),
     duration: const Duration(hours: 1),
     person: Person(
       birthday: DateTime.now(),
@@ -30,12 +30,12 @@ void addTestAppointments() {
   );
   Appointment a3 = Appointment(
     id: "2",
-    start: DateTime.now(),
+    start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour)),
     duration: const Duration(hours: 1),
   );
   Appointment a4 = Appointment(
     id: "3",
-    start: DateTime.now(),
+    start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour)),
     duration: const Duration(hours: 1),
   );
   a4.start = a4.start.add(const Duration(hours: -2));
@@ -77,7 +77,7 @@ void addTestRequests() {
 
   Appointment a2 = Appointment(
     id: "98",
-    start: DateTime.now().add(const Duration(hours: 24)),
+    start: extractDay(DateTime.now()).add(Duration(hours: 24 + DateTime.now().hour + 2)),
     duration: const Duration(hours: 1),
     person: Person(
       birthday: DateTime.now(),
@@ -92,7 +92,7 @@ void addTestRequests() {
 
   Appointment a3 = Appointment(
     id: "97",
-    start: DateTime.now(),
+    start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour )),
     duration: const Duration(hours: 1),
     request: Request(
       created: DateTime.now(),
@@ -102,7 +102,7 @@ void addTestRequests() {
 
   Appointment a4 = Appointment(
     id: "96",
-    start: DateTime.now().add(const Duration(hours: 48)),
+    start: extractDay(DateTime.now()).add(Duration(hours: 48 + DateTime.now().hour -2)),
     duration: const Duration(hours: 1),
     person: Person(
       birthday: DateTime.now(),
@@ -122,7 +122,7 @@ void addTestRequests() {
 }
 
 void addTestPlannerEvents() {
-  SettingsService ss = SettingsService.instance;
+  CapacityService ss = CapacityService.instance;
 
   ss.addCapacity(
     Capacity(start: DateTime(2021, 12, 06, 08), duration: const Duration(hours: 4), chairs: 10),
@@ -138,11 +138,7 @@ void addTestPlannerEvents() {
 
   ss.addCapacity(
     Capacity(
-      start: extractDay(
-        DateTime.now(),
-      ).add(
-        const Duration(hours: 8),
-      ),
+      start: extractDay(DateTime.now()).add(const Duration(hours: 8)),
       duration: const Duration(hours: 14),
       chairs: 8,
     ),

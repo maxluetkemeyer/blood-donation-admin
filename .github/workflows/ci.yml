@@ -17,8 +17,6 @@ jobs:
         with:
           java-version: "12.x"
       - uses: subosito/flutter-action@v1
-        with:
-          channel: "master"
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test
@@ -33,8 +31,6 @@ jobs:
         with:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
-        with:
-          channel: "master"
       - run: flutter pub get
       - run: flutter clean
       - run: flutter build web

@@ -50,4 +50,13 @@ class EmptyAppointment extends Appointment {
           start: DateTime(0),
           duration: const Duration(),
         );
+
+  EmptyAppointment.free({
+    required DateTime start,
+    required Duration duration,
+  }) : super(
+          id: "-1",
+          start: start,
+          duration: duration,
+        );
 }

@@ -2,9 +2,11 @@ import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/models/capacity_model.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
-import 'package:blooddonation_admin/services/settings_service.dart';
+import 'package:blooddonation_admin/services/capacity_service.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_event_model.dart';
 import 'package:flutter/material.dart';
+
+import 'style.dart';
 
 List<CoolCalendarEvent> calendarBuildEventsOfDay({
   required DateTime day,
@@ -14,9 +16,9 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
 
   void _addToEvents({
     required Appointment appointment,
-    required String text,
     required BoxDecoration decoration,
     required BoxDecoration decorationHover,
+    required Widget child,
   }) {
     int topStep = appointment.start.hour * 2;
     int durationSteps = (appointment.duration.inMinutes / 30).ceil();
@@ -24,13 +26,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
     events.add(
       CoolCalendarEvent(
         child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child: child,
         ),
         initTopMultiplier: topStep,
         initHeightMultiplier: durationSteps,
@@ -73,31 +69,70 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
       ),
     );
 
-    String text = "VBS";
+    String name = (appointment.person?.name ?? "");
+    if (name.length > 7) {
+      name = name.substring(0, 5) + "..";
+    }
+
+    Widget child = Text(
+      name,
+      style: const TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+    );
 
     if (appointment.request != null && appointment.request!.status != "accepted") {
-      decoration = BoxDecoration(
-        color: const Color.fromRGBO(180, 209, 228, 1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          width: 1,
-          color: Colors.black26,
-        ),
-      );
-      decorationHover = BoxDecoration(
-        color: const Color.fromRGBO(90, 160, 213, 1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          width: 1,
-          color: Colors.white,
-        ),
-      );
-      text = "Req";
+      switch (appointment.request!.status) {
+        case "declined":
+          decoration = BoxDecoration(
+            color: requestColor("declined"),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              width: 1,
+              color: Colors.black26,
+            ),
+          );
+          decorationHover = BoxDecoration(
+            color: const Color.fromRGBO(90, 160, 213, 1),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              width: 1,
+              color: Colors.white,
+            ),
+          );
+          break;
+        default: //pending
+          decoration = BoxDecoration(
+            color: requestColor("pending"),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              width: 1,
+              color: Colors.black26,
+            ),
+          );
+          decorationHover = BoxDecoration(
+            color: const Color.fromRGBO(90, 160, 213, 1),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              width: 1,
+              color: Colors.white,
+            ),
+          );
+          child = Text(
+            name,
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+          break;
+      }
     }
 
     _addToEvents(
       appointment: appointment,
-      text: text,
+      child: child,
       decoration: decoration,
       decorationHover: decorationHover,
     );
@@ -106,7 +141,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
   //#############################################################################################################################
 
   List<Appointment> mockAppointments = [];
-  List<Capacity> dayCapacities = SettingsService.instance.getCapacitiesPerDay(day);
+  List<Capacity> dayCapacities = CapacityService.instance.getCapacitiesPerDay(day);
 
   for (int i = 0; i < 24; i++) {
     DateTime aktuell = day.add(Duration(hours: i));
@@ -138,7 +173,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
   for (Appointment appointment in mockAppointments) {
     _addToEvents(
       appointment: appointment,
-      text: "",
+      child: const SizedBox(),
       decoration: BoxDecoration(
         color: const Color.fromRGBO(242, 249, 250, 0.1),
         borderRadius: BorderRadius.circular(8),

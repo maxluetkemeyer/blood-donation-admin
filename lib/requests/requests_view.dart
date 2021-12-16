@@ -95,7 +95,7 @@ class Requests extends ConsumerWidget {
                       padding: const EdgeInsets.all(6),
                       child: TweenAnimationBuilder<double>(
                         tween: Tween(begin: 1, end: 254),
-                        duration: const Duration(milliseconds: 800),
+                        duration: const Duration(milliseconds: 300),
                         builder: (context, value, child) => Text(
                           dayString,
                           textAlign: TextAlign.center,

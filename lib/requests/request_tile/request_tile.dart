@@ -55,14 +55,26 @@ class RequestTile extends ConsumerWidget {
 Widget genderIcon(String gender) {
   switch (gender) {
     case "male":
-      return const Icon(
-        Icons.male,
-        size: 20,
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Icon(
+            Icons.male,
+            size: 20,
+          ),
+          SelectableText("männlich"),
+        ],
       );
     case "female":
-      return const Icon(
-        Icons.female,
-        size: 20,
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Icon(
+            Icons.female,
+            size: 20,
+          ),
+          SelectableText("weiblich"),
+        ],
       );
     default:
       return Text(gender);

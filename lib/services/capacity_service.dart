@@ -1,12 +1,12 @@
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/capacity_model.dart';
 
-class SettingsService {
-  static final SettingsService instance = SettingsService._privateConstructor();
+class CapacityService {
+  static final CapacityService instance = CapacityService._privateConstructor();
 
   Map capacities = <String, List<Capacity>>{};
 
-  SettingsService._privateConstructor() {
+  CapacityService._privateConstructor() {
     print("Starting Settings Service");
   }
 

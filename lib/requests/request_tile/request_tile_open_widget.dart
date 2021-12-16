@@ -1,3 +1,4 @@
+import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
@@ -24,7 +25,7 @@ class RequestTileOpen extends StatelessWidget {
             cursor: SystemMouseCursors.click,
             child: Row(
               children: [
-                SelectableText(DateFormat("dd.MM.yyyy").format(appointment.start) + " um " + DateFormat("hh:mm").format(appointment.start)),
+                SelectableText(dayWithTimeString(appointment.start)),
                 Expanded(
                   child: Align(
                     alignment: Alignment.centerRight,
@@ -142,9 +143,7 @@ class RequestTileOpen extends StatelessWidget {
                               children: [
                                 const Text("Created"),
                                 Text(
-                                  DateFormat("dd.MM.yyyy").format(appointment.request!.created) +
-                                      " um " +
-                                      DateFormat("hh:mm").format(appointment.request!.created),
+                                  dayWithTimeString(appointment.request!.created),
                                 ),
                               ],
                             ),

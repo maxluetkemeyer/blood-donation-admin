@@ -8,3 +8,7 @@ final requestTileOpenProvider = StateProvider<Appointment>((ref) {
 final calendarOverviewSelectedAppointmentProvider = StateProvider<Appointment>((ref) {
   return EmptyAppointment();
 });
+
+final plannerUpdateProvider = StateProvider<int>((ref) {
+  return 0;
+});
