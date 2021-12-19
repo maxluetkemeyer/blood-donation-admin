@@ -165,7 +165,7 @@ class RequestTileOpen extends StatelessWidget {
               primary: const Color.fromRGBO(11, 72, 116, 1),
             ),
             onPressed: () {
-              CalendarService.instance.updateAppointment(
+              CalendarService().updateAppointment(
                 appointment.copyWith(
                   request: appointment.request!.copyWith(
                     status: "accepted",
@@ -174,7 +174,7 @@ class RequestTileOpen extends StatelessWidget {
               );
 
               //reset selected request appointment
-              ProviderService.instance.container.read(requestTileOpenProvider.state).state = EmptyAppointment();
+              ProviderService().container.read(requestTileOpenProvider.state).state = EmptyAppointment();
             },
             child: const Padding(
               padding: EdgeInsets.all(14.0),
@@ -196,7 +196,7 @@ class RequestTileOpen extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              CalendarService.instance.updateAppointment(
+              CalendarService().updateAppointment(
                 appointment.copyWith(
                   request: appointment.request!.copyWith(
                     status: "declined",
@@ -205,7 +205,7 @@ class RequestTileOpen extends StatelessWidget {
               );
 
               //reset selected request appointment
-              ProviderService.instance.container.read(requestTileOpenProvider.state).state = EmptyAppointment();
+              ProviderService().container.read(requestTileOpenProvider.state).state = EmptyAppointment();
             },
             child: const Padding(
               padding: EdgeInsets.all(14.0),

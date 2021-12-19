@@ -51,7 +51,7 @@ class Requests extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    ...buildRequests(CalendarService.instance.getRequests(today: true)),
+                    ...buildRequests(CalendarService().getRequests(today: true)),
                     const Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
@@ -62,7 +62,7 @@ class Requests extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    ...buildRequests(CalendarService.instance.getRequests(today: false)),
+                    ...buildRequests(CalendarService().getRequests(today: false)),
                   ],
                 ),
               ],

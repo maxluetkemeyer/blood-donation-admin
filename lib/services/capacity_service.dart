@@ -2,13 +2,14 @@ import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/capacity_model.dart';
 
 class CapacityService {
-  static final CapacityService instance = CapacityService._privateConstructor();
-
-  Map capacities = <String, List<Capacity>>{};
-
-  CapacityService._privateConstructor() {
+  //Singleton
+  static final CapacityService _instance = CapacityService._private();
+  factory CapacityService() => _instance;
+  CapacityService._private() {
     print("Starting Settings Service");
   }
+
+  Map capacities = <String, List<Capacity>>{};
 
   List<Capacity> getCapacitiesPerDay(DateTime day) {
     // ignore: parameter_assignments

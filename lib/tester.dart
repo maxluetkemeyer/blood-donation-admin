@@ -7,7 +7,7 @@ import 'package:blooddonation_admin/models/request_model.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
 
 void addTestAppointments() {
-  CalendarService cs = CalendarService.instance;
+  CalendarService cs = CalendarService();
 
   Appointment a1 = Appointment(
     id: "0",
@@ -58,7 +58,7 @@ void addTestAppointments() {
 }
 
 void addTestRequests() {
-  CalendarService cs = CalendarService.instance;
+  CalendarService cs = CalendarService();
 
   Appointment a1 = Appointment(
     id: "99",
@@ -122,7 +122,7 @@ void addTestRequests() {
 }
 
 void addTestPlannerEvents() {
-  CapacityService ss = CapacityService.instance;
+  CapacityService ss = CapacityService();
 
   ss.addCapacity(
     Capacity(start: DateTime(2021, 12, 06, 08), duration: const Duration(hours: 4), chairs: 10),

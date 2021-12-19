@@ -46,7 +46,7 @@ List<CoolCalendarEvent> requestBuildEventsOfDay({
 
   //#############################################################################################################################
 
-  List<Appointment> appointments = CalendarService.instance.getAppointmentsPerDay(requestedAppointment.start);
+  List<Appointment> appointments = CalendarService().getAppointmentsPerDay(requestedAppointment.start);
 
   for (Appointment appointment in appointments) {
     if (appointment.id == requestedAppointment.id) continue;
@@ -177,7 +177,7 @@ List<CoolCalendarEvent> requestBuildEventsOfDay({
   //#############################################################################################################################
 
   List<Appointment> mockAppointments = [];
-  List<Capacity> dayCapacities = CapacityService.instance.getCapacitiesPerDay(requestedAppointment.start);
+  List<Capacity> dayCapacities = CapacityService().getCapacitiesPerDay(requestedAppointment.start);
 
   for (int i = 0; i < 24; i++) {
     DateTime aktuell = extractDay(requestedAppointment.start).add(Duration(hours: i));

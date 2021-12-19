@@ -35,7 +35,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
         decoration: decoration,
         decorationHover: decorationHover,
         onTap: () {
-          ProviderService.instance.container.read(calendarOverviewSelectedAppointmentProvider.state).state = appointment;
+          ProviderService().container.read(calendarOverviewSelectedAppointmentProvider.state).state = appointment;
         },
       ),
     );
@@ -48,7 +48,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
 
   //#############################################################################################################################
 
-  List<Appointment> appointments = CalendarService.instance.getAppointmentsPerDay(day);
+  List<Appointment> appointments = CalendarService().getAppointmentsPerDay(day);
 
   for (Appointment appointment in appointments) {
     BoxDecoration decoration = BoxDecoration(
@@ -141,7 +141,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
   //#############################################################################################################################
 
   List<Appointment> mockAppointments = [];
-  List<Capacity> dayCapacities = CapacityService.instance.getCapacitiesPerDay(day);
+  List<Capacity> dayCapacities = CapacityService().getCapacitiesPerDay(day);
 
   for (int i = 0; i < 24; i++) {
     DateTime aktuell = day.add(Duration(hours: i));

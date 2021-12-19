@@ -85,7 +85,7 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
               onPressed: () {
                 if (widget.appointment.id == "-1") {
                   //later: Send to backend and recieve new appointment
-                  CalendarService.instance.addAppointment(
+                  CalendarService().addAppointment(
                     Appointment(
                       id: DateTime.now().toString(),
                       start: widget.appointment.start,
@@ -99,8 +99,8 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                   );
                   print("add");
                 }
-                print(CalendarService.instance.calendar);
-                CalendarService.instance.updateAppointment(
+                print(CalendarService().calendar);
+                CalendarService().updateAppointment(
                   Appointment(
                     id: widget.appointment.id,
                     start: widget.appointment.start,
@@ -113,7 +113,7 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                     request: widget.appointment.request,
                   ),
                 );
-                print(CalendarService.instance.calendar);
+                print(CalendarService().calendar);
 
                 personEdited = false;
                 edited = false;
@@ -219,7 +219,7 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                         CupertinoDialogAction(
                           isDestructiveAction: true,
                           onPressed: () {
-                            CalendarService.instance.removeAppointment(widget.appointment);
+                            CalendarService().removeAppointment(widget.appointment);
                             //clear appointment details
                             ref.read(calendarOverviewSelectedAppointmentProvider.state).state = EmptyAppointment();
 

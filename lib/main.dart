@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_statements
-
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,15 +9,17 @@ import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
 import 'package:blooddonation_admin/tester.dart';
 
+
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  ProviderService.instance;
-  //BackendService.instance;
-  CalendarService.instance;
+  ProviderService();
+  //BackendService();
+  CalendarService();
   addTestAppointments();
   addTestRequests();
-  CapacityService.instance;
+  CapacityService();
   addTestPlannerEvents();
 
   runApp(const App());
@@ -35,7 +35,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void dispose() {
-    ProviderService.instance.container.dispose();
+    ProviderService().container.dispose();
 
     super.dispose();
   }
@@ -43,7 +43,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return UncontrolledProviderScope(
-      container: ProviderService.instance.container,
+      container: ProviderService().container,
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: const [

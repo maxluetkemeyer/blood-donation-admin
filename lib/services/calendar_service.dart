@@ -3,15 +3,14 @@ import 'package:blooddonation_admin/misc/utils.dart';
 import '../models/appointment_model.dart';
 
 class CalendarService {
-  static final CalendarService instance = CalendarService._privateConstructor();
+  //Singleton
+  static final CalendarService _instance = CalendarService._private();
+  factory CalendarService() => _instance;
+  CalendarService._private() {
+    print("Starting Calendar Service");
+  }
 
   Map calendar = <String, List<Appointment>>{};
-
-  CalendarService._privateConstructor() {
-    print("Starting Calendar Service");
-
-    print(calendar);
-  }
 
   void addAppointment(Appointment appointment) {
     DateTime day = extractDay(appointment.start);

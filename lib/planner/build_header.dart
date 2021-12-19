@@ -19,7 +19,7 @@ List<Widget> buildHeader() {
         PlannerHeader(
           weekday: days[i - 1],
           onPressed: () {
-            CapacityService.instance.addCapacity(
+            CapacityService().addCapacity(
               Capacity(
                 start: day.add(const Duration(hours: 8)),
                 duration: const Duration(hours: 2),
@@ -27,7 +27,7 @@ List<Widget> buildHeader() {
               ),
             );
 
-            ProviderService.instance.container.read(plannerUpdateProvider.state).state++;
+            ProviderService().container.read(plannerUpdateProvider.state).state++;
           },
         ),
       );

@@ -6,7 +6,7 @@ import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_widget.dar
 import 'package:flutter/material.dart';
 
 List<CoolCalendarEvent> buildEvents(DateTime monday) {
-  CapacityService ss = CapacityService.instance;
+  CapacityService ss = CapacityService();
 
   List<CoolCalendarEvent> events = [];
 
@@ -36,7 +36,7 @@ List<CoolCalendarEvent> buildEvents(DateTime monday) {
             /*setState(() {
                 changed = true;
               });*/
-            ProviderService.instance.container.read(plannerUpdateProvider.state).state++;
+            ProviderService().container.read(plannerUpdateProvider.state).state++;
           },
           decoration: const BoxDecoration(
             color: Color.fromRGBO(237, 152, 42, 1),
