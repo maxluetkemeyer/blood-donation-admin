@@ -1,25 +1,26 @@
+import 'package:blooddonation_admin/app.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:blooddonation_admin/home/home_view.dart';
 import 'package:blooddonation_admin/misc/theme.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
 import 'package:blooddonation_admin/tester.dart';
 
-
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
+  //Services
   ProviderService();
   //BackendService();
   CalendarService();
+  CapacityService();
+
+  // Test Data
   addTestAppointments();
   addTestRequests();
-  CapacityService();
   addTestPlannerEvents();
 
   runApp(const App());
@@ -58,7 +59,7 @@ class _AppState extends State<App> {
           child: child!,
         ),
         locale: const Locale("en"),
-        home: const Home(),
+        home: const AppStructure(),
       ),
     );
   }

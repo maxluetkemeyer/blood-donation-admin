@@ -28,6 +28,7 @@ dependencies:
   # Visuals
   table_calendar: ^3.0.3
   fl_chart: ^0.40.2
+  html_editor_enhanced: ^2.4.0+1
   
   
 

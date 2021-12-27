@@ -12,3 +12,7 @@ final calendarOverviewSelectedAppointmentProvider = StateProvider<Appointment>((
 final plannerUpdateProvider = StateProvider<int>((ref) {
   return 0;
 });
+
+final loggingProvider = StateProvider<int>((ref) {
+  return 0;
+});

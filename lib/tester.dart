@@ -92,17 +92,22 @@ void addTestRequests() {
 
   Appointment a3 = Appointment(
     id: "97",
-    start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour )),
+    start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour)),
     duration: const Duration(hours: 1),
     request: Request(
       created: DateTime.now(),
       status: 'pending',
     ),
+    person: Person(
+      birthday: DateTime(1985, 05, 16),
+      gender: "female",
+      name: "Anne",
+    ),
   );
 
   Appointment a4 = Appointment(
     id: "96",
-    start: extractDay(DateTime.now()).add(Duration(hours: 48 + DateTime.now().hour -2)),
+    start: extractDay(DateTime.now()).add(Duration(hours: 48 + DateTime.now().hour - 2)),
     duration: const Duration(hours: 1),
     person: Person(
       birthday: DateTime.now(),

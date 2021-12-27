@@ -1,24 +1,28 @@
 import 'package:blooddonation_admin/calendar_overview/calendar_overview_view.dart';
 import 'package:blooddonation_admin/dashboard/dashboard_view.dart';
 import 'package:blooddonation_admin/help/help_view.dart';
+import 'package:blooddonation_admin/logging/logging_view.dart';
 import 'package:blooddonation_admin/requests/requests_view.dart';
 import 'package:blooddonation_admin/planner/planner_view.dart';
+import 'package:blooddonation_admin/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class AppStructure extends StatefulWidget {
+  const AppStructure({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<AppStructure> createState() => _AppStructureState();
 }
 
-class _HomeState extends State<Home> {
+class _AppStructureState extends State<AppStructure> {
   final List<Widget> screens = [
     const Dashboard(),
     const Requests(),
     const CalendarOverview(),
     const Planner(),
+    const SettingsView(),
+    const LoggingView(),
     const Help(),
   ];
 
@@ -62,13 +66,43 @@ class _HomeState extends State<Home> {
             label: Text(AppLocalizations.of(context)!.navPlanner),
             style: screenIndex == 3 ? _buttonSelectedStyle : null,
           ),
-          TextButton.icon(
-            onPressed: () => setState(() {
-              screenIndex = 4;
-            }),
-            icon: const Icon(Icons.help),
-            label: Text(AppLocalizations.of(context)!.navHelp),
-            style: screenIndex == 4 ? _buttonSelectedStyle : null,
+          PopupMenuButton<int>(
+            icon: const Icon(Icons.more_horiz),
+            onSelected: (value) {
+              switch (value) {
+                case 0:
+                  setState(() {
+                    screenIndex = 4;
+                  });
+                  break;
+                case 1:
+                  setState(() {
+                    screenIndex = 5;
+                  });
+                  break;
+                case 2:
+                  setState(() {
+                    screenIndex = 6;
+                  });
+                  break;
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 0,
+                child: Text(AppLocalizations.of(context)!.navSettings),
+              ),
+              const PopupMenuDivider(),
+              PopupMenuItem(
+                value: 1,
+                child: Text(AppLocalizations.of(context)!.navLogging),
+              ),
+              const PopupMenuDivider(),
+              PopupMenuItem(
+                value: 2,
+                child: Text(AppLocalizations.of(context)!.navHelp),
+              ),
+            ],
           ),
         ],
       ),

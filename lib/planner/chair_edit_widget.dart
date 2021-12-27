@@ -31,8 +31,12 @@ class _ChairEditState extends State<ChairEdit> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
+    return Center(
+      child: Text(widget.chairs.toString() + " Stühle"),
     );
+
+    /*return TextField(
+      controller: controller,
+    );*/
   }
 }

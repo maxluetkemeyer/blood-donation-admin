@@ -25,7 +25,10 @@
   "navCalendar": "Calendar",
   "navRequests": "Requests",
   "navPlanner": "Planner",
+  "navSettings": "Settings",
+  "navLogging": "Logging",
   "navHelp": "Help",
+  
 
   "calendarSidebarNothingSelected": "Nothing selected"
   
