@@ -117,6 +117,7 @@ class Requests extends ConsumerWidget {
                         eventGridLineColorFullHour: Colors.black38.withOpacity(0.2),
                         eventGridLineColorHalfHour: Colors.transparent,
                         discreteStepSize: 30,
+                        hourHeight: 30,
                         scrollController: ScrollController(
                           initialScrollOffset: 14 * 30,
                         ),

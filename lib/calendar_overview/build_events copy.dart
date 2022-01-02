@@ -1,17 +1,17 @@
-import 'package:blooddonation_admin/calendar_overview/style.dart';
-import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/models/capacity_model.dart';
+import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/event_model/coolcalendar_event_model.dart';
 import 'package:flutter/material.dart';
 
-List<CoolCalendarEvent> requestBuildEventsOfDay({
-  required Appointment requestedAppointment,
-}) {
-  if (requestedAppointment is EmptyAppointment) return [];
+import 'style.dart';
 
+List<CoolCalendarEvent> calendarBuildEventsOfDay({
+  required DateTime day,
+  required int appointmentLengthInMinutes,
+}) {
   List<CoolCalendarEvent> events = [];
   List<int> rows = List.generate(48, (index) => 0);
 
@@ -35,6 +35,9 @@ List<CoolCalendarEvent> requestBuildEventsOfDay({
         dragging: false,
         decoration: decoration,
         decorationHover: decorationHover,
+        onTap: () {
+          ProviderService().container.read(calendarOverviewSelectedAppointmentProvider.state).state = appointment;
+        },
       ),
     );
 
@@ -46,11 +49,9 @@ List<CoolCalendarEvent> requestBuildEventsOfDay({
 
   //#############################################################################################################################
 
-  List<Appointment> appointments = CalendarService().getAppointmentsPerDay(requestedAppointment.start);
+  List<Appointment> appointments = CalendarService().getAppointmentsPerDay(day);
 
   for (Appointment appointment in appointments) {
-    if (appointment.id == requestedAppointment.id) continue;
-
     BoxDecoration decoration = BoxDecoration(
       color: const Color.fromRGBO(11, 72, 116, 1),
       borderRadius: BorderRadius.circular(8),
@@ -140,47 +141,14 @@ List<CoolCalendarEvent> requestBuildEventsOfDay({
 
   //#############################################################################################################################
 
-  String requestedName = (requestedAppointment.person?.name ?? "");
-  if (requestedName.length > 7) {
-    requestedName = requestedName.substring(0, 5) + "..";
-  }
-
-  Widget requestedChild = Text(
-    requestedName,
-    style: const TextStyle(
-      color: Colors.white,
-      fontWeight: FontWeight.bold,
-    ),
-  );
-
-  _addToEvents(
-    appointment: requestedAppointment,
-    child: requestedChild,
-    decoration: BoxDecoration(
-      color: Colors.green,
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(
-        width: 1,
-        color: Colors.black26,
-      ),
-    ),
-    decorationHover: BoxDecoration(
-      color: Colors.greenAccent,
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(
-        width: 1,
-        color: Colors.white,
-      ),
-    ),
-  );
-
-  //#############################################################################################################################
-
   List<Appointment> mockAppointments = [];
-  List<Capacity> dayCapacities = CapacityService().getCapacitiesPerDay(requestedAppointment.start);
+  List<Capacity> dayCapacities = CapacityService().getCapacitiesPerDay(day);
 
-  for (int i = 0; i < 24; i++) {
-    DateTime aktuell = extractDay(requestedAppointment.start).add(Duration(hours: i));
+  int eventsPerDayLength = (24 * (60 / 15)).toInt();
+  print(eventsPerDayLength);
+
+  for (int i = 0; i < eventsPerDayLength; i++) {
+    DateTime aktuell = day.add(Duration(minutes: i * appointmentLengthInMinutes));
     bool paint = false;
     Capacity? inCapacity;
 
@@ -193,6 +161,8 @@ List<CoolCalendarEvent> requestBuildEventsOfDay({
 
     if (!paint) continue;
 
+    print("in capacity");
+
     for (int j = 0; j < inCapacity!.chairs; j++) {
       if (j < rows[i * 2]) continue;
 
@@ -200,7 +170,7 @@ List<CoolCalendarEvent> requestBuildEventsOfDay({
         Appointment(
           id: "-1",
           start: aktuell,
-          duration: const Duration(hours: 1),
+          duration: Duration(minutes: appointmentLengthInMinutes),
         ),
       );
     }

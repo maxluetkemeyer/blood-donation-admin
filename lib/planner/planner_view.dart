@@ -109,6 +109,7 @@ class _PlannerState extends ConsumerState<Planner> {
         Expanded(
           child: CoolCalendar(
             discreteStepSize: 20,
+            hourHeight: 20,
             eventGridColor: const Color.fromRGBO(140, 208, 247, 1),
             headerTitles: buildHeader(),
             headerTitleDecoration: const BoxDecoration(

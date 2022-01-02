@@ -60,8 +60,8 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
   @override
   Widget build(BuildContext context) {
     requestCreatedController.text = widget.appointment.request?.created.toString() ?? "";
-    appointmentStartController.text = widget.appointment.start.toString();
-    appointmentDurationController.text = widget.appointment.duration.toString();
+    appointmentStartController.text = dayWithTimeString(widget.appointment.start);
+    appointmentDurationController.text = widget.appointment.duration.inMinutes.toString() + " Minuten";
     personNameController.text = widget.appointment.person?.name ?? "";
     personBirthdayController.text = widget.appointment.person?.birthday.toString() ?? "";
     personGenderController.text = widget.appointment.person?.gender ?? "";
@@ -299,6 +299,31 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
               child: CupertinoTextFormFieldRow(
                 controller: personGenderController,
                 enabled: personEdited,
+                prefix: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.male),
+                      color: Theme.of(context).primaryColor,
+                      padding: EdgeInsets.zero,
+                      onPressed: personEdited
+                          ? () {
+                              personGenderController.text = "male";
+                            }
+                          : null,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.female),
+                      color: Theme.of(context).primaryColor,
+                      padding: EdgeInsets.zero,
+                      onPressed: personEdited
+                          ? () {
+                              personGenderController.text = "female";
+                            }
+                          : null,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

@@ -1,18 +1,21 @@
+import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/models/capacity_model.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
-import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_event_model.dart';
+import 'package:blooddonation_admin/widgets/coolcalendar/event_model/coolcalendar_event_model.dart';
 import 'package:flutter/material.dart';
 
 import 'style.dart';
 
 List<CoolCalendarEvent> calendarBuildEventsOfDay({
   required DateTime day,
+  required int appointmentLengthInMinutes,
 }) {
   List<CoolCalendarEvent> events = [];
-  List<int> rows = List.generate(48, (index) => 0);
+  int eventsPerDayLength = (24 * (60 / 15)).toInt();
+  List<int> rows = List.generate(eventsPerDayLength, (index) => 0);
 
   void _addToEvents({
     required Appointment appointment,
@@ -20,8 +23,16 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
     required BoxDecoration decorationHover,
     required Widget child,
   }) {
-    int topStep = appointment.start.hour * 2;
-    int durationSteps = (appointment.duration.inMinutes / 30).ceil();
+    //TODO: step size
+    int topStep = (Duration(
+              milliseconds: appointment.start.millisecondsSinceEpoch - extractDay(appointment.start).millisecondsSinceEpoch,
+            ).inMinutes /
+            appointmentLengthInMinutes)
+        .ceil();
+    print("topStep " + topStep.toString());
+
+    int durationSteps = (appointment.duration.inMinutes / appointmentLengthInMinutes).ceil();
+    print("durationSteps " + durationSteps.toString());
 
     events.add(
       CoolCalendarEvent(
@@ -143,8 +154,8 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
   List<Appointment> mockAppointments = [];
   List<Capacity> dayCapacities = CapacityService().getCapacitiesPerDay(day);
 
-  for (int i = 0; i < 24; i++) {
-    DateTime aktuell = day.add(Duration(hours: i));
+  for (int i = 0; i < eventsPerDayLength; i++) {
+    DateTime aktuell = day.add(Duration(minutes: i * appointmentLengthInMinutes));
     bool paint = false;
     Capacity? inCapacity;
 
@@ -157,14 +168,16 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
 
     if (!paint) continue;
 
+    print("in capacity");
+
     for (int j = 0; j < inCapacity!.chairs; j++) {
-      if (j < rows[i * 2]) continue;
+      if (j < rows[i]) continue;
 
       mockAppointments.add(
         Appointment(
           id: "-1",
           start: aktuell,
-          duration: const Duration(hours: 1),
+          duration: Duration(minutes: appointmentLengthInMinutes),
         ),
       );
     }
