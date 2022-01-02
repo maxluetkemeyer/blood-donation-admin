@@ -86,8 +86,8 @@ void addTestRequests() {
 
   Appointment a1 = Appointment(
     id: "99",
-    start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour + 2)),
-    duration: const Duration(hours: 1),
+    start: extractDay(DateTime.now()).add(const Duration(hours: 10)),
+    duration: const Duration(minutes: 15),
     person: Person(
       birthday: DateTime.now(),
       gender: "male",

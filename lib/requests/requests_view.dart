@@ -1,3 +1,4 @@
+import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/requests/build_events.dart';
 import 'package:blooddonation_admin/services/provider/providers.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +9,41 @@ import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_widget.dart';
 import 'request_tile/request_tile.dart';
 
-class Requests extends ConsumerWidget {
+class Requests extends ConsumerStatefulWidget {
   const Requests({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _RequestsState createState() => _RequestsState();
+}
+
+class _RequestsState extends ConsumerState<Requests> {
+  // settings
+  double hourHeight = 80;
+  int appointmentLengthInMinutes = 15;
+
+  ScrollController calendarScrollController = ScrollController();
+
+  @override
+  void dispose() {
+    calendarScrollController.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     Appointment openAppointment = ref.watch(requestTileOpenProvider.state).state;
     double width = MediaQuery.of(context).size.width;
     String dayString = DateFormat("dd.MM.yyyy").format(openAppointment.start);
+
+    Future.delayed(const Duration(milliseconds: 1), () {
+      double scrollOffset = Duration(
+            milliseconds: openAppointment.start.millisecondsSinceEpoch - extractDay(openAppointment.start).millisecondsSinceEpoch,
+          ).inMinutes /
+          appointmentLengthInMinutes;
+      calendarScrollController.animateTo(scrollOffset * hourHeight / (60 / appointmentLengthInMinutes) - hourHeight,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    });
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,19 +139,21 @@ class Requests extends ConsumerWidget {
                     ),
                     Expanded(
                       child: CoolCalendar(
+                        key: GlobalKey(),
                         backgroundColor: Colors.white,
                         timeLineColor: Colors.white,
                         eventGridColor: const Color.fromRGBO(227, 245, 255, 1),
                         eventGridLineColorFullHour: Colors.black38.withOpacity(0.2),
                         eventGridLineColorHalfHour: Colors.transparent,
-                        discreteStepSize: 30,
-                        hourHeight: 30,
-                        scrollController: ScrollController(
-                          initialScrollOffset: 14 * 30,
-                        ),
-                        eventGridEventWidth: width * 0.03,
+                        discreteStepSize: hourHeight / (60 / appointmentLengthInMinutes),
+                        hourHeight: hourHeight,
+                        scrollController: calendarScrollController,
+                        eventGridEventWidth: width * 0.05,
                         animated: true,
-                        events: requestBuildEventsOfDay(requestedAppointment: openAppointment),
+                        events: requestBuildEventsOfDay(
+                          requestedAppointment: openAppointment,
+                          appointmentLengthInMinutes: appointmentLengthInMinutes,
+                        ),
                         //events: calendarBuildEventsOfDay(day: extractDay(DateTime.now())),
                       ),
                     ),

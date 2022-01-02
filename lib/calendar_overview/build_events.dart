@@ -1,3 +1,4 @@
+import 'package:blooddonation_admin/misc/appointment_styles.dart';
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/models/capacity_model.dart';
@@ -7,14 +8,12 @@ import 'package:blooddonation_admin/services/capacity_service.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/event_model/coolcalendar_event_model.dart';
 import 'package:flutter/material.dart';
 
-import 'style.dart';
-
 List<CoolCalendarEvent> calendarBuildEventsOfDay({
   required DateTime day,
   required int appointmentLengthInMinutes,
 }) {
   List<CoolCalendarEvent> events = [];
-  int eventsPerDayLength = (24 * (60 / 15)).toInt();
+  int eventsPerDayLength = (24 * (60 / appointmentLengthInMinutes)).toInt();
   List<int> rows = List.generate(eventsPerDayLength, (index) => 0);
 
   void _addToEvents({
@@ -23,16 +22,13 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
     required BoxDecoration decorationHover,
     required Widget child,
   }) {
-    //TODO: step size
     int topStep = (Duration(
               milliseconds: appointment.start.millisecondsSinceEpoch - extractDay(appointment.start).millisecondsSinceEpoch,
             ).inMinutes /
             appointmentLengthInMinutes)
         .ceil();
-    print("topStep " + topStep.toString());
 
     int durationSteps = (appointment.duration.inMinutes / appointmentLengthInMinutes).ceil();
-    print("durationSteps " + durationSteps.toString());
 
     events.add(
       CoolCalendarEvent(
@@ -62,23 +58,8 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
   List<Appointment> appointments = CalendarService().getAppointmentsPerDay(day);
 
   for (Appointment appointment in appointments) {
-    BoxDecoration decoration = BoxDecoration(
-      color: const Color.fromRGBO(11, 72, 116, 1),
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(
-        width: 1,
-        color: Colors.black26,
-      ),
-    );
-
-    BoxDecoration decorationHover = BoxDecoration(
-      color: const Color.fromRGBO(90, 160, 213, 1),
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(
-        width: 1,
-        color: Colors.white,
-      ),
-    );
+    BoxDecoration decoration = appointmentDecoration;
+    BoxDecoration decorationHover = appointmentDecorationHover;
 
     String name = (appointment.person?.name ?? "");
     if (name.length > 7) {
@@ -96,40 +77,12 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
     if (appointment.request != null && appointment.request!.status != "accepted") {
       switch (appointment.request!.status) {
         case "declined":
-          decoration = BoxDecoration(
-            color: requestColor("declined"),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              width: 1,
-              color: Colors.black26,
-            ),
-          );
-          decorationHover = BoxDecoration(
-            color: const Color.fromRGBO(90, 160, 213, 1),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              width: 1,
-              color: Colors.white,
-            ),
-          );
+          decoration = appointmentDeclinedDecoration;
+          decorationHover = appointmentDeclinedDecorationHover;
           break;
         default: //pending
-          decoration = BoxDecoration(
-            color: requestColor("pending"),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              width: 1,
-              color: Colors.black26,
-            ),
-          );
-          decorationHover = BoxDecoration(
-            color: const Color.fromRGBO(90, 160, 213, 1),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              width: 1,
-              color: Colors.white,
-            ),
-          );
+          decoration = appointmentPendingDecoration;
+          decorationHover = appointmentPendingDecorationHover;
           child = Text(
             name,
             style: const TextStyle(
@@ -168,8 +121,6 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
 
     if (!paint) continue;
 
-    print("in capacity");
-
     for (int j = 0; j < inCapacity!.chairs; j++) {
       if (j < rows[i]) continue;
 
@@ -187,22 +138,8 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
     _addToEvents(
       appointment: appointment,
       child: const SizedBox(),
-      decoration: BoxDecoration(
-        color: const Color.fromRGBO(242, 249, 250, 0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          width: 1,
-          color: Colors.black26,
-        ),
-      ),
-      decorationHover: BoxDecoration(
-        color: const Color.fromRGBO(242, 249, 250, 0.8),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          width: 2,
-          color: Colors.white,
-        ),
-      ),
+      decoration: appointmentEmptyDecoration,
+      decorationHover: appointmentEmptyDecorationHover,
     );
   }
 

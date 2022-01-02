@@ -42,9 +42,8 @@ List<CoolCalendarEvent> buildEvents(DateTime monday) {
             color: Color.fromRGBO(237, 152, 42, 1),
           ),
           child: Center(
-            //child: Text(capacity.chairs.toString() + " Stühle"),
-            child: ChairEdit(chairs: capacity.chairs)
-          ),
+              //child: Text(capacity.chairs.toString() + " Stühle"),
+              child: ChairEdit(chairs: capacity.chairs)),
         ),
       );
     }
@@ -52,4 +51,3 @@ List<CoolCalendarEvent> buildEvents(DateTime monday) {
 
   return events;
 }
-

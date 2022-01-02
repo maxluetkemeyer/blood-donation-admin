@@ -1,4 +1,4 @@
-import 'package:blooddonation_admin/calendar_overview/style.dart';
+import 'package:blooddonation_admin/misc/appointment_styles.dart';
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/person_model.dart';
 import 'package:blooddonation_admin/services/provider/providers.dart';
