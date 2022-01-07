@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'coolcalendar_event_widget.dart';
-import 'coolcalendar_event_model.dart';
+import 'event_model/coolcalendar_event_model.dart';
+import 'widget/event_stack.dart';
+import 'widget/header.dart';
+import 'widget/time_line.dart';
 
-export 'coolcalendar_event_model.dart';
+export 'event_model/coolcalendar_event_model.dart';
 
 class CoolCalendar extends StatefulWidget {
   /// All events which will be displayed.
@@ -15,6 +17,9 @@ class CoolCalendar extends StatefulWidget {
 
   /// Height of the time steps.
   final double discreteStepSize;
+
+  /// Height of one hour
+  final double hourHeight;
 
   /// Width of the time line.
   final double timeLineWidth;
@@ -49,7 +54,8 @@ class CoolCalendar extends StatefulWidget {
     this.backgroundColor = Colors.white,
     this.timeLineColor = Colors.white,
     this.eventGridColor = Colors.lightBlueAccent,
-    this.discreteStepSize = 30,
+    required this.discreteStepSize,
+    required this.hourHeight,
     this.eventGridLineColorFullHour = Colors.black38,
     this.eventGridLineColorHalfHour = Colors.transparent,
     this.eventGridEventWidth = 220,
@@ -72,7 +78,12 @@ class _CoolCalendarState extends State<CoolCalendar> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          header(),
+          Header(
+            eventGridEventWidth: widget.eventGridEventWidth,
+            headerTitleDecoration: widget.headerTitleDecoration,
+            headerTitles: widget.headerTitles,
+            timeLineWidth: widget.timeLineWidth,
+          ),
           Expanded(
             child: SingleChildScrollView(
               controller: widget.scrollController ?? ScrollController(),
@@ -88,15 +99,21 @@ class _CoolCalendarState extends State<CoolCalendar> {
                     Container(
                       color: widget.timeLineColor,
                       width: widget.timeLineWidth,
-                      child: Column(
-                        children: timeLine(),
+                      child: TimeLine(
+                        hourHeight: widget.hourHeight,
                       ),
                     ),
                     Expanded(
                       child: Container(
                         color: widget.eventGridColor,
-                        child: Stack(
-                          children: buildEventStack(),
+                        child: EventStack(
+                          animated: widget.animated,
+                          discreteStepSize: widget.discreteStepSize,
+                          eventGridEventWidth: widget.eventGridEventWidth,
+                          eventGridLineColorFullHour: widget.eventGridLineColorFullHour,
+                          eventGridLineColorHalfHour: widget.eventGridLineColorHalfHour,
+                          events: widget.events,
+                          hourHeight: widget.hourHeight,
                         ),
                       ),
                     ),
@@ -108,109 +125,5 @@ class _CoolCalendarState extends State<CoolCalendar> {
         ],
       ),
     );
-  }
-
-  Widget header() {
-    if (widget.headerTitles.isEmpty) {
-      return const SizedBox();
-    }
-
-    return Row(
-      children: [
-        SizedBox(
-          width: widget.timeLineWidth + 5,
-        ),
-        for (var item in widget.headerTitles)
-          Container(
-            decoration: widget.headerTitleDecoration,
-            alignment: Alignment.center,
-            width: widget.eventGridEventWidth,
-            child: item,
-          ),
-      ],
-    );
-  }
-
-  List<Widget> buildEventStack() {
-    List<Widget> stack = [];
-
-    stack.add(
-      Padding(
-        padding: const EdgeInsets.only(top: 0),
-        child: Column(
-          children: eventGrid(),
-        ),
-      ),
-    );
-
-    for (CoolCalendarEvent event in widget.events) {
-      stack.add(
-        Positioned.fill(
-          child: CoolCalendarEventWidget(
-            discreteStepSize: widget.discreteStepSize,
-            initHeightMultiplier: event.initHeightMultiplier,
-            initTopMultiplier: event.initTopMultiplier,
-            rowIndex: event.rowIndex,
-            decoration: event.decoration,
-            decorationHover: event.decorationHover,
-            ballDecoration: event.ballDecoration,
-            onChange: event.onChange ?? (_, __) {},
-            onTap: event.onTap ?? () {},
-            width: widget.eventGridEventWidth,
-            dragging: event.dragging,
-            animated: widget.animated,
-            child: event.child,
-          ),
-        ),
-      );
-    }
-
-    return stack;
-  }
-
-  List<Widget> timeLine() {
-    SizedBox timeBox(String text) => SizedBox(
-          width: double.infinity,
-          height: widget.discreteStepSize,
-          child: Transform.translate(
-            offset: const Offset(0, -8),
-            child: Text(text),
-          ),
-        );
-
-    List<Widget> items = [];
-
-    for (int i = 0; i < 24; i++) {
-      String time = i < 10 ? "0$i" : "$i";
-
-      items.add(timeBox("$time:00"));
-      items.add(timeBox("$time:30"));
-    }
-
-    return items;
-  }
-
-  List<Widget> eventGrid() {
-    Container eventBox(Color color) => Container(
-          width: double.infinity,
-          height: widget.discreteStepSize,
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                width: 1,
-                color: color,
-              ),
-            ),
-          ),
-        );
-
-    List<Widget> items = [];
-
-    for (int i = 0; i < 24; i++) {
-      items.add(eventBox(widget.eventGridLineColorFullHour));
-      items.add(eventBox(widget.eventGridLineColorHalfHour));
-    }
-
-    return items;
   }
 }

@@ -50,11 +50,35 @@ void addTestAppointments() {
     duration: const Duration(hours: 1),
   );
 
+  Appointment a6 = Appointment(
+    id: "5",
+    start: extractDay(DateTime.now()).add(const Duration(hours: 9)),
+    duration: const Duration(minutes: 15),
+    person: Person(
+      birthday: DateTime.now(),
+      name: "Bob",
+      gender: "male",
+    ),
+  );
+
+  Appointment a7 = Appointment(
+    id: "6",
+    start: extractDay(DateTime.now()).add(const Duration(hours: 10)),
+    duration: const Duration(minutes: 30),
+    person: Person(
+      birthday: DateTime.now(),
+      name: "Alice",
+      gender: "female",
+    ),
+  );
+
   cs.addAppointment(a1);
   cs.addAppointment(a2);
   cs.addAppointment(a3);
   cs.addAppointment(a4);
   cs.addAppointment(a5);
+  cs.addAppointment(a6);
+  cs.addAppointment(a7);
 }
 
 void addTestRequests() {
@@ -62,8 +86,8 @@ void addTestRequests() {
 
   Appointment a1 = Appointment(
     id: "99",
-    start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour + 2)),
-    duration: const Duration(hours: 1),
+    start: extractDay(DateTime.now()).add(const Duration(hours: 10)),
+    duration: const Duration(minutes: 15),
     person: Person(
       birthday: DateTime.now(),
       gender: "male",
@@ -145,7 +169,7 @@ void addTestPlannerEvents() {
     Capacity(
       start: extractDay(DateTime.now()).add(const Duration(hours: 8)),
       duration: const Duration(hours: 14),
-      chairs: 8,
+      chairs: 4,
     ),
   );
 }

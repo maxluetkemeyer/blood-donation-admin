@@ -9,6 +9,8 @@ class CoolCalendarEventWidget extends StatefulWidget {
   final bool animated;
 
   final double discreteStepSize;
+  final double hourHeight;
+
   final int initHeightMultiplier;
   final int initTopMultiplier;
   final double width;
@@ -21,6 +23,7 @@ class CoolCalendarEventWidget extends StatefulWidget {
   const CoolCalendarEventWidget({
     Key? key,
     required this.discreteStepSize,
+    required this.hourHeight,
     required this.initHeightMultiplier,
     required this.initTopMultiplier,
     required this.rowIndex,

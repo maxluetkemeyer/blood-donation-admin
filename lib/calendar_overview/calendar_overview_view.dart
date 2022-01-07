@@ -17,7 +17,30 @@ class CalendarOverview extends ConsumerStatefulWidget {
 }
 
 class _CalendarOverviewState extends ConsumerState<CalendarOverview> {
+  // settings
+  double hourHeight = 120;
+  int appointmentLengthInMinutes = 15;
+
   DateTime _selectedDay = extractDay(DateTime.now());
+
+  late ScrollController calendarScrollController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    calendarScrollController = ScrollController(
+      initialScrollOffset: hourHeight * 7,
+      keepScrollOffset: true,
+    );
+  }
+
+  @override
+  void dispose() {
+    calendarScrollController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +53,18 @@ class _CalendarOverviewState extends ConsumerState<CalendarOverview> {
           fit: FlexFit.tight,
           flex: 2,
           child: CoolCalendar(
+            //TODO:
+            //key: const PageStorageKey("calendar_overview"), //save scroll position, but buggy with manual events
             key: GlobalKey(),
-            discreteStepSize: 30,
-            scrollController: ScrollController(
-              initialScrollOffset: 14 * 30,
-            ),
+            discreteStepSize: hourHeight / (60 / appointmentLengthInMinutes),
+            hourHeight: 120,
+            eventGridEventWidth: 140,
+            eventGridLineColorHalfHour: Colors.grey.withOpacity(0.3),
+            scrollController: calendarScrollController,
             events: calendarBuildEventsOfDay(
               day: _selectedDay,
+              appointmentLengthInMinutes: appointmentLengthInMinutes,
             ),
-            eventGridEventWidth: 70,
             animated: true,
             eventGridColor: const Color.fromRGBO(227, 245, 255, 1),
           ),

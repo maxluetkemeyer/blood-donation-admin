@@ -108,9 +108,11 @@ class _PlannerState extends ConsumerState<Planner> {
         ),
         Expanded(
           child: CoolCalendar(
-            discreteStepSize: 20,
+            discreteStepSize: 10,
+            hourHeight: 40,
             eventGridColor: const Color.fromRGBO(140, 208, 247, 1),
             headerTitles: buildHeader(),
+            eventGridLineColorHalfHour: Colors.grey,
             headerTitleDecoration: const BoxDecoration(
               color: Color.fromRGBO(227, 245, 255, 1),
               border: Border(
@@ -125,8 +127,6 @@ class _PlannerState extends ConsumerState<Planner> {
       ],
     );
   }
-
-  
 
   Widget saveButton() {
     return ElevatedButton(
