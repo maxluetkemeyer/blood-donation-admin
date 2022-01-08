@@ -36,14 +36,16 @@ class _RequestsState extends ConsumerState<Requests> {
     double width = MediaQuery.of(context).size.width;
     String dayString = DateFormat("dd.MM.yyyy").format(openAppointment.start);
 
-    Future.delayed(const Duration(milliseconds: 1), () {
-      double scrollOffset = Duration(
-            milliseconds: openAppointment.start.millisecondsSinceEpoch - extractDay(openAppointment.start).millisecondsSinceEpoch,
-          ).inMinutes /
-          appointmentLengthInMinutes;
-      calendarScrollController.animateTo(scrollOffset * hourHeight / (60 / appointmentLengthInMinutes) - hourHeight,
-          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-    });
+    if (openAppointment is! EmptyAppointment) {
+      Future.delayed(const Duration(milliseconds: 1), () {
+        double scrollOffset = Duration(
+              milliseconds: openAppointment.start.millisecondsSinceEpoch - extractDay(openAppointment.start).millisecondsSinceEpoch,
+            ).inMinutes /
+            appointmentLengthInMinutes;
+        calendarScrollController.animateTo(scrollOffset * hourHeight / (60 / appointmentLengthInMinutes) - hourHeight,
+            duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+      });
+    }
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

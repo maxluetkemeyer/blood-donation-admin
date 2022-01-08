@@ -1,5 +1,5 @@
-import 'package:blooddonation_admin/services/logging_service.dart';
-import 'package:blooddonation_admin/services/provider/provider_service.dart';
+import 'package:blooddonation_admin/logging/eventlog/eventlog_widget.dart';
+import 'package:blooddonation_admin/logging/statistic_row.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -8,25 +8,28 @@ class LoggingView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ignore: unused_local_variable
-    int update = ref.watch(loggingProvider.state).state;
-
-    return Column(
+    return Row(
       children: [
-        ElevatedButton(
-          onPressed: () {
-            LoggingService().addEvent(DateTime.now().toString());
-          },
-          child: const Text("Add event"),
+        const Flexible(
+          flex: 1,
+          fit: FlexFit.tight,
+          child: Eventlog(),
         ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: LoggingService().events.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: SelectableText(index.toString() + " " + LoggingService().events[index]),
-              );
-            },
+        Flexible(
+          flex: 1,
+          fit: FlexFit.tight,
+          child: Container(
+            color: Colors.lightGreen,
+            alignment: Alignment.topCenter,
+            padding: const EdgeInsets.all(8.0),
+            child: Table(
+              children: <TableRow>[
+                statisticRow(key: "Statistik 1", value: "234"),
+                statisticRow(key: "Statistik 2", value: "4564"),
+                statisticRow(key: "Statistik 3", value: "89464"),
+                statisticRow(key: "Statistik 4", value: "78"),
+              ],
+            ),
           ),
         ),
       ],

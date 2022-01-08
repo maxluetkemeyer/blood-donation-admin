@@ -42,9 +42,6 @@ class CoolCalendar extends StatefulWidget {
   /// List of header widgets, which will be shown over the calendar.
   final List<Widget> headerTitles;
 
-  /// Decoration of every header title box.
-  final Decoration headerTitleDecoration;
-
   final ScrollController? scrollController;
   final bool animated;
 
@@ -60,7 +57,6 @@ class CoolCalendar extends StatefulWidget {
     this.eventGridLineColorHalfHour = Colors.transparent,
     this.eventGridEventWidth = 220,
     this.headerTitles = const [],
-    this.headerTitleDecoration = const BoxDecoration(),
     this.timeLineWidth = 50,
     this.scrollController,
     this.animated = false,
@@ -80,7 +76,6 @@ class _CoolCalendarState extends State<CoolCalendar> {
         children: [
           Header(
             eventGridEventWidth: widget.eventGridEventWidth,
-            headerTitleDecoration: widget.headerTitleDecoration,
             headerTitles: widget.headerTitles,
             timeLineWidth: widget.timeLineWidth,
           ),

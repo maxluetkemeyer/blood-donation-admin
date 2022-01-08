@@ -5,33 +5,41 @@ import 'package:blooddonation_admin/services/capacity_service.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:flutter/material.dart';
 
-List<Widget> buildHeader() {
-    List<Widget> headers = [];
+List<Widget> buildHeader({required DateTime monday}) {
+  List<Widget> headers = [];
 
-    List<String> days = const ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
-    int todayWeekDay = DateTime.now().weekday;
-    DateTime today = extractDay(DateTime.now());
+  List<String> days = const ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
+  DateTime today = extractDay(DateTime.now());
 
-    for (int i = 1; i < 8; i++) {
-      DateTime day = today.add(Duration(days: -todayWeekDay + i));
+  for (int i = 0; i < 7; i++) {
+    DateTime day = monday.add(Duration(days: i));
 
+    PlannerHeader head = PlannerHeader(
+      weekday: days[i],
+      onPressed: () {
+        CapacityService().addCapacity(
+          Capacity(
+            start: day.add(const Duration(hours: 8)),
+            duration: const Duration(hours: 4),
+            chairs: 4,
+          ),
+        );
+
+        ProviderService().container.read(plannerUpdateProvider.state).state++;
+      },
+    );
+
+    if (day.isAtSameMomentAs(today)) {
       headers.add(
-        PlannerHeader(
-          weekday: days[i - 1],
-          onPressed: () {
-            CapacityService().addCapacity(
-              Capacity(
-                start: day.add(const Duration(hours: 8)),
-                duration: const Duration(hours: 2),
-                chairs: 4,
-              ),
-            );
-
-            ProviderService().container.read(plannerUpdateProvider.state).state++;
-          },
+        Container(
+          color: Colors.yellow,
+          child: head,
         ),
       );
+    } else {
+      headers.add(head);
     }
-
-    return headers;
   }
+
+  return headers;
+}

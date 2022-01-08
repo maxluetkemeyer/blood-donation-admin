@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:blooddonation_admin/calendar_overview/calendar_overview_view.dart';
 import 'package:blooddonation_admin/dashboard/dashboard_view.dart';
 import 'package:blooddonation_admin/help/help_view.dart';
@@ -5,17 +8,20 @@ import 'package:blooddonation_admin/logging/logging_view.dart';
 import 'package:blooddonation_admin/requests/requests_view.dart';
 import 'package:blooddonation_admin/planner/planner_view.dart';
 import 'package:blooddonation_admin/settings/settings_view.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class AppStructure extends StatefulWidget {
-  const AppStructure({Key? key}) : super(key: key);
+/// The structure of the program
+///
+/// It contains a list of all pages and an [AppBar] where these pages are selectable.
+class App extends StatefulWidget {
+  const App({Key? key}) : super(key: key);
 
   @override
-  State<AppStructure> createState() => _AppStructureState();
+  State<App> createState() => _AppState();
 }
 
-class _AppStructureState extends State<AppStructure> {
+class _AppState extends State<App> {
+
+  /// All pages of the program
   final List<Widget> screens = [
     const Dashboard(),
     const Requests(),

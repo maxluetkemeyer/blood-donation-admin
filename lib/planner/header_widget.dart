@@ -12,20 +12,28 @@ class PlannerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(weekday),
-        const SizedBox(
-          height: 10,
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.lightBlue.shade100,
+        border: const Border.symmetric(
+          vertical: BorderSide(width: 1),
         ),
-        ElevatedButton(
-          onPressed: onPressed,
-          child: const Text("Zeitslot hinzufügen"),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-      ],
+      ),
+      child: Column(
+        children: [
+          Text(weekday),
+          const SizedBox(
+            height: 10,
+          ),
+          ElevatedButton(
+            onPressed: onPressed,
+            child: const Text("Zeitslot hinzufügen"),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -14,4 +14,10 @@ class LoggingService {
     events.add(event);
     ProviderService().container.read(loggingProvider.state).state++;
   }
+
+  Future reload() async {
+    return Future.delayed(const Duration(seconds: 1), () {
+      ProviderService().container.read(loggingProvider.state).state++;
+    });
+  }
 }

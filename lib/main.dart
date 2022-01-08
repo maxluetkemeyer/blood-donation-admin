@@ -1,10 +1,11 @@
-import 'package:blooddonation_admin/app.dart';
-import 'package:blooddonation_admin/services/provider/provider_service.dart';
+import 'package:blooddonation_admin/services/logging_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:blooddonation_admin/app.dart';
 import 'package:blooddonation_admin/misc/theme.dart';
+import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
 import 'package:blooddonation_admin/tester.dart';
@@ -17,29 +18,23 @@ void main() {
   //BackendService();
   CalendarService();
   CapacityService();
+  LoggingService();
+
 
   // Test Data
+  for (int i = 0; i < 1000;i++){
+    LoggingService().addEvent(DateTime.now().toString());
+  }
   addTestAppointments();
   addTestRequests();
   addTestPlannerEvents();
 
-  runApp(const App());
+  runApp(const MainWidget());
 }
 
-class App extends StatefulWidget {
-  const App({Key? key}) : super(key: key);
-
-  @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  @override
-  void dispose() {
-    ProviderService().container.dispose();
-
-    super.dispose();
-  }
+/// The top widget in the widget tree of the program
+class MainWidget extends StatelessWidget {
+  const MainWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +54,7 @@ class _AppState extends State<App> {
           child: child!,
         ),
         locale: const Locale("en"),
-        home: const AppStructure(),
+        home: const App(),
       ),
     );
   }

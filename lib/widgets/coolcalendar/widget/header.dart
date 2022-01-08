@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 class Header extends StatelessWidget {
   final List<Widget> headerTitles;
   final double timeLineWidth;
-  final Decoration headerTitleDecoration;
   final double eventGridEventWidth;
 
   const Header({
     Key? key,
     required this.headerTitles,
     required this.timeLineWidth,
-    required this.headerTitleDecoration,
     required this.eventGridEventWidth,
   }) : super(key: key);
 
@@ -26,9 +24,7 @@ class Header extends StatelessWidget {
           width: timeLineWidth + 5,
         ),
         for (var item in headerTitles)
-          Container(
-            decoration: headerTitleDecoration,
-            alignment: Alignment.center,
+          SizedBox(
             width: eventGridEventWidth,
             child: item,
           ),

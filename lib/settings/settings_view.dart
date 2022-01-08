@@ -9,14 +9,7 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  late HtmlEditorController controller;
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller = HtmlEditorController();
-  }
+  HtmlEditorController controller = HtmlEditorController();
 
   @override
   void dispose() {
