@@ -20,7 +20,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-
   /// All pages of the program
   final List<Widget> screens = [
     const Dashboard(),
@@ -48,13 +47,40 @@ class _AppState extends State<App> {
             label: Text(AppLocalizations.of(context)!.navDashboard),
             style: screenIndex == 0 ? _buttonSelectedStyle : null,
           ),
-          TextButton.icon(
-            onPressed: () => setState(() {
-              screenIndex = 1;
-            }),
-            icon: const Icon(Icons.table_chart),
-            label: Text(AppLocalizations.of(context)!.navRequests),
-            style: screenIndex == 1 ? _buttonSelectedStyle : null,
+          Stack(
+            children: [
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: SizedBox(
+                  height: 60,
+                  child: TextButton.icon(
+                    onPressed: () => setState(() {
+                      screenIndex = 1;
+                    }),
+                    icon: const Icon(Icons.table_chart),
+                    label: Text(AppLocalizations.of(context)!.navRequests),
+                    style: screenIndex == 1 ? _buttonSelectedStyle : null,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 5,
+                right: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.red.shade400,
+                  ),
+                  child: const Text(
+                    "18",
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           TextButton.icon(
             onPressed: () => setState(() {

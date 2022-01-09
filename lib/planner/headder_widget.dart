@@ -81,7 +81,7 @@ class _PlannerHeaderState extends State<PlannerHeader> {
             child: TableCalendar(
               focusedDay: focusedDay,
               firstDay: getMonday(DateTime.now()),
-              lastDay: getMonday(DateTime.now()).add(const Duration(days: 365)),
+              lastDay: getMonday(DateTime.now()).add(const Duration(days: 365 * 2)),
               calendarFormat: CalendarFormat.month,
               startingDayOfWeek: StartingDayOfWeek.monday,
               headerStyle: HeaderStyle(

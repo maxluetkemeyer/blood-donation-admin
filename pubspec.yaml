@@ -15,6 +15,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
+  freezed_annotation: any
 
   # Basic
   cupertino_icons: ^1.0.2
@@ -42,6 +43,12 @@ dev_dependencies:
 
   # Static Tests
   flutter_lints: ^1.0.4
+
+  # Code generation
+  # flutter pub run build_runner build --delete-conflicting-outputs
+  build_runner: any
+  json_serializable: any
+  freezed: any
 
 
 flutter:

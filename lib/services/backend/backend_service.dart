@@ -1,6 +1,7 @@
 import 'package:blooddonation_admin/misc/env.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import './message_handler.dart' as handler;
+import './message_actions.dart' as actions;
 
 // ignore: non_constant_identifier_names
 var BackendService = _BackendService();
@@ -42,4 +43,11 @@ class _BackendService {
         print(message);
     }
   }
+
+  void sendMessage(String message) {
+    channel.sink.add(message);
+    
+  }
+
+  Future sendChangeAllCapacities() => actions.sendChangeAllCapacities();
 }

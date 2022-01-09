@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class BarChartSample1 extends StatefulWidget {
+class RequestWeekBarChart extends StatefulWidget {
   final List<Color> availableColors = const [
     Colors.purpleAccent,
     Colors.yellow,
@@ -11,13 +11,13 @@ class BarChartSample1 extends StatefulWidget {
     Colors.redAccent,
   ];
 
-  const BarChartSample1({Key? key}) : super(key: key);
+  const RequestWeekBarChart({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => BarChartSample1State();
+  State<StatefulWidget> createState() => RequestWeekBarChartState();
 }
 
-class BarChartSample1State extends State<BarChartSample1> {
+class RequestWeekBarChartState extends State<RequestWeekBarChart> {
   final Color barBackgroundColor = Colors.grey.shade400;
   final Duration animDuration = const Duration(milliseconds: 250);
 
@@ -30,43 +30,13 @@ class BarChartSample1State extends State<BarChartSample1> {
     return SizedBox(
       width: 700,
       child: AspectRatio(
-        aspectRatio: 2,
-        child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-          color: Colors.blue.shade50,
+        aspectRatio: 3 / 1,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
           child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                const Text(
-                  'Blood donations',
-                  style: TextStyle(color: Color(0xff0f4a3c), fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                const Text(
-                  'This week',
-                  style: TextStyle(color: Color(0xff379982), fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 38,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: BarChart(
-                      mainBarData(),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-              ],
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: BarChart(
+              mainBarData(),
             ),
           ),
         ),
