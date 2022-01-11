@@ -37,8 +37,8 @@ class _PlannerState extends ConsumerState<Planner> {
       body: Column(
         children: [
           PlannerHeader(
-            //width: (width / 7 - 10) * 7,
-            width: (width / 9 - 10) * 4,
+            width: (width / 7 - 10) * 7,
+            //width: (width / 9 - 10) * 4,
             monday: monday,
             onTableCalendarPageChange: (focusedDay) {
               print(getMonday(focusedDay));
@@ -52,12 +52,13 @@ class _PlannerState extends ConsumerState<Planner> {
               key: GlobalKey(),
               discreteStepSize: 10,
               hourHeight: 40,
-              eventGridColor: const Color.fromRGBO(140, 208, 247, 1),
               eventGridEventWidth: width / 7 - 10,
               timeLineWidth: 56,
               headerTitles: buildHeader(monday: monday),
-              eventGridLineColorHalfHour: Colors.grey,
               events: buildEvents(monday),
+              eventGridColor: const Color.fromRGBO(225, 245, 254, 1),
+              eventGridLineColorHalfHour: const Color.fromRGBO(11, 72, 116, 0.06),
+              eventGridLineColorFullHour: const Color.fromRGBO(11, 72, 116, 0.2),
             ),
           ),
         ],

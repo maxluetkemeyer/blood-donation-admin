@@ -1,4 +1,5 @@
 import 'package:blooddonation_admin/dashboard/patient_overview_widget.dart';
+import 'package:blooddonation_admin/dashboard/workloadoverview/workload_overview_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'requestsoverview/requests_overview_widget.dart';
@@ -43,6 +44,8 @@ class Dashboard extends StatelessWidget {
                   fit: FlexFit.tight,
                   child: Container(
                     decoration: cardDecoration,
+                    padding: const EdgeInsets.all(8),
+                    child: const WorkloadOverview(),
                   ),
                 ),
               ],

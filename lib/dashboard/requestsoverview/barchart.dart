@@ -2,196 +2,147 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class RequestWeekBarChart extends StatefulWidget {
-  final List<Color> availableColors = const [
-    Colors.purpleAccent,
-    Colors.yellow,
-    Colors.lightBlue,
-    Colors.orange,
-    Colors.pink,
-    Colors.redAccent,
-  ];
-
-  const RequestWeekBarChart({Key? key}) : super(key: key);
+  const RequestWeekBarChart({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => RequestWeekBarChartState();
 }
 
 class RequestWeekBarChartState extends State<RequestWeekBarChart> {
-  final Color barBackgroundColor = Colors.grey.shade400;
-  final Duration animDuration = const Duration(milliseconds: 250);
-
-  int touchedIndex = -1;
-
-  bool isPlaying = false;
+  final Color barColorBottom = Colors.blue;
+  final Color barColorTop = Colors.blue.shade100;
+  final double barWidth = 30;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 700,
-      child: AspectRatio(
-        aspectRatio: 3 / 1,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: BarChart(
-              mainBarData(),
+    return AspectRatio(
+      aspectRatio: 3.5 / 1,
+      child: BarChart(
+        BarChartData(
+          backgroundColor: Colors.transparent,
+          borderData: FlBorderData(
+            show: true,
+            border: const Border(
+              top: BorderSide(
+                width: 1,
+                color: Colors.grey,
+              ),
+              bottom: BorderSide(
+                width: 1,
+                color: Colors.grey,
+              ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  BarChartGroupData makeGroupData(
-    int x,
-    double y, {
-    bool isTouched = false,
-    Color barColor = Colors.blue,
-    double width = 30,
-    List<int> showTooltips = const [],
-  }) {
-    return BarChartGroupData(
-      x: x,
-      barRods: [
-        BarChartRodData(
-          y: isTouched ? y + 0.5 : y,
-          colors: isTouched ? [Colors.lightBlue.shade300] : [barColor],
-          width: width,
-          borderSide: isTouched ? const BorderSide(color: Colors.white, width: 2) : const BorderSide(color: Colors.white, width: 0),
-          borderRadius: const BorderRadius.all(Radius.circular(4)),
-          backDrawRodData: BackgroundBarChartRodData(
-            show: true,
-            y: 20,
-            colors: [barBackgroundColor],
+          //fertig
+          barGroups: <BarChartGroupData>[
+            //fertig
+            createBar(
+              x: 0,
+              y: 40,
+              barWidth: barWidth,
+              barColorBottom: barColorBottom,
+              barColorTop: barColorTop,
+            ),
+            createBar(
+              x: 1,
+              y: 30,
+              barWidth: barWidth,
+              barColorBottom: barColorBottom,
+              barColorTop: barColorTop,
+            ),
+            createBar(
+              x: 2,
+              y: 10,
+              barWidth: barWidth,
+              barColorBottom: barColorBottom,
+              barColorTop: barColorTop,
+            ),
+            createBar(
+              x: 3,
+              y: 20,
+              barWidth: barWidth,
+              barColorBottom: barColorBottom,
+              barColorTop: barColorTop,
+            ),
+            createBar(
+              x: 4,
+              y: 30,
+              barWidth: barWidth,
+              barColorBottom: barColorBottom,
+              barColorTop: barColorTop,
+            ),
+            createBar(
+              x: 5,
+              y: 0,
+              barWidth: barWidth,
+              barColorBottom: barColorBottom,
+              barColorTop: barColorTop,
+            ),
+            createBar(
+              x: 6,
+              y: 0,
+              barWidth: barWidth,
+              barColorBottom: barColorBottom,
+              barColorTop: barColorTop,
+            ),
+          ],
+          gridData: FlGridData(),
+          titlesData: FlTitlesData(
+            topTitles: SideTitles(showTitles: false),
+            rightTitles: SideTitles(showTitles: false),
+            bottomTitles: SideTitles(
+              getTitles: (value) {
+                switch (value.toInt()) {
+                  case 0:
+                    return "Montag";
+                  case 1:
+                    return "Dienstag";
+                  case 2:
+                    return "Mittwoch";
+                  case 3:
+                    return "Donnerstag";
+                  case 4:
+                    return "Freitag";
+                  case 5:
+                    return "Samstag";
+                  case 6:
+                    return "Sonntag";
+                  default:
+                    return "";
+                }
+              },
+              showTitles: true,
+            ),
           ),
-        ),
-      ],
-      showingTooltipIndicators: showTooltips,
-    );
-  }
-
-  List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
-        switch (i) {
-          case 0:
-            return makeGroupData(0, 5, isTouched: i == touchedIndex);
-          case 1:
-            return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
-          case 2:
-            return makeGroupData(2, 5, isTouched: i == touchedIndex);
-          case 3:
-            return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
-          case 4:
-            return makeGroupData(4, 9, isTouched: i == touchedIndex);
-          case 5:
-            return makeGroupData(5, 11.5, isTouched: i == touchedIndex);
-          case 6:
-            return makeGroupData(6, 6.5, isTouched: i == touchedIndex);
-          default:
-            return throw Error();
-        }
-      });
-
-  BarChartData mainBarData() {
-    return BarChartData(
-      barTouchData: BarTouchData(
-        touchTooltipData: BarTouchTooltipData(
-            tooltipBgColor: Colors.blueGrey,
-            getTooltipItem: (group, groupIndex, rod, rodIndex) {
-              String weekDay;
-              switch (group.x.toInt()) {
-                case 0:
-                  weekDay = 'Monday';
-                  break;
-                case 1:
-                  weekDay = 'Tuesday';
-                  break;
-                case 2:
-                  weekDay = 'Wednesday';
-                  break;
-                case 3:
-                  weekDay = 'Thursday';
-                  break;
-                case 4:
-                  weekDay = 'Friday';
-                  break;
-                case 5:
-                  weekDay = 'Saturday';
-                  break;
-                case 6:
-                  weekDay = 'Sunday';
-                  break;
-                default:
-                  throw Error();
-              }
-              return BarTooltipItem(
-                weekDay + '\n',
-                const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: (rod.y - 1).toString(),
-                    style: const TextStyle(
-                      color: Colors.yellow,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              );
-            }),
-        touchCallback: (FlTouchEvent event, barTouchResponse) {
-          setState(() {
-            if (!event.isInterestedForInteractions || barTouchResponse == null || barTouchResponse.spot == null) {
-              touchedIndex = -1;
-              return;
-            }
-            touchedIndex = barTouchResponse.spot!.touchedBarGroupIndex;
-          });
-        },
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        rightTitles: SideTitles(showTitles: false),
-        topTitles: SideTitles(showTitles: false),
-        bottomTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (context, value) => const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
-          margin: 16,
-          getTitles: (double value) {
-            switch (value.toInt()) {
-              case 0:
-                return 'Mo';
-              case 1:
-                return 'Tu';
-              case 2:
-                return 'We';
-              case 3:
-                return 'Th';
-              case 4:
-                return 'Fr';
-              case 5:
-                return 'Sa';
-              case 6:
-                return 'Su';
-              default:
-                return '';
-            }
-          },
-        ),
-        leftTitles: SideTitles(
-          showTitles: false,
+          maxY: 50,
         ),
       ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      barGroups: showingGroups(),
-      gridData: FlGridData(show: false),
     );
   }
 }
+
+BarChartGroupData createBar({
+  required int x,
+  required double y,
+  required double barWidth,
+  required Color barColorBottom,
+  required Color barColorTop,
+}) =>
+    BarChartGroupData(
+      x: x,
+      //fertig
+      barRods: <BarChartRodData>[
+        //fertig
+        BarChartRodData(
+          y: y,
+          borderRadius: const BorderRadius.all(Radius.zero),
+          width: barWidth,
+          colors: [
+            barColorBottom,
+            barColorTop,
+          ],
+        ),
+      ],
+    );

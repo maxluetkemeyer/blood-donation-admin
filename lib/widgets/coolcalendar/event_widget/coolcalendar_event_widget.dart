@@ -64,36 +64,6 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Positioned(
-          top: top,
-          left: widget.width * widget.rowIndex,
-          child: MouseRegion(
-            onEnter: (_) => setState(() {
-              onHover = true;
-            }),
-            onExit: (_) => setState(() {
-              onHover = false;
-            }),
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () => widget.onTap(),
-              child: widget.animated
-                  ? AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      height: height,
-                      width: widget.width,
-                      decoration: onHover ? widget.decorationHover : widget.decoration,
-                      child: widget.child,
-                    )
-                  : Container(
-                      height: height,
-                      width: widget.width,
-                      decoration: widget.decoration,
-                      child: widget.child,
-                    ),
-            ),
-          ),
-        ),
         // ###################################### Top controll
         if (widget.dragging)
           Positioned(
@@ -197,6 +167,37 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
               ),
             ),
           ),
+        // ###################################### Child
+        Positioned(
+          top: top,
+          left: widget.width * widget.rowIndex,
+          child: MouseRegion(
+            onEnter: (_) => setState(() {
+              onHover = true;
+            }),
+            onExit: (_) => setState(() {
+              onHover = false;
+            }),
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () => widget.onTap(),
+              child: widget.animated
+                  ? AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      height: height,
+                      width: widget.width,
+                      decoration: onHover ? widget.decorationHover : widget.decoration,
+                      child: widget.child,
+                    )
+                  : Container(
+                      height: height,
+                      width: widget.width,
+                      decoration: widget.decoration,
+                      child: widget.child,
+                    ),
+            ),
+          ),
+        ),
       ],
     );
   }

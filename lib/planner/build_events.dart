@@ -39,7 +39,7 @@ List<CoolCalendarEvent> buildEvents(DateTime monday) {
             ProviderService().container.read(plannerUpdateProvider.state).state++;
           },
           decoration: const BoxDecoration(
-            color: Color.fromRGBO(237, 152, 42, 1),
+            color: Color.fromRGBO(11, 72, 116, 1),
           ),
           child: Center(
               //child: Text(capacity.chairs.toString() + " Stühle"),

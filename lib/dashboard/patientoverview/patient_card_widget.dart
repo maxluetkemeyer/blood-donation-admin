@@ -5,28 +5,31 @@ class PatientCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
-      children: const [
+      children: [
         Icon(
           Icons.person,
-          size: 150,
+          //size: 150,
+          size: width * 0.08,
         ),
         Text(
           "Helene Hubbert",
           style: TextStyle(
-            fontSize: 25,
+            fontSize: width * 0.013,
           ),
         ),
         Icon(
           Icons.female,
-          size: 26,
+          size: width * 0.013,
         ),
         Text(
           "09.01.1990",
           style: TextStyle(
-            fontSize: 20,
+            fontSize: width * 0.013,
           ),
         ),
       ],

@@ -22,6 +22,7 @@ class PlannerHeader extends StatefulWidget {
 
 class _PlannerHeaderState extends State<PlannerHeader> {
   late DateTime focusedDay;
+  bool isExpanded = false;
 
   @override
   void initState() {
@@ -31,13 +32,18 @@ class _PlannerHeaderState extends State<PlannerHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionPanelList.radio(
+    return ExpansionPanelList(
+      expansionCallback: (_, __) {
+        setState(() {
+          isExpanded = !isExpanded;
+        });
+      },
       children: [
-        ExpansionPanelRadio(
-          value: "value",
-          canTapOnHeader: true,
-          headerBuilder: (context, isExpanded) {
-            if (isExpanded) {
+        ExpansionPanel(
+          isExpanded: isExpanded,
+          //canTapOnHeader: true,
+          headerBuilder: (context, isExpanded2) {
+            if (isExpanded2) {
               return const Center(
                 child: Text(
                   "Choose week",
@@ -63,6 +69,14 @@ class _PlannerHeaderState extends State<PlannerHeader> {
                     startingDayOfWeek: StartingDayOfWeek.monday,
                     daysOfWeekVisible: false,
                     headerVisible: false,
+                    onDaySelected: (_, __) => setState(() {
+                      isExpanded = !isExpanded;
+                      print("hi");
+                    }),
+                    onDisabledDayTapped: (_) => setState(() {
+                      isExpanded = !isExpanded;
+                      print("hi2");
+                    }),
                     headerStyle: const HeaderStyle(
                       formatButtonVisible: false,
                       headerPadding: EdgeInsets.all(0),

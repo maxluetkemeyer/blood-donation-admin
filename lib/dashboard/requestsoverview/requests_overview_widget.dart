@@ -33,7 +33,7 @@ class RequestsOverview extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            statistic("Anfragen\ninsgesammt:", "10"),
+            statistic("Anfragen\ninsgesamt:", "10"),
             statistic("Anfragen\nbestätigt:", "10"),
             statistic("Anfragen\nabgelehnt:", "0"),
           ],
@@ -48,7 +48,13 @@ class RequestsOverview extends StatelessWidget {
             ),
           ),
         ),
-        const RequestWeekBarChart(),
+        const Padding(
+          padding: EdgeInsets.only(top: 30.0),
+          child: SizedBox(
+            width: 700,
+            child: RequestWeekBarChart(),
+          ),
+        ),
       ],
     );
   }
