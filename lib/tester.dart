@@ -72,6 +72,17 @@ void addTestAppointments() {
     ),
   );
 
+  Appointment a8 = Appointment(
+    id: "7",
+    start: extractDay(DateTime.now()).add(const Duration(hours: 20)),
+    duration: const Duration(minutes: 30),
+    person: Person(
+      birthday: DateTime(1987, 3, 22),
+      name: "John",
+      gender: "male",
+    ),
+  );
+
   cs.addAppointment(a1);
   cs.addAppointment(a2);
   cs.addAppointment(a3);
@@ -79,6 +90,7 @@ void addTestAppointments() {
   cs.addAppointment(a5);
   cs.addAppointment(a6);
   cs.addAppointment(a7);
+  cs.addAppointment(a8);
 }
 
 void addTestRequests() {

@@ -1,4 +1,4 @@
-import 'package:blooddonation_admin/dashboard/patient_overview_widget.dart';
+import 'package:blooddonation_admin/dashboard/patientoverview/patient_overview_widget.dart';
 import 'package:blooddonation_admin/dashboard/workloadoverview/workload_overview_widget.dart';
 import 'package:flutter/material.dart';
 

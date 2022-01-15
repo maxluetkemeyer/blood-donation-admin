@@ -59,6 +59,22 @@ class CalendarService {
     return [];
   }
 
+  List<Appointment> getAppointmentsInHour(DateTime dateHour) {
+    DateTime day = extractDay(dateHour);
+    List<Appointment> appointmentsThisDay = getAppointmentsPerDay(day);
+    List<Appointment> appointmentsInHourInterval = [];
+
+    for (Appointment appointment in appointmentsThisDay) {
+      DateTime start = appointment.start;
+
+      if ((start.isAtSameMomentAs(dateHour) || start.isAfter(dateHour)) && start.isBefore(dateHour.add(const Duration(hours: 1)))) {
+        appointmentsInHourInterval.add(appointment);
+      }
+    }
+
+    return appointmentsInHourInterval;
+  }
+
   List<Appointment> getRequests({required bool today}) {
     List<Appointment> appointments = [];
 
