@@ -7,6 +7,11 @@ class Request {
     required this.status,
   });
 
+  factory Request.fromJson(Map<String, dynamic> json) => Request(
+        created: DateTime.parse(json["created"]),
+        status: json["status"],
+      );
+
   Request copyWith({
     DateTime? created,
     String? status,

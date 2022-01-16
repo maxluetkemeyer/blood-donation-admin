@@ -109,7 +109,7 @@ double usagePercent() {
   List<Capacity> capacities = CapacityService().getCapacitiesPerDay(extractDay(DateTime.now()));
   for (Capacity capacity in capacities) {
     int a = capacity.duration.inMinutes ~/ env.appointmentLengthInMinutes;
-    int b = a * capacity.chairs;
+    int b = a * capacity.slots;
 
     freeAppointments = freeAppointments + b;
   }

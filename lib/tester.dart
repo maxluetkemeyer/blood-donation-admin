@@ -10,7 +10,7 @@ void addTestAppointments() {
   CalendarService cs = CalendarService();
 
   Appointment a1 = Appointment(
-    id: "0",
+    id: 0,
     start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour)),
     duration: const Duration(hours: 1),
     person: Person(
@@ -20,7 +20,7 @@ void addTestAppointments() {
     ),
   );
   Appointment a2 = Appointment(
-    id: "1",
+    id: 1,
     start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour)),
     duration: const Duration(hours: 1),
     person: Person(
@@ -29,18 +29,18 @@ void addTestAppointments() {
     ),
   );
   Appointment a3 = Appointment(
-    id: "2",
+    id: 2,
     start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour)),
     duration: const Duration(hours: 1),
   );
   Appointment a4 = Appointment(
-    id: "3",
+    id: 3,
     start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour)),
     duration: const Duration(hours: 1),
   );
   a4.start = a4.start.add(const Duration(hours: -2));
   Appointment a5 = Appointment(
-    id: "4",
+    id: 4,
     start: extractDay(DateTime.now()).add(
       const Duration(
         days: 10,
@@ -51,7 +51,7 @@ void addTestAppointments() {
   );
 
   Appointment a6 = Appointment(
-    id: "5",
+    id: 5,
     start: extractDay(DateTime.now()).add(const Duration(hours: 9)),
     duration: const Duration(minutes: 15),
     person: Person(
@@ -62,7 +62,7 @@ void addTestAppointments() {
   );
 
   Appointment a7 = Appointment(
-    id: "6",
+    id: 6,
     start: extractDay(DateTime.now()).add(const Duration(hours: 10)),
     duration: const Duration(minutes: 30),
     person: Person(
@@ -73,7 +73,7 @@ void addTestAppointments() {
   );
 
   Appointment a8 = Appointment(
-    id: "7",
+    id: 7,
     start: extractDay(DateTime.now()).add(const Duration(hours: 20)),
     duration: const Duration(minutes: 30),
     person: Person(
@@ -97,7 +97,7 @@ void addTestRequests() {
   CalendarService cs = CalendarService();
 
   Appointment a1 = Appointment(
-    id: "99",
+    id: 99,
     start: extractDay(DateTime.now()).add(const Duration(hours: 10)),
     duration: const Duration(minutes: 15),
     person: Person(
@@ -112,7 +112,7 @@ void addTestRequests() {
   );
 
   Appointment a2 = Appointment(
-    id: "98",
+    id: 98,
     start: extractDay(DateTime.now()).add(Duration(hours: 24 + DateTime.now().hour + 2)),
     duration: const Duration(hours: 1),
     person: Person(
@@ -127,7 +127,7 @@ void addTestRequests() {
   );
 
   Appointment a3 = Appointment(
-    id: "97",
+    id: 97,
     start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour)),
     duration: const Duration(hours: 1),
     request: Request(
@@ -142,7 +142,7 @@ void addTestRequests() {
   );
 
   Appointment a4 = Appointment(
-    id: "96",
+    id: 96,
     start: extractDay(DateTime.now()).add(Duration(hours: 48 + DateTime.now().hour - 2)),
     duration: const Duration(hours: 1),
     person: Person(
@@ -166,22 +166,22 @@ void addTestPlannerEvents() {
   CapacityService ss = CapacityService();
 
   ss.addCapacity(
-    Capacity(start: DateTime(2021, 12, 06, 08), duration: const Duration(hours: 4), chairs: 10),
+    Capacity(start: DateTime(2021, 12, 06, 08), duration: const Duration(hours: 4), slots: 10),
   );
 
   ss.addCapacity(
-    Capacity(start: DateTime(2021, 12, 09, 09), duration: const Duration(hours: 6), chairs: 10),
+    Capacity(start: DateTime(2021, 12, 09, 09), duration: const Duration(hours: 6), slots: 10),
   );
 
   ss.addCapacity(
-    Capacity(start: DateTime(2021, 12, 10, 08), duration: const Duration(hours: 4), chairs: 10),
+    Capacity(start: DateTime(2021, 12, 10, 08), duration: const Duration(hours: 4), slots: 10),
   );
 
   ss.addCapacity(
     Capacity(
       start: extractDay(DateTime.now()).add(const Duration(hours: 8)),
       duration: const Duration(hours: 14),
-      chairs: 4,
+      slots: 4,
     ),
   );
 }

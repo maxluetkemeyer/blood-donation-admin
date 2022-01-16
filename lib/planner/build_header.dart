@@ -21,7 +21,7 @@ List<Widget> buildHeader({required DateTime monday}) {
           Capacity(
             start: day.add(const Duration(hours: 8)),
             duration: const Duration(hours: 4),
-            chairs: 4,
+            slots: 4,
           ),
         );
 

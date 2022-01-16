@@ -1,3 +1,4 @@
+import 'package:blooddonation_admin/services/backend/backend_service.dart';
 import 'package:blooddonation_admin/services/logging_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,7 +16,7 @@ void main() {
 
   //Services
   ProviderService();
-  //BackendService();
+  BackendService();
   CalendarService();
   CapacityService();
   LoggingService();

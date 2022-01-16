@@ -1,7 +1,7 @@
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/planner/build_header.dart';
 import 'package:blooddonation_admin/planner/headder_widget.dart';
-import 'package:blooddonation_admin/services/backend/backend_service.dart';
+import 'package:blooddonation_admin/services/backend/handlers/create_capacities.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_widget.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +67,7 @@ class _PlannerState extends ConsumerState<Planner> {
         label: const Text("UPLOAD CHANGES"),
         icon: const Icon(Icons.save),
         onPressed: () {
-          BackendService.sendChangeAllCapacities();
+          CreateCapacitiesHandler().send();
         },
       ),
     );

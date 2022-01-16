@@ -1,22 +1,31 @@
+import 'dart:convert';
+
 import 'package:blooddonation_admin/misc/env.dart';
+import 'package:blooddonation_admin/services/backend/backend_handler.dart';
+import 'package:blooddonation_admin/services/backend/handlers/create_appointment.dart';
+import 'package:blooddonation_admin/services/backend/handlers/create_capacities.dart';
+import 'package:blooddonation_admin/services/backend/handlers/get_all_appointments.dart';
+import 'package:blooddonation_admin/services/backend/handlers/get_all_capacities.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import './message_handler.dart' as handler;
-import './message_actions.dart' as actions;
 
-// ignore: non_constant_identifier_names
-var BackendService = _BackendService();
-
-class _BackendService {
+class BackendService {
   //Singleton
-  static final _BackendService _instance = _BackendService._private();
-  factory _BackendService() => _instance;
-  _BackendService._private() {
+  static final BackendService _instance = BackendService._private();
+  factory BackendService() => _instance;
+  BackendService._private() {
     print("Starting Backend Service");
 
     init();
   }
 
   late final WebSocketChannel channel;
+
+  List<BackendHandler> handlers = [
+    CreateCapacitiesHandler(),
+    CreateAppointmentHandler(),
+    GetAllAppointmentsHandler(),
+    GetAllCapacitiesHandler(),
+  ];
 
   void init() async {
     try {
@@ -27,27 +36,23 @@ class _BackendService {
       print(error);
     }
 
-    channel.stream.listen(onMessage);
-    channel.sink.add("Hello!");
+    channel.stream.listen(_onMessage);
     print("inited");
   }
 
-  void onMessage(message) {
+  void _onMessage(message) {
     print(message);
+    Map json = const JsonDecoder().convert(message);
 
-    switch (message.type) {
-      case "example":
-        handler.exampleMessageHandler(message);
+    for (BackendHandler handler in handlers) {
+      if (handler.action == json["action"]) {
+        handler.receive(json);
         return;
-      default:
-        print(message);
+      }
     }
   }
 
   void sendMessage(String message) {
     channel.sink.add(message);
-    
   }
-
-  Future sendChangeAllCapacities() => actions.sendChangeAllCapacities();
 }

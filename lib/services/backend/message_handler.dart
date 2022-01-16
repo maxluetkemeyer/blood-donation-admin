@@ -1,4 +1,0 @@
-void exampleMessageHandler(String message) {
-  
-
-}
