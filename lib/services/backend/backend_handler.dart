@@ -4,13 +4,15 @@ import 'package:blooddonation_admin/services/backend/backend_service.dart';
 
 abstract class BackendHandler {
   final String action;
+  final Function? cb;
 
   BackendHandler({
     required this.action,
+    this.cb,
   });
 
   Map createSendMap([arg]);
-  void receive(Map json);
+  void receiveLogic(Map json);
 
   void send([arg]) {
     Map map = createSendMap([arg]);
@@ -23,5 +25,13 @@ abstract class BackendHandler {
     String message = const JsonEncoder().convert(map);
 
     BackendService().sendMessage(message);
+  }
+
+  void receive(Map json) {
+    receiveLogic(json);
+    print("6");
+    if (cb != null) {
+      cb!();
+    }
   }
 }

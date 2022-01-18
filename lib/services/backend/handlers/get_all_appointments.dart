@@ -3,7 +3,12 @@ import 'package:blooddonation_admin/services/backend/backend_handler.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 
 class GetAllAppointmentsHandler extends BackendHandler {
-  GetAllAppointmentsHandler() : super(action: "getAllAppointments");
+  GetAllAppointmentsHandler({
+    Function? cb,
+  }) : super(
+          action: "getAllAppointments",
+          cb: cb,
+        );
 
   @override
   Map createSendMap([arg]) {
@@ -12,7 +17,7 @@ class GetAllAppointmentsHandler extends BackendHandler {
   }
 
   @override
-  void receive(Map json) {
+  void receiveLogic(Map json) {
     //check response
     if (json["response_status"] != 200) {
       print("error");

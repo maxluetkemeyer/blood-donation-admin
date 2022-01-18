@@ -20,7 +20,7 @@ class CreateAppointmentHandler extends BackendHandler {
   }
 
   @override
-  void receive(Map json) {
+  void receiveLogic(Map json) {
     // TODO: implement recieve
   }
 }

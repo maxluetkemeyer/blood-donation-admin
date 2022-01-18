@@ -1,8 +1,9 @@
+import 'package:blooddonation_admin/planner/header/accordion_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'package:blooddonation_admin/misc/utils.dart';
-import 'package:blooddonation_admin/planner/calendar_builder.dart';
+import 'package:blooddonation_admin/planner/header/calendar_builder.dart';
 
 class PlannerHeader extends StatefulWidget {
   final DateTime monday;
@@ -32,65 +33,54 @@ class _PlannerHeaderState extends State<PlannerHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionPanelList(
-      expansionCallback: (_, __) {
-        setState(() {
-          isExpanded = !isExpanded;
-        });
-      },
-      children: [
-        ExpansionPanel(
-          isExpanded: isExpanded,
-          //canTapOnHeader: true,
-          headerBuilder: (context, isExpanded2) {
-            if (isExpanded2) {
-              return const Center(
-                child: Text(
-                  "Choose week",
-                  style: TextStyle(
-                    fontSize: 24,
+    return GestureDetector(
+      onTap: () => setState(() {
+        isExpanded = !isExpanded;
+      }),
+      child: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Accordion(
+          open: isExpanded,
+          onButtonTap: () => setState(() {
+            isExpanded = !isExpanded;
+          }),
+          closedWidget: Row(
+            children: [
+              const SizedBox(
+                width: 61, //timeline width + 5 padding
+                height: 10,
+              ),
+              SizedBox(
+                width: widget.width,
+                child: TableCalendar(
+                  focusedDay: widget.monday,
+                  firstDay: getMonday(DateTime.now()),
+                  lastDay: widget.monday.add(const Duration(days: 70)),
+                  calendarFormat: CalendarFormat.week,
+                  startingDayOfWeek: StartingDayOfWeek.monday,
+                  daysOfWeekVisible: false,
+                  headerVisible: false,
+                  onDaySelected: (_, __) => setState(() {
+                    isExpanded = !isExpanded;
+                    print("hi");
+                  }),
+                  onDisabledDayTapped: (_) => setState(() {
+                    isExpanded = !isExpanded;
+                    print("hi2");
+                  }),
+                  headerStyle: const HeaderStyle(
+                    formatButtonVisible: false,
+                    headerPadding: EdgeInsets.all(0),
+                  ),
+                  calendarBuilders: plannerCalendarClosedBuilder(widget.monday),
+                  calendarStyle: const CalendarStyle(
+                    isTodayHighlighted: false,
                   ),
                 ),
-              );
-            }
-
-            return Row(
-              children: [
-                const SizedBox(
-                  width: 61, //timeline width + 5 padding
-                ),
-                SizedBox(
-                  width: widget.width,
-                  child: TableCalendar(
-                    focusedDay: widget.monday,
-                    firstDay: getMonday(DateTime.now()),
-                    lastDay: widget.monday.add(const Duration(days: 70)),
-                    calendarFormat: CalendarFormat.week,
-                    startingDayOfWeek: StartingDayOfWeek.monday,
-                    daysOfWeekVisible: false,
-                    headerVisible: false,
-                    onDaySelected: (_, __) => setState(() {
-                      isExpanded = !isExpanded;
-                      print("hi");
-                    }),
-                    onDisabledDayTapped: (_) => setState(() {
-                      isExpanded = !isExpanded;
-                      print("hi2");
-                    }),
-                    headerStyle: const HeaderStyle(
-                      formatButtonVisible: false,
-                      headerPadding: EdgeInsets.all(0),
-                    ),
-                    calendarBuilders: plannerCalendarClosedBuilder(widget.monday),
-                    calendarStyle: const CalendarStyle(
-                      isTodayHighlighted: false,
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-          body: Padding(
+              ),
+            ],
+          ),
+          openWidget: Padding(
             padding: const EdgeInsets.only(left: 100, right: 100, bottom: 40),
             child: TableCalendar(
               focusedDay: focusedDay,
@@ -133,10 +123,13 @@ class _PlannerHeaderState extends State<PlannerHeader> {
               onDaySelected: (selectedDay, focusedDay) {
                 widget.onTableCalendarPageChange(selectedDay);
               },
+              onHeaderTapped: (_) => setState(() {
+                isExpanded = !isExpanded;
+              }),
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

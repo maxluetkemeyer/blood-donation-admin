@@ -3,7 +3,12 @@ import 'package:blooddonation_admin/services/backend/backend_handler.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
 
 class GetAllCapacitiesHandler extends BackendHandler {
-  GetAllCapacitiesHandler() : super(action: "getAllCapacities");
+  GetAllCapacitiesHandler({
+    Function? cb,
+  }) : super(
+          action: "getAllCapacities",
+          cb: cb,
+        );
 
   @override
   Map createSendMap([arg]) {
@@ -12,7 +17,7 @@ class GetAllCapacitiesHandler extends BackendHandler {
   }
 
   @override
-  void receive(Map json) {
+  void receiveLogic(Map json) {
     //check response
     if (json["response_status"] != 200) {
       print("error");
@@ -29,7 +34,5 @@ class GetAllCapacitiesHandler extends BackendHandler {
       //add to local storage
       CapacityService().addCapacity(capacity);
     }
-
-    //TODO: Rebuild widgets
   }
 }

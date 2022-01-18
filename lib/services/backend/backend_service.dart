@@ -20,12 +20,12 @@ class BackendService {
 
   late final WebSocketChannel channel;
 
-  List<BackendHandler> handlers = [
-    CreateCapacitiesHandler(),
-    CreateAppointmentHandler(),
-    GetAllAppointmentsHandler(),
-    GetAllCapacitiesHandler(),
-  ];
+  Map<String, BackendHandler> handlers = {
+    "getAllCapacities": GetAllCapacitiesHandler(),
+    "getAllAppointments": GetAllAppointmentsHandler(),
+    "createCapacities": CreateCapacitiesHandler(),
+    "createAppointment": CreateAppointmentHandler(),
+  };
 
   void init() async {
     try {
@@ -44,12 +44,7 @@ class BackendService {
     print(message);
     Map json = const JsonDecoder().convert(message);
 
-    for (BackendHandler handler in handlers) {
-      if (handler.action == json["action"]) {
-        handler.receive(json);
-        return;
-      }
-    }
+    handlers[json["action"]]?.receive(json);
   }
 
   void sendMessage(String message) {

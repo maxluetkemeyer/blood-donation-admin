@@ -24,7 +24,7 @@ class CreateCapacitiesHandler extends BackendHandler {
 
   ///Clear all old local Capacities and replace them with the newest server capacities
   @override
-  void receive(Map json) {
+  void receiveLogic(Map json) {
     //check response
     if (json["response_status"] != 201) {
       print("error");

@@ -20,7 +20,9 @@ class _WorkloadOverviewState extends State<WorkloadOverview> {
   @override
   Widget build(BuildContext context) {
     double usage = usagePercent();
-    double free = 100 - usage;
+    double free = 100.0 - usage;
+
+    double sectionSpace = usage > 95 || usage < 5 ? 0 : 5;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +66,7 @@ class _WorkloadOverviewState extends State<WorkloadOverview> {
               ],
               centerSpaceRadius: 0,
               startDegreeOffset: -90,
-              sectionsSpace: 5,
+              sectionsSpace: sectionSpace,
               pieTouchData: PieTouchData(
                 enabled: true,
                 touchCallback: (FlTouchEvent flTouchEvent, PieTouchResponse? pieTouchResponse) {
@@ -106,13 +108,16 @@ double usagePercent() {
   int appointments = CalendarService().getAppointmentsPerDay(extractDay(DateTime.now())).length;
 
   int freeAppointments = 0;
-  List<Capacity> capacities = CapacityService().getCapacitiesPerDay(extractDay(DateTime.now()));
+  List<Capacity> capacities = CapacityService().getCapacitiesPerDay(DateTime.now());
   for (Capacity capacity in capacities) {
     int a = capacity.duration.inMinutes ~/ env.appointmentLengthInMinutes;
     int b = a * capacity.slots;
 
     freeAppointments = freeAppointments + b;
   }
+
+  //TODO: Bug when 100.0 is returned => Legend (Row Widget) does not get painted
+  if (freeAppointments == 0) return 99.9;
 
   return ((appointments / freeAppointments) * 100).roundToDouble();
 }
