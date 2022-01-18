@@ -1,4 +1,5 @@
 import 'package:blooddonation_admin/services/logging_service.dart';
+import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +20,7 @@ void main() {
   CalendarService();
   CapacityService();
   LoggingService();
+  SettingService();
 
 
   // Test Data
@@ -28,6 +30,7 @@ void main() {
   addTestAppointments();
   addTestRequests();
   addTestPlannerEvents();
+  addTestSettings();
 
   runApp(const MainWidget());
 }

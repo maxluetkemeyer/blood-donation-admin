@@ -1,5 +1,8 @@
+import 'package:blooddonation_admin/services/settings/models/faq_question_model.dart';
+import 'package:blooddonation_admin/services/settings/models/language_model.dart';
+import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:flutter/material.dart';
-import '../data/data.dart' as dates;
+import '../../services/settings/models/faq_controller_model.dart';
 import '../widgets/question_tile.dart';
 
 class FaqEditView extends StatefulWidget {
@@ -9,8 +12,10 @@ class FaqEditView extends StatefulWidget {
 }
 
 class _FaqEditViewState extends State<FaqEditView> {
-  var data = dates.data;
-  var lang = dates.lang;
+  var faqQuestions = SettingService().getFaqQuestions();
+  var faqController = SettingService().getFaqControllers();
+  var lang = SettingService().getLanguages();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,42 +24,34 @@ class _FaqEditViewState extends State<FaqEditView> {
       ),
       body: Center(
         child: ReorderableListView(
-          children: getQuestionTiles(data,lang),
+          children: getQuestionTiles(faqQuestions,lang,faqController),
           onReorder: (oldIndex, newIndex) {
             setState(() {
               if (oldIndex < newIndex) {
                 newIndex -= 1;
               }
-              var item = data.removeAt(oldIndex);
-              data.insert(newIndex, item);
+              SettingService().swapQuestions(oldIndex, newIndex);
             });
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.save),
+        onPressed: (){
+
+        },
       ),
     );
   }
 
   ///Returns a [List] of [QuestionTile]'s which are Expandable Tiles that allow the user to change FAQ questions
-  List<QuestionTile> getQuestionTiles(List<Map<String, List<String>>> data, List<List<String>> lang) {
+  List<QuestionTile> getQuestionTiles(List<Map<String, FaqQuestion>> faqQuest, List<Language> lang, List<Map<String, FaqController>> faqContr) {
     List<QuestionTile> l = [];
-    for(int i = 0; i < data.length;i++){
-      l.add(QuestionTile(iterator: i,data: data,lang: lang,key: ValueKey("Frage$i"),));
+    for(int i = 0; i < faqQuest.length;i++){
+      l.add(QuestionTile(iterator: i,data: faqQuest,lang: lang,controllers:faqContr,key: ValueKey("Frage$i"),));
     }
     return  l;
   }
 
-
-  ///In this function, the field for [TextEditingController]'s is created. The generated pointer system has the same structure 
-  ///as the data fetched from the server. Therefore both need to be managed and maintained.
-  List<Map<String, List<TextEditingController>>> buildController(List<Map<String, List<String>>> data, List<List<String>> lang){
-    List<Map<String, List<TextEditingController>>> res = [];
-    for(int i = 0; i<data.length; i++){
-      Map<String, List<TextEditingController>> cur = {};
-      for(int j = 0; j<lang.length; j++){
-        cur[lang[j][0]]=[TextEditingController(),TextEditingController()];
-      }
-      res.add(cur);
-    }
-    return res;
-  }
+  ///Saves all current Controllerstates inside the data service
 }
