@@ -1,15 +1,14 @@
+import 'package:blooddonation_admin/connection_view/connetion_view.dart';
 import 'package:blooddonation_admin/services/backend/backend_service.dart';
 import 'package:blooddonation_admin/services/logging_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:blooddonation_admin/app.dart';
 import 'package:blooddonation_admin/misc/theme.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
-import 'package:blooddonation_admin/tester.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,14 +20,13 @@ void main() {
   CapacityService();
   LoggingService();
 
-
   // Test Data
-  for (int i = 0; i < 1000;i++){
+  for (int i = 0; i < 1000; i++) {
     LoggingService().addEvent(DateTime.now().toString());
   }
-  addTestAppointments();
-  addTestRequests();
-  addTestPlannerEvents();
+  //addTestAppointments();
+  //addTestRequests();
+  //addTestPlannerEvents();
 
   runApp(const MainWidget());
 }
@@ -55,7 +53,7 @@ class MainWidget extends StatelessWidget {
           child: child!,
         ),
         locale: const Locale("en"),
-        home: const App(),
+        home: const ConnectionView(),
       ),
     );
   }

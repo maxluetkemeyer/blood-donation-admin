@@ -1,5 +1,3 @@
-import 'package:blooddonation_admin/services/provider/provider_service.dart';
-import 'package:blooddonation_admin/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -38,19 +36,6 @@ class _AppState extends ConsumerState<App> {
 
   @override
   Widget build(BuildContext context) {
-    bool start = ref.watch(startProvider.state).state;
-    if (start) {
-      print("1");
-      initLoadOfBackendData();
-      print("2");
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    }
-    print("7");
-
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.appTitle),
