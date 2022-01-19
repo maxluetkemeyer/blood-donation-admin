@@ -19,7 +19,14 @@ class SettingsButton extends StatelessWidget {
               MaterialPageRoute(builder: (context) => nextPage),
             );
           },
-          child: Text(buttonText, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+          child: FittedBox(
+              child: Text(
+            buttonText,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          )),
         ),
       ),
     );

@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
 import 'package:blooddonation_admin/services/settings/models/faq_question_model.dart';
@@ -18,6 +16,8 @@ class SettingService {
   This part covers the Language management
   */
 
+  ///Saves all registered [Language]s.
+  ///
   ///Example:
   ///[
   /// Language(
@@ -26,17 +26,31 @@ class SettingService {
   /// ),
   /// Language(
   ///   abbr:"en",
-  ///   abbr:"Englisch",
+  ///   name:"English",
   /// ),
   ///]
   List<Language> _languages = [];
 
+  ///Adds one Language to the [_languages] List
   void addLanguage(Language newLanguage) {
     _languages.add(newLanguage);
   }
 
+  ///Returns a [List] of all registered [Language]s.
   List<Language> getLanguages() {
     return _languages;
+  }
+
+  ///Returns the [Language] with the fitting abbreviation.
+  ///
+  ///If [_languages] does not contain a Language with the fitting value for [abbr], then an error is thrown.
+  Language getLanguagesbyAbbr(String abbr) {
+    for(int i = 0; i<_languages.length;i++){
+      if(_languages[i].abbr==abbr){
+        return _languages[i];
+      }
+    }
+    throw("List of languages does not include an Object with the abbreviation '$abbr'");
   }
 
   int getLanguageListLength() {
@@ -50,7 +64,14 @@ class SettingService {
   ///Example:
   ///[
   /// {
-  ///   "de":FaqQuestion(answer:..,question:..)
+  ///   "de":FaqQuestion(
+  ///     answer:..,
+  ///     question:..,
+  ///   )
+  ///   "en":FaqQuestion(
+  ///     answer:..,
+  ///     question:..,
+  ///   )
   /// }
   ///]
   List<Map<String, FaqQuestion>> _faqQuestions = [];
@@ -74,6 +95,12 @@ class SettingService {
     _faqController.add(newQuestionController);
   }
 
+  ///Deletes the Question with [id]
+  void deleteFaqQuestion(int id){
+    _faqQuestions.removeAt(id);
+    _faqController.removeAt(id);
+  }
+
   List<Map<String, FaqQuestion>> getFaqQuestions() {
     return _faqQuestions;
   }
@@ -95,18 +122,18 @@ class SettingService {
   }
 
   void saveControllerState() {
-    for(int i = 0; i<_faqQuestions.length;i++){
-      for(int j = 0;j<_faqQuestions[i].length;i++){
-        _faqQuestions[i][j]?.answer=_faqController[i][j]?.answerController.text??"";
-        _faqQuestions[i][j]?.question=_faqController[i][j]?.questionController.text??"";
+    for (int i = 0; i < _faqQuestions.length; i++) {
+      for (int j = 0; j < _faqQuestions[i].length; i++) {
+        _faqQuestions[i][j]?.answer = _faqController[i][j]?.answerController.text ?? "";
+        _faqQuestions[i][j]?.question = _faqController[i][j]?.questionController.text ?? "";
       }
     }
   }
 
   //TODO: Dispose System für FAQ Editor
-  void disposeControllers(){
-    for(int i = 0; i<_faqQuestions.length;i++){
-      for(int j = 0;j<_faqQuestions[i].length;i++){
+  void disposeControllers() {
+    for (int i = 0; i < _faqQuestions.length; i++) {
+      for (int j = 0; j < _faqQuestions[i].length; i++) {
         _faqController[i][j]?.answerController.dispose();
         _faqController[i][j]?.questionController.dispose();
       }
