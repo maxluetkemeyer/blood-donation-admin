@@ -2,8 +2,8 @@ import 'package:blooddonation_admin/services/settings/models/faq_controller_mode
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-//TODO: localizations
 
 class NewFaqLangInput extends StatelessWidget {
   List<Language> lang;
@@ -28,26 +28,26 @@ class NewFaqLangInput extends StatelessWidget {
           margin: const EdgeInsets.all(12),
           children: [
             CupertinoFormRow(
-              prefix: const Text(
-                "Frage",
-                style: TextStyle(
+              prefix: Text(
+                AppLocalizations.of(context)!.question,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               child: CupertinoTextFormFieldRow(
-                placeholder: "Deine Antwort",
+                placeholder: AppLocalizations.of(context)!.yourQuestion,
                 controller: controller[lang[i].abbr]?.questionController,
               ),
             ),
             CupertinoFormRow(
-              prefix: const Text(
-                "Antwort",
-                style: TextStyle(
+              prefix: Text(
+                AppLocalizations.of(context)!.answer,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               child: CupertinoTextFormFieldRow(
-                placeholder: "Deine Antwort",
+                placeholder: AppLocalizations.of(context)!.yourAnswer,
                 controller: controller[lang[i].abbr]?.answerController,
               ),
             ),

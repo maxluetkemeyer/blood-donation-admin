@@ -3,6 +3,7 @@ import 'package:blooddonation_admin/services/settings/models/language_model.dart
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:blooddonation_admin/settings/widgets/new_faq_question.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../services/settings/models/faq_controller_model.dart';
 import '../widgets/question_tile.dart';
 
@@ -21,12 +22,13 @@ class _FaqEditViewState extends State<FaqEditView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Faq Edit Settings"),
+        title: Text(AppLocalizations.of(context)!.settingsFaq),
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
             onPressed: () {
               SettingService().saveControllerState();
+              //TODO: Backend Connection
             },
           )
         ],
@@ -68,7 +70,7 @@ class _FaqEditViewState extends State<FaqEditView> {
         data: faqQuest,
         lang: lang,
         controllers: faqContr,
-        key: ValueKey("Frage$i"),
+        key: ValueKey("${AppLocalizations.of(context)!.question}$i"),
       ));
     }
     return l;

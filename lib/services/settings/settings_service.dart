@@ -1,4 +1,3 @@
-import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
 import 'package:blooddonation_admin/services/settings/models/faq_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
@@ -34,6 +33,10 @@ class SettingService {
   ///Adds one Language to the [_languages] List
   void addLanguage(Language newLanguage) {
     _languages.add(newLanguage);
+  }
+
+  void deleteLanguage(int i) {
+    _languages.removeAt(i);
   }
 
   ///Returns a [List] of all registered [Language]s.

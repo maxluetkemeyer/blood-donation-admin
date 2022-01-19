@@ -2,8 +2,8 @@ import 'package:blooddonation_admin/services/settings/models/faq_controller_mode
 import 'package:blooddonation_admin/services/settings/models/faq_question_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-//TODO: localizations
 
 ///[LangInput] is a widget that generates two input and one [Text] Widget for one question and one language
 class LangInput extends StatefulWidget {
@@ -39,9 +39,9 @@ class _LangInputState extends State<LangInput> {
             margin: const EdgeInsets.all(12),
             children: [
               CupertinoFormRow(
-                prefix: const Text(
-                  "Frage",
-                  style: TextStyle(
+                prefix: Text(
+                  AppLocalizations.of(context)!.question,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -51,9 +51,9 @@ class _LangInputState extends State<LangInput> {
                 ),
               ),
               CupertinoFormRow(
-                prefix: const Text(
-                  "Antwort",
-                  style: TextStyle(
+                prefix: Text(
+                  AppLocalizations.of(context)!.answer,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),

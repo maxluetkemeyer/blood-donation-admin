@@ -4,8 +4,8 @@ import 'package:blooddonation_admin/services/settings/models/language_model.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import './lang_input.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-//TODO: localizations
 
 class QuestionTile extends StatefulWidget {
   Function notifyParents;
@@ -37,13 +37,13 @@ class _QuestionTileState extends State<QuestionTile> {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: ExpansionTile(
-        key: ValueKey("Frage${widget.iterator + 1}"),
+        key: ValueKey("${AppLocalizations.of(context)!.question}${widget.iterator + 1}"),
         iconColor: Theme.of(context).primaryColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Frage no. ${widget.iterator + 1}",
+              "${AppLocalizations.of(context)!.question} no. ${widget.iterator + 1}",
               style: TextStyle(
                 fontWeight: FontWeight.w300,
                 fontSize: 30,
@@ -79,18 +79,18 @@ class _QuestionTileState extends State<QuestionTile> {
         showCupertinoDialog(
           context: context,
           builder: (BuildContext context) => CupertinoAlertDialog(
-            title: const Text(
-              "Do you want to delete this Question?",
-              style: TextStyle(
+            title: Text(
+              AppLocalizations.of(context)!.settingsFaqDeleteTitle,
+              style: const TextStyle(
                 fontSize: 24,
               ),
             ),
             content: Column(
-              children: const [
-                SizedBox(height: 10),
+              children: [
+                const SizedBox(height: 10),
                 Text(
-                  "The deletion is irreversable",
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.settingsFaqDeleteSubtitle,
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 ),
@@ -107,14 +107,14 @@ class _QuestionTileState extends State<QuestionTile> {
                   Navigator.pop(context);
                 },
                 //child: const Text('Cancel Booking'),
-                child: const Text("Delete"),
+                child: Text(AppLocalizations.of(context)!.delete),
               ),
               CupertinoDialogAction(
                 isDefaultAction: true,
                 //pop dialog
                 onPressed: () => Navigator.pop(context),
                 //child: const Text('Back'),
-                child: const Text("Back"),
+                child: Text(AppLocalizations.of(context)!.back),
               ),
             ],
           ),

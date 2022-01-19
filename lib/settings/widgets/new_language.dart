@@ -1,41 +1,87 @@
+import 'package:blooddonation_admin/services/settings/models/language_model.dart';
+import 'package:blooddonation_admin/services/settings/settings_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewLanguage extends StatefulWidget {
-  final List<String> languages;
-  
-  const NewLanguage({ Key? key ,required this.languages}) : super(key: key);
+  final List<Language> languages = SettingService().getLanguages();
+  final Function notifyParents;
+
+  NewLanguage({Key? key, required this.notifyParents}) : super(key: key);
 
   @override
   State<NewLanguage> createState() => _NewLanguageState();
 }
 
 class _NewLanguageState extends State<NewLanguage> {
-  final TextEditingController _textEditingController = TextEditingController(text: "New Language");
+  TextEditingController _nameController = TextEditingController(text: "");
+  TextEditingController _abbrController = TextEditingController(text: "");
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height/2,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            TextFormField(
-              controller: _textEditingController,
-            ),
-            const SizedBox(height: 30,),
-            IconButton(
-              onPressed: (){
-                setState(() {
-                  widget.languages.add(_textEditingController.text);
-                  print(widget.languages);
-                  Navigator.of(context).pop();
-                });
-              }, 
-              icon: const Icon(Icons.save)
-            )
-          ],
+      height: MediaQuery.of(context).size.height / 2,
+      child: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CupertinoFormSection.insetGrouped(
+                header: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    AppLocalizations.of(context)!.settingsLanguageNew,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                footer: const Divider(),
+                margin: const EdgeInsets.all(12),
+                children: [
+                  CupertinoFormRow(
+                    prefix: Text(
+                      AppLocalizations.of(context)!.settingsLanguageName,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    child: CupertinoTextFormFieldRow(
+                      placeholder: "",
+                      controller: _nameController,
+                    ),
+                  ),
+                  CupertinoFormRow(
+                    prefix: Text(
+                      AppLocalizations.of(context)!.settingsLanguageAbbr,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    child: CupertinoTextFormFieldRow(
+                      placeholder: "",
+                      controller: _abbrController,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              CupertinoButton.filled(
+                  onPressed: () {
+                    setState(() {
+                      Language newLanguage = Language(name: _nameController.text, abbr: _abbrController.text);
+                      widget.notifyParents(newLanguage);
+                      Navigator.of(context).pop();
+                    });
+                  },
+                  child: Text(AppLocalizations.of(context)!.settingsLanguageNewSave))
+            ],
+          ),
         ),
       ),
     );

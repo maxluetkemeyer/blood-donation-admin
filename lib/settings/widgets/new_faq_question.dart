@@ -4,10 +4,12 @@ import 'package:blooddonation_admin/services/settings/models/language_model.dart
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:blooddonation_admin/settings/widgets/new_faq_lang_input.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 //TODO: disposing the controllers
-//TODO: localizations
 
+///Pop-up window to Add new [Language]s
 class NewFaqQuestion extends StatelessWidget {
   final Function notifyParents;
 
@@ -45,9 +47,9 @@ class NewFaqQuestion extends StatelessWidget {
                   ));
                   Navigator.of(context).pop();
                 },
-                child: const Text(
-                  "Neue Frage speichern",
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.settingsFaqNewSave,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
