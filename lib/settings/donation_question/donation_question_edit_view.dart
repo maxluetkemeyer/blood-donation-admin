@@ -50,10 +50,10 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
                   });
                 },
               )
-            : const Center(
-                key: ValueKey("noItemsInList"),
+            : Center(
+                key: const ValueKey("noItemsInList"),
                 child: Text(
-                  "Add new Questions to Enable User sided donation questions",
+                  AppLocalizations.of(context)!.settingsDonationEmpty,
                 ),
               ),
       ),

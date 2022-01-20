@@ -56,14 +56,14 @@ class _NewDonationInputFieldsState extends State<NewDonationInputFields> {
               flex: 2,
               child: Column(
                 children: [
-                  const Text(
-                    "Correct Answer:",
-                    style: TextStyle(
+                  Text(
+                    "${AppLocalizations.of(context)!.correctAnswer}:",
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   ListTile(
-                    title: const Text("yes"),
+                    title: Text(AppLocalizations.of(context)!.yes),
                     leading: Radio<bool>(
                       value: true,
                       groupValue: widget.newQuestion[widget.lang[i].abbr]?.isYesCorrect,
@@ -76,7 +76,7 @@ class _NewDonationInputFieldsState extends State<NewDonationInputFields> {
                     ),
                   ),
                   ListTile(
-                    title: const Text("no"),
+                    title: Text(AppLocalizations.of(context)!.no),
                     leading: Radio<bool>(
                       value: false,
                       groupValue: widget.newQuestion[widget.lang[i].abbr]?.isYesCorrect,

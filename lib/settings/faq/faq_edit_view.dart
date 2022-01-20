@@ -4,8 +4,8 @@ import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:blooddonation_admin/settings/faq/new_faq_question.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../services/settings/models/faq_controller_model.dart';
-import 'faq_question_tile.dart';
+import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
+import 'package:blooddonation_admin/settings/faq/faq_question_tile.dart';
 
 class FaqEditView extends StatefulWidget {
   const FaqEditView({Key? key}) : super(key: key);
@@ -47,10 +47,10 @@ class _FaqEditViewState extends State<FaqEditView> {
                   });
                 },
               )
-            : const Center(
-                key: ValueKey("noItemsInList"),
+            : Center(
+                key: const ValueKey("noItemsInList"),
                 child: Text(
-                  "Add new Questions to Enable the User sided FAQ",
+                  AppLocalizations.of(context)!.settingsFaqEmpty,
                 ),
               ),
       ),
