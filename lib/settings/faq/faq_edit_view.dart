@@ -1,11 +1,11 @@
 import 'package:blooddonation_admin/services/settings/models/faq_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
-import 'package:blooddonation_admin/settings/widgets/new_faq_question.dart';
+import 'package:blooddonation_admin/settings/faq/new_faq_question.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../services/settings/models/faq_controller_model.dart';
-import '../widgets/question_tile.dart';
+import 'faq_question_tile.dart';
 
 class FaqEditView extends StatefulWidget {
   const FaqEditView({Key? key}) : super(key: key);
@@ -27,24 +27,32 @@ class _FaqEditViewState extends State<FaqEditView> {
           IconButton(
             icon: const Icon(Icons.save),
             onPressed: () {
-              SettingService().saveControllerState();
+              print("Saving Faq");
+              SettingService().saveFaqControllerState();
               //TODO: Backend Connection
             },
           )
         ],
       ),
       body: Center(
-        child: ReorderableListView(
-          children: getQuestionTiles(faqQuestions, lang, faqController),
-          onReorder: (oldIndex, newIndex) {
-            setState(() {
-              if (oldIndex < newIndex) {
-                newIndex -= 1;
-              }
-              SettingService().swapQuestions(oldIndex, newIndex);
-            });
-          },
-        ),
+        child: faqQuestions.isNotEmpty
+            ? ReorderableListView(
+                children: getQuestionTiles(faqQuestions, lang, faqController),
+                onReorder: (oldIndex, newIndex) {
+                  setState(() {
+                    if (oldIndex < newIndex) {
+                      newIndex -= 1;
+                    }
+                    SettingService().swapFaqQuestions(oldIndex, newIndex);
+                  });
+                },
+              )
+            : const Center(
+                key: ValueKey("noItemsInList"),
+                child: Text(
+                  "Add new Questions to Enable the User sided FAQ",
+                ),
+              ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
@@ -61,10 +69,10 @@ class _FaqEditViewState extends State<FaqEditView> {
   }
 
   ///Returns a [List] of [QuestionTile]'s which are Expandable Tiles that allow the user to change FAQ questions
-  List<QuestionTile> getQuestionTiles(List<Map<String, FaqQuestion>> faqQuest, List<Language> lang, List<Map<String, FaqController>> faqContr) {
-    List<QuestionTile> l = [];
+  List<Widget> getQuestionTiles(List<Map<String, FaqQuestion>> faqQuest, List<Language> lang, List<Map<String, FaqController>> faqContr) {
+    List<Widget> l = [];
     for (int i = 0; i < faqQuest.length; i++) {
-      l.add(QuestionTile(
+      l.add(FaqQuestionTile(
         notifyParents: () => refreshDelete(i),
         iterator: i,
         data: faqQuest,
@@ -84,7 +92,7 @@ class _FaqEditViewState extends State<FaqEditView> {
   }
 
   ///Function is called when a [QuestionTile] is added
-  void refreshAdd(Map<String,FaqQuestion> data) {
+  void refreshAdd(Map<String, FaqQuestion> data) {
     setState(() {
       SettingService().addFaqQuestion(data);
     });

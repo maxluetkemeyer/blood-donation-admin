@@ -3,30 +3,30 @@ import 'package:blooddonation_admin/services/settings/models/faq_question_model.
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import './lang_input.dart';
+import 'faq_input_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
-class QuestionTile extends StatefulWidget {
+class FaqQuestionTile extends StatefulWidget {
   Function notifyParents;
   int iterator;
   List<Map<String, FaqQuestion>> data;
   List<Language> lang;
   List<Map<String, FaqController>> controllers;
 
-  QuestionTile({Key? key, required this.notifyParents, required this.iterator, required this.data, required this.lang, required this.controllers})
+  FaqQuestionTile({Key? key, required this.notifyParents, required this.iterator, required this.data, required this.lang, required this.controllers})
       : super(key: key);
 
   @override
-  _QuestionTileState createState() => _QuestionTileState();
+  _FaqQuestionTileState createState() => _FaqQuestionTileState();
 }
 
-class _QuestionTileState extends State<QuestionTile> {
+class _FaqQuestionTileState extends State<FaqQuestionTile> {
   @override
   Widget build(BuildContext context) {
     List<Widget> inputList = [];
     for (int j = 0; j < widget.lang.length; j++) {
-      inputList.add(LangInput(
+      inputList.add(FaqInputFields(
           data: widget.data,
           controllers: widget.controllers,
           country: widget.lang[j].abbr,

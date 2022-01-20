@@ -61,19 +61,17 @@ class _LanguageTileState extends State<LanguageTile> {
                           key: const ValueKey('deleteLanguage'),
                           isDestructiveAction: true,
                           onPressed: () {
-                            //Delete Faq Question
+                            //Delete language
                             widget.notifyParents(widget.iterator);
                             //pop dialog
                             Navigator.pop(context);
                           },
-                          //child: const Text('Cancel Booking'),
                           child: Text(AppLocalizations.of(context)!.delete),
                         ),
                         CupertinoDialogAction(
                           isDefaultAction: true,
                           //pop dialog
                           onPressed: () => Navigator.pop(context),
-                          //child: const Text('Back'),
                           child: Text(AppLocalizations.of(context)!.back),
                         ),
                       ],
@@ -82,7 +80,7 @@ class _LanguageTileState extends State<LanguageTile> {
                 },
                 );
               },
-              icon: const Icon(Icons.delete)),
+              icon: const Icon(Icons.delete,color: Colors.grey,)),
         ],
       ),
     );

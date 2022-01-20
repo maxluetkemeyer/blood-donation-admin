@@ -25,8 +25,6 @@ class _NewLanguageState extends State<NewLanguage> {
       child: Center(
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CupertinoFormSection.insetGrouped(
                 header: Padding(
@@ -72,14 +70,21 @@ class _NewLanguageState extends State<NewLanguage> {
                 height: 30,
               ),
               CupertinoButton.filled(
-                  onPressed: () {
-                    setState(() {
-                      Language newLanguage = Language(name: _nameController.text, abbr: _abbrController.text);
-                      widget.notifyParents(newLanguage);
-                      Navigator.of(context).pop();
-                    });
-                  },
-                  child: Text(AppLocalizations.of(context)!.settingsLanguageNewSave))
+                onPressed: () {
+                  setState(() {
+                    Language newLanguage = Language(name: _nameController.text, abbr: _abbrController.text);
+                    widget.notifyParents(newLanguage);
+                    Navigator.of(context).pop();
+                  });
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.settingsLanguageNewSave,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              )
             ],
           ),
         ),

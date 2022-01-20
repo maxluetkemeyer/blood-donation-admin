@@ -5,6 +5,7 @@ import 'package:blooddonation_admin/models/person_model.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/models/request_model.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
+import 'package:blooddonation_admin/services/settings/models/donation_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/faq_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
@@ -249,5 +250,32 @@ void addTestSettings() {
             "On the day of your blood donation, you should drink plenty of fluids and eat normally to prepare your body for blood donation. Also, you should not eat foods that are too fatty the day before you donate blood, as this can affect the quality of your blood plasma. Smoking a cigarette before donating blood can also affect the quality of your blood plasma. You should refrain from sports activities before and after donating blood.",
       ),
     },
+  );
+
+  //Donation Questions
+  ss.addDonationQuestion(
+    {
+      "de": DonationQuestion(
+        question: "Sind Sie positiv auf HIV getestet worden oder haben Sie die Befürchtung evtl. HIV-positiv zu sein?",
+        isYesCorrect: false,
+      ),
+      "en": DonationQuestion(
+        question: "Have you tested positive for HIV or are you concerned that you may be HIV positive?",
+        isYesCorrect: false,
+      ),
+    }
+  );
+
+  ss.addDonationQuestion(
+    {
+      "de": DonationQuestion(
+        question: "Wurden bei Ihnen oder einem Ihrer Blutsverwandten 1. Grades die Creutzfeldt-Jakob-Krankheit erkannt?",
+        isYesCorrect: false,
+      ),
+      "en": DonationQuestion(
+        question: "Have you or any of your 1st-degree blood relatives been diagnosed with Creutzfeldt-Jakob disease?",
+        isYesCorrect: false,
+      ),
+    }
   );
 }

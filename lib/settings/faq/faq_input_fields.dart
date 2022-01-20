@@ -6,21 +6,21 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 ///[LangInput] is a widget that generates two input and one [Text] Widget for one question and one language
-class LangInput extends StatefulWidget {
+class FaqInputFields extends StatefulWidget {
   List<Map<String, FaqQuestion>> data;
   String country;
   int iterator;
   String countryName;
   List<Map<String, FaqController>> controllers;
 
-  LangInput({Key? key, required this.data, required this.country, required this.iterator, required this.countryName, required this.controllers})
+  FaqInputFields({Key? key, required this.data, required this.country, required this.iterator, required this.countryName, required this.controllers})
       : super(key: key);
 
   @override
-  _LangInputState createState() => _LangInputState();
+  _FaqInputFieldsState createState() => _FaqInputFieldsState();
 }
 
-class _LangInputState extends State<LangInput> {
+class _FaqInputFieldsState extends State<FaqInputFields> {
   @override
   Widget build(BuildContext context) {
     return Row(

@@ -1,3 +1,5 @@
+import 'package:blooddonation_admin/services/settings/models/donation_controller_model.dart';
+import 'package:blooddonation_admin/services/settings/models/donation_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
 import 'package:blooddonation_admin/services/settings/models/faq_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
@@ -48,12 +50,12 @@ class SettingService {
   ///
   ///If [_languages] does not contain a Language with the fitting value for [abbr], then an error is thrown.
   Language getLanguagesbyAbbr(String abbr) {
-    for(int i = 0; i<_languages.length;i++){
-      if(_languages[i].abbr==abbr){
+    for (int i = 0; i < _languages.length; i++) {
+      if (_languages[i].abbr == abbr) {
         return _languages[i];
       }
     }
-    throw("List of languages does not include an Object with the abbreviation '$abbr'");
+    throw ("List of languages does not include an Object with the abbreviation '$abbr'");
   }
 
   int getLanguageListLength() {
@@ -99,7 +101,7 @@ class SettingService {
   }
 
   ///Deletes the Question with [id]
-  void deleteFaqQuestion(int id){
+  void deleteFaqQuestion(int id) {
     _faqQuestions.removeAt(id);
     _faqController.removeAt(id);
   }
@@ -124,35 +126,113 @@ class SettingService {
     return _faqQuestions.length;
   }
 
-  void saveControllerState() {
+  void saveFaqControllerState() {
     for (int i = 0; i < _faqQuestions.length; i++) {
-      for (int j = 0; j < _faqQuestions[i].length; i++) {
-        _faqQuestions[i][j]?.answer = _faqController[i][j]?.answerController.text ?? "";
-        _faqQuestions[i][j]?.question = _faqController[i][j]?.questionController.text ?? "";
+      for (int j = 0; j < _languages.length; i++) {
+        _faqQuestions[i][_languages[j].abbr]?.answer = _faqController[i][_languages[j].abbr]?.answerController.text ?? "";
+        _faqQuestions[i][_languages[j].abbr]?.question = _faqController[i][_languages[j].abbr]?.questionController.text ?? "";
       }
     }
   }
 
-  //TODO: Dispose System für FAQ Editor
-  void disposeControllers() {
-    for (int i = 0; i < _faqQuestions.length; i++) {
-      for (int j = 0; j < _faqQuestions[i].length; i++) {
-        _faqController[i][j]?.answerController.dispose();
-        _faqController[i][j]?.questionController.dispose();
-      }
+  //TODO: Dispose System for FAQ Controller
+  void disposeFaqControllers(int i) {
+    for (int j = 0; j < _languages.length; j++) {
+      _faqController[i][_languages[j].abbr]?.answerController.dispose();
+      _faqController[i][_languages[j].abbr]?.questionController.dispose();
     }
   }
 
-  void swapQuestions(int oldIndex, int newIndex) {
+  void swapFaqQuestions(int oldIndex, int newIndex) {
     Map<String, FaqQuestion> item = _faqQuestions.removeAt(oldIndex);
     _faqQuestions.insert(newIndex, item);
 
     Map<String, FaqController> itemController = _faqController.removeAt(oldIndex);
     _faqController.insert(newIndex, itemController);
   }
-}
 
   /*
   This part covers the Donation Question management
   */
-  
+  ///Example:
+  ///[
+  /// {
+  ///   "de":DonationQuestion(
+  ///     answer:..,
+  ///     question:..,
+  ///     isYesCorrect:..,
+  ///   )
+  ///   "en": DonationQuestion(
+  ///     answer:..,
+  ///     question:..,
+  ///     isYesCorrect:..,
+  ///   )
+  /// }
+  ///]
+  List<Map<String, DonationQuestion>> _donationQuestions = [];
+  List<Map<String, DonationController>> _donationController = [];
+
+  ///Adds a new [DonationQuestion] and a fitting Controller adds them according to their list
+  void addDonationQuestion(Map<String, DonationQuestion> newQuestion) {
+    _donationQuestions.add(newQuestion);
+    Map<String, DonationController> newQuestionController = {};
+    for (int i = 0; i < _languages.length; i++) {
+      DonationController entry = DonationController(
+        questionController: TextEditingController(
+          text: newQuestion[_languages[i].abbr]?.question,
+        ),
+      );
+      newQuestionController[_languages[i].abbr] = entry;
+    }
+    _donationController.add(newQuestionController);
+  }
+
+  ///Deletes the Question with [id]
+  void deleteDonationQuestion(int id) {
+    _donationQuestions.removeAt(id);
+    _donationController.removeAt(id);
+  }
+
+  List<Map<String, DonationQuestion>> getDonationQuestions() {
+    return _donationQuestions;
+  }
+
+  List<Map<String, DonationController>> getDonationControllers() {
+    return _donationController;
+  }
+
+  Map<String, DonationQuestion> getDonationQuestionById(int id) {
+    return _donationQuestions[id];
+  }
+
+  Map<String, DonationController> getDonationControllerById(int id) {
+    return _donationController[id];
+  }
+
+  int getDonationQuestionListLength() {
+    return _donationQuestions.length;
+  }
+
+  void saveDonationControllerState() {
+    for (int i = 0; i < _donationQuestions.length; i++) {
+      for (int j = 0; j < _languages.length; j++) {
+        _donationQuestions[i][_languages[j].abbr]?.question = _donationController[i][_languages[j].abbr]?.questionController.text ?? "";
+      }
+    }
+  }
+
+  //TODO: Dispose System for Donation Controller
+  void disposeDonationControllers(int i) {
+    for (int j = 0; j < _languages.length; j++) {
+      _donationController[i][_languages[j].abbr]?.questionController.dispose();
+    }
+  }
+
+  void swapDonationQuestions(int oldIndex, int newIndex) {
+    Map<String, DonationQuestion> item = _donationQuestions.removeAt(oldIndex);
+    _donationQuestions.insert(newIndex, item);
+
+    Map<String, DonationController> itemController = _donationController.removeAt(oldIndex);
+    _donationController.insert(newIndex, itemController);
+  }
+}
