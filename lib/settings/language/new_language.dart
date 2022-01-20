@@ -15,8 +15,8 @@ class NewLanguage extends StatefulWidget {
 }
 
 class _NewLanguageState extends State<NewLanguage> {
-  TextEditingController _nameController = TextEditingController(text: "");
-  TextEditingController _abbrController = TextEditingController(text: "");
+  TextEditingController nameController = TextEditingController(text: "");
+  TextEditingController abbrController = TextEditingController(text: "");
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _NewLanguageState extends State<NewLanguage> {
                     ),
                     child: CupertinoTextFormFieldRow(
                       placeholder: "",
-                      controller: _nameController,
+                      controller: nameController,
                     ),
                   ),
                   CupertinoFormRow(
@@ -61,7 +61,7 @@ class _NewLanguageState extends State<NewLanguage> {
                     ),
                     child: CupertinoTextFormFieldRow(
                       placeholder: "",
-                      controller: _abbrController,
+                      controller: abbrController,
                     ),
                   ),
                 ],
@@ -72,7 +72,7 @@ class _NewLanguageState extends State<NewLanguage> {
               CupertinoButton.filled(
                 onPressed: () {
                   setState(() {
-                    Language newLanguage = Language(name: _nameController.text, abbr: _abbrController.text);
+                    Language newLanguage = Language(name: nameController.text, abbr: abbrController.text);
                     widget.notifyParents(newLanguage);
                     Navigator.of(context).pop();
                   });

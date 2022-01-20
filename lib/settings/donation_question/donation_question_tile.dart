@@ -7,13 +7,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DonationQuestionTile extends StatefulWidget {
-  Function notifyParents;
-  int iterator;
-  List<Map<String, DonationQuestion>> data;
-  List<Language> lang;
-  List<Map<String, DonationController>> controllers;
+  final Function notifyParents;
+  final int iterator;
+  final List<Map<String, DonationQuestion>> data;
+  final List<Language> lang;
+  final List<Map<String, DonationController>> controllers;
 
-  DonationQuestionTile(
+  const DonationQuestionTile(
       {Key? key, required this.notifyParents, required this.iterator, required this.data, required this.lang, required this.controllers})
       : super(key: key);
 

@@ -8,13 +8,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class FaqQuestionTile extends StatefulWidget {
-  Function notifyParents;
-  int iterator;
-  List<Map<String, FaqQuestion>> data;
-  List<Language> lang;
-  List<Map<String, FaqController>> controllers;
+  final Function notifyParents;
+  final int iterator;
+  final List<Map<String, FaqQuestion>> data;
+  final List<Language> lang;
+  final List<Map<String, FaqController>> controllers;
 
-  FaqQuestionTile({Key? key, required this.notifyParents, required this.iterator, required this.data, required this.lang, required this.controllers})
+  const FaqQuestionTile({Key? key, required this.notifyParents, required this.iterator, required this.data, required this.lang, required this.controllers})
       : super(key: key);
 
   @override

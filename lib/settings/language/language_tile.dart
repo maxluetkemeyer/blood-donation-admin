@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageTile extends StatefulWidget {
-  List<Language> languages;
-  int iterator;
-  Function notifyParents;
+  final List<Language> languages;
+  final int iterator;
+  final Function notifyParents;
 
-  LanguageTile({Key? key, required this.languages, required this.iterator, required this.notifyParents}) : super(key: key);
+  const LanguageTile({Key? key, required this.languages, required this.iterator, required this.notifyParents}) : super(key: key);
 
   @override
   State<LanguageTile> createState() => _LanguageTileState();

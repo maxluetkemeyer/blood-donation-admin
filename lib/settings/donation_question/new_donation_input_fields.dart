@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewDonationInputFields extends StatefulWidget {
-  List<Language> lang;
-  Map<String, DonationController> controller;
-  Map<String, DonationQuestion> newQuestion;
+  final List<Language> lang;
+  final Map<String, DonationController> controller;
+  final Map<String, DonationQuestion> newQuestion;
 
-  NewDonationInputFields({Key? key, required this.lang, required this.controller, required this.newQuestion}) : super(key: key);
+  const NewDonationInputFields({Key? key, required this.lang, required this.controller, required this.newQuestion}) : super(key: key);
 
   @override
   State<NewDonationInputFields> createState() => _NewDonationInputFieldsState();

@@ -6,13 +6,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 ///[LangInput] is a widget that generates two input and one [Text] Widget for one question and one language
 class DonationInputFields extends StatefulWidget {
-  List<Map<String, DonationQuestion>> data;
-  String country;
-  int iterator;
-  String countryName;
-  List<Map<String, DonationController>> controllers;
+  final List<Map<String, DonationQuestion>> data;
+  final String country;
+  final int iterator;
+  final String countryName;
+  final List<Map<String, DonationController>> controllers;
 
-  DonationInputFields(
+  const DonationInputFields(
       {Key? key, required this.data, required this.country, required this.iterator, required this.countryName, required this.controllers})
       : super(key: key);
 

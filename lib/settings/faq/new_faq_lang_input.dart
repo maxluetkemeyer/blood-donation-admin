@@ -6,10 +6,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class NewFaqLangInput extends StatelessWidget {
-  List<Language> lang;
-  Map<String, FaqController> controller;
+  final List<Language> lang;
+  final Map<String, FaqController> controller;
 
-  NewFaqLangInput({Key? key, required this.lang, required this.controller}) : super(key: key);
+  const NewFaqLangInput({Key? key, required this.lang, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
