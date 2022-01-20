@@ -8,18 +8,19 @@ import 'package:blooddonation_admin/logging/logging_view.dart';
 import 'package:blooddonation_admin/requests/requests_view.dart';
 import 'package:blooddonation_admin/planner/planner_view.dart';
 import 'package:blooddonation_admin/settings/settings_view.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// The structure of the program
 ///
 /// It contains a list of all pages and an [AppBar] where these pages are selectable.
-class App extends StatefulWidget {
+class App extends ConsumerStatefulWidget {
   const App({Key? key}) : super(key: key);
 
   @override
-  State<App> createState() => _AppState();
+  ConsumerState<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends ConsumerState<App> {
   /// All pages of the program
   final List<Widget> screens = [
     const Dashboard(),

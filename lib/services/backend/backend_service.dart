@@ -1,53 +1,71 @@
+import 'dart:convert';
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html';
+
 import 'package:blooddonation_admin/misc/env.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import './message_handler.dart' as handler;
-import './message_actions.dart' as actions;
+import 'package:blooddonation_admin/services/backend/backend_handler.dart';
+import 'package:blooddonation_admin/services/backend/handlers/create_appointment.dart';
+import 'package:blooddonation_admin/services/backend/handlers/create_capacities.dart';
+import 'package:blooddonation_admin/services/backend/handlers/get_all_appointments.dart';
+import 'package:blooddonation_admin/services/backend/handlers/get_all_capacities.dart';
+import 'package:blooddonation_admin/services/provider/provider_service.dart';
 
-// ignore: non_constant_identifier_names
-var BackendService = _BackendService();
-
-class _BackendService {
+class BackendService {
   //Singleton
-  static final _BackendService _instance = _BackendService._private();
-  factory _BackendService() => _instance;
-  _BackendService._private() {
+  static final BackendService _instance = BackendService._private();
+  factory BackendService() => _instance;
+  BackendService._private() {
     print("Starting Backend Service");
-
-    init();
   }
 
-  late final WebSocketChannel channel;
+  late WebSocket ws;
 
-  void init() async {
-    try {
-      channel = WebSocketChannel.connect(
-        Uri.parse(WEBSOCKETURI),
-      );
-    } catch (error) {
-      print(error);
-    }
+  Map<String, BackendHandler> handlers = {
+    "getAllCapacities": GetAllCapacitiesHandler(),
+    "getAllAppointments": GetAllAppointmentsHandler(),
+    "createCapacities": CreateCapacitiesHandler(),
+    "createAppointment": CreateAppointmentHandler(),
+  };
 
-    channel.stream.listen(onMessage);
-    channel.sink.add("Hello!");
-    print("inited");
+  void init() {
+    ws = WebSocket(WEBSOCKETURL);
+
+    ws.onOpen.listen((e) {
+      print('Websocket connected');
+      ProviderService().container.read(backendStatus.state).state = BackendStatus.connected;
+    });
+
+    ws.onClose.listen((e) {
+      print('Websocket closed');
+      ProviderService().container.read(backendStatus.state).state = BackendStatus.closed;
+    });
+
+    ws.onError.listen((e) {
+      print('Error connecting to Websocket');
+      ProviderService().container.read(backendStatus.state).state = BackendStatus.failed;
+    });
+
+    ws.onMessage.listen(_onMessage);
   }
 
-  void onMessage(message) {
+  void _onMessage(MessageEvent messageEvent) {
+    String message = messageEvent.data.toString();
     print(message);
 
-    switch (message.type) {
-      case "example":
-        handler.exampleMessageHandler(message);
-        return;
-      default:
-        print(message);
-    }
+    Map json = const JsonDecoder().convert(message);
+
+    handlers[json["action"]]?.receive(json);
   }
 
   void sendMessage(String message) {
-    channel.sink.add(message);
-    
+    ws.sendString(message);
   }
+}
 
-  Future sendChangeAllCapacities() => actions.sendChangeAllCapacities();
+enum BackendStatus {
+  initializing,
+  connected,
+  closed,
+  failed,
+  everythingLoaded,
 }

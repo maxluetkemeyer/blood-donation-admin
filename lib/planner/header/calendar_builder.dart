@@ -9,8 +9,8 @@ CalendarBuilders plannerCalendarBuilder(DateTime monday) => CalendarBuilders(
         day = day.toLocal().add(const Duration(hours: -1));
         bool isPlanned = CapacityService().getCapacitiesPerDay(day).isNotEmpty;
 
-        BoxDecoration decoration = BoxDecoration(
-          color: Colors.blueGrey.shade50,
+        BoxDecoration decoration = const BoxDecoration(
+          color: Colors.white,
         );
 
         //selected week days
@@ -35,7 +35,7 @@ CalendarBuilders plannerCalendarBuilder(DateTime monday) => CalendarBuilders(
 
         //past days
         if (day.isBefore(extractDay(DateTime.now()))) {
-          //decoration = const BoxDecoration();
+          decoration = const BoxDecoration();
         }
 
         //today

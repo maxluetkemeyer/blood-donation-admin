@@ -83,11 +83,11 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
             width: double.infinity,
             child: CupertinoButton.filled(
               onPressed: () {
-                if (widget.appointment.id == "-1") {
+                if (widget.appointment.id == -1) {
                   //later: Send to backend and recieve new appointment
                   CalendarService().addAppointment(
                     Appointment(
-                      id: DateTime.now().toString(),
+                      id: DateTime.now().millisecondsSinceEpoch,
                       start: widget.appointment.start,
                       duration: widget.appointment.duration,
                       person: Person(
@@ -197,7 +197,7 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(AppLocalizations.of(context)!.appointment),
-              if (widget.appointment.id != "-1")
+              if (widget.appointment.id != -1)
                 TextButton(
                   onPressed: () => showCupertinoDialog(
                     context: context,

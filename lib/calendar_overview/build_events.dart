@@ -121,12 +121,12 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
 
     if (!paint) continue;
 
-    for (int j = 0; j < inCapacity!.chairs; j++) {
+    for (int j = 0; j < inCapacity!.slots; j++) {
       if (j < rows[i]) continue;
 
       mockAppointments.add(
         Appointment(
-          id: "-1",
+          id: -1,
           start: aktuell,
           duration: Duration(minutes: appointmentLengthInMinutes),
         ),

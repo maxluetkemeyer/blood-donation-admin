@@ -1,9 +1,13 @@
+import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class RequestWeekBarChart extends StatefulWidget {
+  final DateTime monday;
+
   const RequestWeekBarChart({
     Key? key,
+    required this.monday,
   }) : super(key: key);
 
   @override
@@ -36,58 +40,7 @@ class RequestWeekBarChartState extends State<RequestWeekBarChart> {
             ),
           ),
           //fertig
-          barGroups: <BarChartGroupData>[
-            //fertig
-            createBar(
-              x: 0,
-              y: 40,
-              barWidth: barWidth,
-              barColorBottom: barColorBottom,
-              barColorTop: barColorTop,
-            ),
-            createBar(
-              x: 1,
-              y: 30,
-              barWidth: barWidth,
-              barColorBottom: barColorBottom,
-              barColorTop: barColorTop,
-            ),
-            createBar(
-              x: 2,
-              y: 10,
-              barWidth: barWidth,
-              barColorBottom: barColorBottom,
-              barColorTop: barColorTop,
-            ),
-            createBar(
-              x: 3,
-              y: 20,
-              barWidth: barWidth,
-              barColorBottom: barColorBottom,
-              barColorTop: barColorTop,
-            ),
-            createBar(
-              x: 4,
-              y: 30,
-              barWidth: barWidth,
-              barColorBottom: barColorBottom,
-              barColorTop: barColorTop,
-            ),
-            createBar(
-              x: 5,
-              y: 0,
-              barWidth: barWidth,
-              barColorBottom: barColorBottom,
-              barColorTop: barColorTop,
-            ),
-            createBar(
-              x: 6,
-              y: 0,
-              barWidth: barWidth,
-              barColorBottom: barColorBottom,
-              barColorTop: barColorTop,
-            ),
-          ],
+          barGroups: buildBars(),
           gridData: FlGridData(),
           titlesData: FlTitlesData(
             topTitles: SideTitles(showTitles: false),
@@ -116,33 +69,48 @@ class RequestWeekBarChartState extends State<RequestWeekBarChart> {
               showTitles: true,
             ),
           ),
-          maxY: 50,
+          maxY: maxY(),
         ),
       ),
     );
   }
-}
 
-BarChartGroupData createBar({
-  required int x,
-  required double y,
-  required double barWidth,
-  required Color barColorBottom,
-  required Color barColorTop,
-}) =>
-    BarChartGroupData(
-      x: x,
-      //fertig
-      barRods: <BarChartRodData>[
-        //fertig
-        BarChartRodData(
-          y: y,
-          borderRadius: const BorderRadius.all(Radius.zero),
-          width: barWidth,
-          colors: [
-            barColorBottom,
-            barColorTop,
+  List<BarChartGroupData> buildBars() {
+    List<BarChartGroupData> bars = [];
+
+    for (int i = 0; i < 7; i++) {
+      int amountAppointments = CalendarService().getAppointmentsPerDay(widget.monday.add(Duration(days: i))).length;
+
+      bars.add(
+        BarChartGroupData(
+          x: i,
+          barRods: <BarChartRodData>[
+            BarChartRodData(
+              y: amountAppointments.toDouble(),
+              borderRadius: const BorderRadius.all(Radius.zero),
+              width: barWidth,
+              colors: [
+                barColorBottom,
+                barColorTop,
+              ],
+            ),
           ],
         ),
-      ],
-    );
+      );
+    }
+
+    return bars;
+  }
+
+  double maxY() {
+    int max = 50;
+
+    for (int i = 0; i < 7; i++) {
+      int amountAppointments = CalendarService().getAppointmentsPerDay(widget.monday.add(Duration(days: i))).length;
+
+      if (amountAppointments > max) max = amountAppointments + 10;
+    }
+
+    return max.toDouble();
+  }
+}

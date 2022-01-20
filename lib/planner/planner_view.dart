@@ -1,13 +1,13 @@
 import 'package:blooddonation_admin/misc/utils.dart';
-import 'package:blooddonation_admin/planner/build_header.dart';
-import 'package:blooddonation_admin/planner/headder_widget.dart';
-import 'package:blooddonation_admin/services/backend/backend_service.dart';
+import 'package:blooddonation_admin/planner/calendar/build_header.dart';
+import 'package:blooddonation_admin/planner/header/headder_widget.dart';
+import 'package:blooddonation_admin/services/backend/handlers/create_capacities.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'build_events.dart';
+import 'calendar/build_events.dart';
 
 class Planner extends ConsumerStatefulWidget {
   const Planner({Key? key}) : super(key: key);
@@ -59,6 +59,8 @@ class _PlannerState extends ConsumerState<Planner> {
               eventGridColor: const Color.fromRGBO(225, 245, 254, 1),
               eventGridLineColorHalfHour: const Color.fromRGBO(11, 72, 116, 0.06),
               eventGridLineColorFullHour: const Color.fromRGBO(11, 72, 116, 0.2),
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              timeLineColor: Theme.of(context).scaffoldBackgroundColor,
             ),
           ),
         ],
@@ -67,7 +69,7 @@ class _PlannerState extends ConsumerState<Planner> {
         label: const Text("UPLOAD CHANGES"),
         icon: const Icon(Icons.save),
         onPressed: () {
-          BackendService.sendChangeAllCapacities();
+          CreateCapacitiesHandler().send();
         },
       ),
     );

@@ -1,4 +1,9 @@
 import 'package:blooddonation_admin/dashboard/workloadoverview/indicator.dart';
+import 'package:blooddonation_admin/misc/utils.dart';
+import 'package:blooddonation_admin/models/capacity_model.dart';
+import 'package:blooddonation_admin/services/calendar_service.dart';
+import 'package:blooddonation_admin/services/capacity_service.dart';
+import 'package:blooddonation_admin/misc/env.dart' as env;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +19,11 @@ class _WorkloadOverviewState extends State<WorkloadOverview> {
 
   @override
   Widget build(BuildContext context) {
+    double usage = usagePercent();
+    double free = 100.0 - usage;
+
+    double sectionSpace = usage > 95 || usage < 5 ? 0 : 5;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -32,23 +42,23 @@ class _WorkloadOverviewState extends State<WorkloadOverview> {
             PieChartData(
               sections: <PieChartSectionData>[
                 PieChartSectionData(
-                  value: 80,
+                  value: usage,
                   radius: 100,
                   color: Colors.blue,
                   showTitle: touchedIndex == 0 ? true : false,
                   titlePositionPercentageOffset: 0.6,
-                  title: "80%",
+                  title: "$usage%",
                   titleStyle: const TextStyle(
                     fontSize: 20,
                   ),
                 ),
                 PieChartSectionData(
-                  value: 20,
+                  value: free,
                   radius: 100,
                   color: Colors.blue.shade100,
                   showTitle: touchedIndex == 1 ? true : false,
                   titlePositionPercentageOffset: 0.6,
-                  title: "20%",
+                  title: "$free%",
                   titleStyle: const TextStyle(
                     fontSize: 20,
                   ),
@@ -56,7 +66,7 @@ class _WorkloadOverviewState extends State<WorkloadOverview> {
               ],
               centerSpaceRadius: 0,
               startDegreeOffset: -90,
-              sectionsSpace: 5,
+              sectionsSpace: sectionSpace,
               pieTouchData: PieTouchData(
                 enabled: true,
                 touchCallback: (FlTouchEvent flTouchEvent, PieTouchResponse? pieTouchResponse) {
@@ -92,4 +102,22 @@ class _WorkloadOverviewState extends State<WorkloadOverview> {
       ],
     );
   }
+}
+
+double usagePercent() {
+  int appointments = CalendarService().getAppointmentsPerDay(extractDay(DateTime.now())).length;
+
+  int freeAppointments = 0;
+  List<Capacity> capacities = CapacityService().getCapacitiesPerDay(DateTime.now());
+  for (Capacity capacity in capacities) {
+    int a = capacity.duration.inMinutes ~/ env.appointmentLengthInMinutes;
+    int b = a * capacity.slots;
+
+    freeAppointments = freeAppointments + b;
+  }
+
+  //TODO: Bug when 100.0 is returned => Legend (Row Widget) does not get painted
+  if (freeAppointments == 0) return 99.9;
+
+  return ((appointments / freeAppointments) * 100).roundToDouble();
 }
