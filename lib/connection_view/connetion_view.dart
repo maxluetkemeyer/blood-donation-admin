@@ -16,11 +16,11 @@ class ConnectionView extends ConsumerWidget {
     BackendStatus status = ref.watch(backendStatus.state).state;
 
     if (status == BackendStatus.initializing) {
-      BackendService().init();
-      return const ConnectionLoading(); //mostly show very very short
+      BackendService().init(); //Start WebSocket
+      return const ConnectionLoading(); //mostly shown very very short
     }
     if (status == BackendStatus.connected) {
-      initLoadOfBackendData();
+      initLoadOfBackendData(); //Load Data
       return const ConnectionLoading();
     }
     if (status == BackendStatus.failed) {
@@ -30,7 +30,7 @@ class ConnectionView extends ConsumerWidget {
       return const ConnectionFailed();
     }
 
-    //if everything is ready, show normal app
+    //if everything is ready, show normal app || BackendStatus.everythingLoaded
     return const App();
   }
 }
@@ -38,13 +38,16 @@ class ConnectionView extends ConsumerWidget {
 void initLoadOfBackendData() {
   // Load all Data from the backend
   GetAllAppointmentsHandler().send();
+  //...
 
+  //Last Handler with callback to update UI
   var handler = GetAllCapacitiesHandler(cb: () async {
+    //for UX to singalize that Data is loaded from a Server
     await Future.delayed(const Duration(seconds: 2));
 
     ProviderService().container.read(backendStatus.state).state = BackendStatus.everythingLoaded;
   });
-
+  //Replace old instance with new instance including the callback
   BackendService().handlers["getAllCapacities"] = handler;
-  handler.send();
+  handler.send(); 
 }

@@ -12,12 +12,12 @@ class LoggingService {
 
   void addEvent(String event) {
     events.add(event);
-    ProviderService().container.read(loggingProvider.state).state++;
+    ProviderService().container.read(loggingUpdateProvider.state).state++;
   }
 
   Future reload() async {
     return Future.delayed(const Duration(seconds: 1), () {
-      ProviderService().container.read(loggingProvider.state).state++;
+      ProviderService().container.read(loggingUpdateProvider.state).state++;
     });
   }
 }

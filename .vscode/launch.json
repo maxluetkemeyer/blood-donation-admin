@@ -5,19 +5,22 @@
             "name": "Debug",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "debug"
+            "flutterMode": "debug",
+            "deviceId": "Chrome"
         },
         {
             "name": "Profile",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "deviceId": "Chrome"
         },
         {
             "name": "Release",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "deviceId": "Chrome"
         }
     ]
 }

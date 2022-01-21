@@ -46,6 +46,15 @@ class BackendService {
     });
 
     ws.onMessage.listen(_onMessage);
+
+    //Check Timeout
+    Future.delayed(const Duration(seconds: 3)).then((_) {
+      BackendStatus statusLater = ProviderService().container.read(backendStatus.state).state;
+      if (statusLater == BackendStatus.initializing) {
+        print("Websocket Timeout!");
+        ProviderService().container.read(backendStatus.state).state = BackendStatus.failed;
+      }
+    });
   }
 
   void _onMessage(MessageEvent messageEvent) {
