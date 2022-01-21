@@ -30,11 +30,12 @@ class SettingService {
   ///   name:"English",
   /// ),
   ///]
-  List<Language> _languages = [];
+  final List<Language> _languages = [];
 
   ///Adds one Language to the [_languages] List
   void addLanguage(Language newLanguage) {
     _languages.add(newLanguage);
+    print(_languages);
   }
 
   void deleteLanguage(int i) {
@@ -79,8 +80,8 @@ class SettingService {
   ///   )
   /// }
   ///]
-  List<Map<String, FaqQuestion>> _faqQuestions = [];
-  List<Map<String, FaqController>> _faqController = [];
+  final List<Map<String, FaqQuestion>> _faqQuestions = [];
+  final List<Map<String, FaqController>> _faqController = [];
 
   ///Adds a new FaqQuestion and a fitting Controller adds them according to their list
   void addFaqQuestion(Map<String, FaqQuestion> newQuestion) {
@@ -128,7 +129,7 @@ class SettingService {
 
   void saveFaqControllerState() {
     for (int i = 0; i < _faqQuestions.length; i++) {
-      for (int j = 0; j < _languages.length; i++) {
+      for (int j = 0; j < _languages.length; j++) {
         _faqQuestions[i][_languages[j].abbr]?.answer = _faqController[i][_languages[j].abbr]?.answerController.text ?? "";
         _faqQuestions[i][_languages[j].abbr]?.question = _faqController[i][_languages[j].abbr]?.questionController.text ?? "";
       }
@@ -169,8 +170,8 @@ class SettingService {
   ///   )
   /// }
   ///]
-  List<Map<String, DonationQuestion>> _donationQuestions = [];
-  List<Map<String, DonationController>> _donationController = [];
+  final List<Map<String, DonationQuestion>> _donationQuestions = [];
+  final List<Map<String, DonationController>> _donationController = [];
 
   ///Adds a new [DonationQuestion] and a fitting Controller adds them according to their list
   void addDonationQuestion(Map<String, DonationQuestion> newQuestion) {
