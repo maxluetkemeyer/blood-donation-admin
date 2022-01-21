@@ -49,7 +49,7 @@ class _EventlogState extends ConsumerState<Eventlog> {
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
-    int update = ref.watch(loggingProvider.state).state;
+    int update = ref.watch(loggingUpdateProvider.state).state;
 
     print("rebuild logging");
 

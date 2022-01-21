@@ -14,7 +14,7 @@ final plannerUpdateProvider = StateProvider<int>((ref) {
   return 0;
 });
 
-final loggingProvider = StateProvider<int>((ref) {
+final loggingUpdateProvider = StateProvider<int>((ref) {
   return 0;
 });
 
