@@ -1,3 +1,4 @@
+import 'package:blooddonation_admin/models/statistic_model.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 
 class LoggingService {
@@ -9,6 +10,7 @@ class LoggingService {
   }
 
   List<String> events = [];
+  Statistic statistic = Statistic();
 
   void addEvent(String event) {
     events.add(event);
@@ -20,4 +22,6 @@ class LoggingService {
       ProviderService().container.read(loggingUpdateProvider.state).state++;
     });
   }
+  
+  
 }

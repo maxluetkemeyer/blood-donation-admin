@@ -20,13 +20,7 @@ void main() {
   CapacityService();
   LoggingService();
 
-  // Test Data
-  for (int i = 0; i < 1000; i++) {
-    LoggingService().addEvent(DateTime.now().toString());
-  }
-  //addTestAppointments();
-  //addTestRequests();
-  //addTestPlannerEvents();
+  LoggingService().statistic.totalBookedAppointments = 1;
 
   runApp(const MainWidget());
 }
