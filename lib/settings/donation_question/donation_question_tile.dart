@@ -2,6 +2,7 @@ import 'package:blooddonation_admin/services/settings/models/donation_controller
 import 'package:blooddonation_admin/services/settings/models/donation_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/settings/donation_question/donation_input_fields.dart';
+import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -9,9 +10,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class DonationQuestionTile extends StatefulWidget {
   final Function notifyParents;
   final int iterator;
-  final List<Map<String, DonationQuestion>> data;
+  final List<DonationQuestion> data;
   final List<Language> lang;
-  final List<Map<String, DonationController>> controllers;
+  final List<DonationController> controllers;
 
   const DonationQuestionTile(
       {Key? key, required this.notifyParents, required this.iterator, required this.data, required this.lang, required this.controllers})
@@ -26,18 +27,23 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
   Widget build(BuildContext context) {
     List<Widget> inputList = [];
     for (int j = 0; j < widget.lang.length; j++) {
-      inputList.add(DonationInputFields(
+      inputList.add(
+        DonationInputFields(
           data: widget.data,
           controllers: widget.controllers,
           country: widget.lang[j].abbr,
           iterator: widget.iterator,
-          countryName: widget.lang[j].name));
+          countryName: widget.lang[j].name,
+        ),
+      );
     }
-
+    print(inputList);
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: ExpansionTile(
-        key: ValueKey("${AppLocalizations.of(context)!.question}${widget.iterator + 1}"),
+        key: ValueKey(
+          "${AppLocalizations.of(context)!.question}${widget.iterator + 1}",
+        ),
         iconColor: Theme.of(context).primaryColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,9 +72,57 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
         children: [
           Padding(
             padding: const EdgeInsets.all(15),
-            child: Column(
+            child: Row(
               children: [
-                ...inputList,
+                Expanded(
+                  flex: 15,
+                  child: Column(
+                    children: [
+                      ...inputList,
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    children: [
+                      Text(
+                        "${AppLocalizations.of(context)!.correctAnswer}:",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(AppLocalizations.of(context)!.yes),
+                        leading: Radio<bool>(
+                          value: true,
+                          groupValue: SettingService().getDonationQuestionById(widget.iterator).isYesCorrect,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              SettingService().getDonationQuestionById(widget.iterator).isYesCorrect = value ?? false;
+                            });
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(AppLocalizations.of(context)!.no),
+                        leading: Radio<bool>(
+                          value: false,
+                          groupValue: SettingService().getDonationQuestionById(widget.iterator).isYesCorrect,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              SettingService().getDonationQuestionById(widget.iterator).isYesCorrect = value ?? true;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(),
+                ),
               ],
             ),
           ),

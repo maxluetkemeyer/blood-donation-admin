@@ -7,8 +7,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewDonationInputFields extends StatefulWidget {
   final List<Language> lang;
-  final Map<String, DonationController> controller;
-  final Map<String, DonationQuestion> newQuestion;
+  final DonationController controller;
+  final DonationQuestion newQuestion;
 
   const NewDonationInputFields({Key? key, required this.lang, required this.controller, required this.newQuestion}) : super(key: key);
 
@@ -46,45 +46,7 @@ class _NewDonationInputFieldsState extends State<NewDonationInputFields> {
                     ),
                     child: CupertinoTextFormFieldRow(
                       placeholder: AppLocalizations.of(context)!.yourQuestion,
-                      controller: widget.controller[widget.lang[i].abbr]?.questionController,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Column(
-                children: [
-                  Text(
-                    "${AppLocalizations.of(context)!.correctAnswer}:",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(AppLocalizations.of(context)!.yes),
-                    leading: Radio<bool>(
-                      value: true,
-                      groupValue: widget.newQuestion[widget.lang[i].abbr]?.isYesCorrect,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          print(widget.newQuestion[widget.lang[i].abbr]?.isYesCorrect);
-                          widget.newQuestion[widget.lang[i].abbr]?.isYesCorrect = value??false;
-                        });
-                      },
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(AppLocalizations.of(context)!.no),
-                    leading: Radio<bool>(
-                      value: false,
-                      groupValue: widget.newQuestion[widget.lang[i].abbr]?.isYesCorrect,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          widget.newQuestion[widget.lang[i].abbr]?.isYesCorrect = value??true;
-                        });
-                      },
+                      controller: widget.controller.translations[i].questionController,
                     ),
                   ),
                 ],

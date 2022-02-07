@@ -35,7 +35,6 @@ class SettingService {
   ///Adds one Language to the [_languages] List
   void addLanguage(Language newLanguage) {
     _languages.add(newLanguage);
-    print(_languages);
   }
 
   void deleteLanguage(int i) {
@@ -157,33 +156,35 @@ class SettingService {
   */
   ///Example:
   ///[
-  /// {
-  ///   "de":DonationQuestion(
-  ///     answer:..,
-  ///     question:..,
-  ///     isYesCorrect:..,
-  ///   )
-  ///   "en": DonationQuestion(
-  ///     answer:..,
-  ///     question:..,
-  ///     isYesCorrect:..,
-  ///   )
-  /// }
+  /// DonationQuestion(
+  ///   translations: [
+  ///     DonationQuestionTranslation(
+  ///       body: ...,
+  ///     	lang: ...,
+  ///     ),
+  ///     DonationQuestionTranslation(
+  ///       body: ...,
+  ///     	lang: ...,
+  ///     ),
+  ///   ],
+  ///   isYesCorrect: ...,
+  /// ),
   ///]
-  final List<Map<String, DonationQuestion>> _donationQuestions = [];
-  final List<Map<String, DonationController>> _donationController = [];
+  final List<DonationQuestion> _donationQuestions = [];
+  final List<DonationController> _donationController = [];
 
   ///Adds a new [DonationQuestion] and a fitting Controller adds them according to their list
-  void addDonationQuestion(Map<String, DonationQuestion> newQuestion) {
+  void addDonationQuestion(DonationQuestion newQuestion) {
     _donationQuestions.add(newQuestion);
-    Map<String, DonationController> newQuestionController = {};
+    DonationController newQuestionController = DonationController(translations: []);
     for (int i = 0; i < _languages.length; i++) {
-      DonationController entry = DonationController(
+      DonationControllerTranslation entry = DonationControllerTranslation(
+        lang: _languages[i],
         questionController: TextEditingController(
-          text: newQuestion[_languages[i].abbr]?.question,
+          text: newQuestion.translations[i].body,
         ),
       );
-      newQuestionController[_languages[i].abbr] = entry;
+      newQuestionController.translations.add(entry);
     }
     _donationController.add(newQuestionController);
   }
@@ -194,19 +195,19 @@ class SettingService {
     _donationController.removeAt(id);
   }
 
-  List<Map<String, DonationQuestion>> getDonationQuestions() {
+  List<DonationQuestion> getDonationQuestions() {
     return _donationQuestions;
   }
 
-  List<Map<String, DonationController>> getDonationControllers() {
+  List<DonationController> getDonationControllers() {
     return _donationController;
   }
 
-  Map<String, DonationQuestion> getDonationQuestionById(int id) {
+  DonationQuestion getDonationQuestionById(int id) {
     return _donationQuestions[id];
   }
 
-  Map<String, DonationController> getDonationControllerById(int id) {
+  DonationController getDonationControllerById(int id) {
     return _donationController[id];
   }
 
@@ -217,23 +218,31 @@ class SettingService {
   void saveDonationControllerState() {
     for (int i = 0; i < _donationQuestions.length; i++) {
       for (int j = 0; j < _languages.length; j++) {
-        _donationQuestions[i][_languages[j].abbr]?.question = _donationController[i][_languages[j].abbr]?.questionController.text ?? "";
+        _donationQuestions[i].translations[j].body = _donationController[i].translations[j].questionController.text;
       }
     }
+  }
+
+  DonationQuestionTranslation findDonationQuestionTranslation(int id, String lang){
+      return _donationQuestions[id].translations.where((element){return (element.lang.abbr==lang)?true:false;}).first;
+  }
+
+  DonationControllerTranslation findDonationControllerTranslation(int id, String lang){
+      return _donationController[id].translations.where((element){return (element.lang.abbr==lang)?true:false;}).first;
   }
 
   //TODO: Dispose System for Donation Controller
   void disposeDonationControllers(int i) {
     for (int j = 0; j < _languages.length; j++) {
-      _donationController[i][_languages[j].abbr]?.questionController.dispose();
+      _donationController[i].translations[j].questionController.dispose();
     }
   }
 
   void swapDonationQuestions(int oldIndex, int newIndex) {
-    Map<String, DonationQuestion> item = _donationQuestions.removeAt(oldIndex);
+    DonationQuestion item = _donationQuestions.removeAt(oldIndex);
     _donationQuestions.insert(newIndex, item);
 
-    Map<String, DonationController> itemController = _donationController.removeAt(oldIndex);
+    DonationController itemController = _donationController.removeAt(oldIndex);
     _donationController.insert(newIndex, itemController);
   }
 }

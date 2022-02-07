@@ -266,28 +266,34 @@ void addTestSettings() {
 
   //Donation Questions
   ss.addDonationQuestion(
-    {
-      "de": DonationQuestion(
-        question: "Sind Sie positiv auf HIV getestet worden oder haben Sie die Befürchtung evtl. HIV-positiv zu sein?",
-        isYesCorrect: false,
-      ),
-      "en": DonationQuestion(
-        question: "Have you tested positive for HIV or are you concerned that you may be HIV positive?",
-        isYesCorrect: false,
-      ),
-    }
+    DonationQuestion(
+      translations: [
+        DonationQuestionTranslation(
+          body: "Sind Sie positiv auf HIV getestet worden oder haben Sie die Befürchtung evtl. HIV-positiv zu sein?",
+          lang: ss.getLanguages()[0],
+        ),
+        DonationQuestionTranslation(
+          body: "Have you tested positive for HIV or are you concerned that you may be HIV positive?",
+          lang: ss.getLanguages()[1],
+        ),
+      ],
+      isYesCorrect: false,
+    ),
   );
 
   ss.addDonationQuestion(
-    {
-      "de": DonationQuestion(
-        question: "Wurden bei Ihnen oder einem Ihrer Blutsverwandten 1. Grades die Creutzfeldt-Jakob-Krankheit erkannt?",
-        isYesCorrect: false,
-      ),
-      "en": DonationQuestion(
-        question: "Have you or any of your 1st-degree blood relatives been diagnosed with Creutzfeldt-Jakob disease?",
-        isYesCorrect: false,
-      ),
-    }
+    DonationQuestion(
+      translations: [
+        DonationQuestionTranslation(
+          body: "Wurden bei Ihnen oder einem Ihrer Blutsverwandten 1. Grades die Creutzfeldt-Jakob-Krankheit erkannt?",
+          lang: ss.getLanguages()[0],
+        ),
+        DonationQuestionTranslation(
+          body: "Have you or any of your 1st-degree blood relatives been diagnosed with Creutzfeldt-Jakob disease?",
+          lang: ss.getLanguages()[1],
+        ),
+      ],
+      isYesCorrect: false,
+    ),
   );
 }

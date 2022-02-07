@@ -15,10 +15,10 @@ class DonationQuestionEditView extends StatefulWidget {
 
 class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
   ///List to capture all [DonationQuestion]s sorted by questions and then language
-  List<Map<String, DonationQuestion>> donationQuestions = SettingService().getDonationQuestions();
+  List<DonationQuestion> donationQuestions = SettingService().getDonationQuestions();
 
   ///List to capture all [DonationController] sorted by questions and then language
-  List<Map<String, DonationController>> donationController = SettingService().getDonationControllers();
+  List<DonationController> donationController = SettingService().getDonationControllers();
   var lang = SettingService().getLanguages();
 
   @override
@@ -73,7 +73,7 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
 
   ///Returns a [List] of [QuestionTile]'s which are Expandable Tiles that allow the user to change FAQ questions
   List<Widget> getQuestionTiles(
-      List<Map<String, DonationQuestion>> donationQuest, List<Language> lang, List<Map<String, DonationController>> donationContr) {
+      List<DonationQuestion> donationQuest, List<Language> lang, List<DonationController> donationContr) {
     List<Widget> l = [];
     //Generating DonationQuestionTiles for every Question in donationQuest
     for (int i = 0; i < donationQuest.length; i++) {
@@ -97,7 +97,7 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
   }
 
   ///Function is called when a [DonationQuestionTile] is added
-  void refreshAdd(Map<String, DonationQuestion> data) {
+  void refreshAdd(DonationQuestion data) {
     setState(() {
       SettingService().addDonationQuestion(data);
     });
