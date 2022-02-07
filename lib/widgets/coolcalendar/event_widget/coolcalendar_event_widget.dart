@@ -1,18 +1,18 @@
+import 'package:blooddonation_admin/misc/env.dart' as env;
 import 'package:flutter/material.dart';
 
 class CoolCalendarEventWidget extends StatefulWidget {
   final Widget child;
-  final Function(double start, double end) onChange;
+  final Function(int start, int length) onChange;
   final Function onTap;
   final Decoration decoration;
   final Decoration decorationHover;
   final bool animated;
 
-  final double discreteStepSize;
   final double hourHeight;
 
-  final int initHeightMultiplier;
-  final int initTopMultiplier;
+  final int initHeightMinutes;
+  final int initTopMinutes;
   final double width;
   final int rowIndex;
 
@@ -22,10 +22,9 @@ class CoolCalendarEventWidget extends StatefulWidget {
 
   const CoolCalendarEventWidget({
     Key? key,
-    required this.discreteStepSize,
     required this.hourHeight,
-    required this.initHeightMultiplier,
-    required this.initTopMultiplier,
+    required this.initHeightMinutes,
+    required this.initTopMinutes,
     required this.rowIndex,
     required this.decoration,
     required this.decorationHover,
@@ -46,6 +45,7 @@ class CoolCalendarEventWidget extends StatefulWidget {
 class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
   late double height;
   late double top;
+  late double discreteStepSize;
   bool onHover = false;
 
   double cumulativeDy = 0;
@@ -56,12 +56,15 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
   void initState() {
     super.initState();
 
-    top = widget.initTopMultiplier * widget.discreteStepSize;
-    height = widget.initHeightMultiplier * widget.discreteStepSize;
+    discreteStepSize = widget.hourHeight / (60 / env.APPOINTMENT_LENGTH_IN_MINUTES);
+
+    top = widget.initTopMinutes * (widget.hourHeight / 60);
+    height = widget.initHeightMinutes * (widget.hourHeight / 60);
   }
 
   @override
   Widget build(BuildContext context) {
+    print("new: " + top.toString() + " " + height.toString());
     return Stack(
       children: <Widget>[
         // ###################################### Top controll
@@ -70,30 +73,30 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
             top: top - widget.ballDiameter / 2,
             left: widget.width * widget.rowIndex + widget.width / 2 - widget.ballDiameter / 2,
             child: _Dragger(
-              onEnd: (_) => widget.onChange(top / widget.discreteStepSize, (top + height) / widget.discreteStepSize),
+              onEnd: (_) => widget.onChange(top ~/ (widget.hourHeight / 60), height ~/ (widget.hourHeight / 60)),
               onDrag: (dx, dy) {
                 cumulativeDy -= dy;
-                if (cumulativeDy >= widget.discreteStepSize) {
+                if (cumulativeDy >= discreteStepSize) {
+                  //drag upwards
                   setState(() {
                     cumulativeDy = 0;
-
-                    var newHeight = height + widget.discreteStepSize;
-                    height = newHeight > widget.discreteStepSize ? newHeight : widget.discreteStepSize;
-                    if (newHeight < widget.discreteStepSize) return;
-
-                    var newTop = top - widget.discreteStepSize;
-                    top = newTop > 0 ? newTop : 0;
+                    //border
+                    if (top == 0) return;
+                    //new position
+                    top = top - discreteStepSize;
+                    //increase height
+                    height = height + discreteStepSize;
                   });
-                } else if (cumulativeDy <= -widget.discreteStepSize) {
+                } else if (cumulativeDy <= -discreteStepSize) {
+                  //drag downwards
                   setState(() {
                     cumulativeDy = 0;
-
-                    var newHeight = height - widget.discreteStepSize;
-                    height = newHeight > widget.discreteStepSize ? newHeight : widget.discreteStepSize;
-                    if (newHeight < widget.discreteStepSize) return;
-
-                    var newTop = top + widget.discreteStepSize;
-                    top = newTop > 0 ? newTop : 0;
+                    //border
+                    if (height == discreteStepSize) return;
+                    //new position
+                    top = top + discreteStepSize;
+                    //decrease height
+                    height = height - discreteStepSize;
                   });
                 }
               },
@@ -110,21 +113,26 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
             top: top + height - widget.ballDiameter / 2,
             left: widget.width * widget.rowIndex + widget.width / 2 - widget.ballDiameter / 2,
             child: _Dragger(
-              onEnd: (_) => widget.onChange(top / widget.discreteStepSize, (top + height) / widget.discreteStepSize),
+              onEnd: (_) => widget.onChange(top ~/ (widget.hourHeight / 60), height ~/ (widget.hourHeight / 60)),
               onDrag: (dx, dy) {
                 cumulativeDy += dy;
-
-                if (cumulativeDy >= widget.discreteStepSize) {
+                if (cumulativeDy >= discreteStepSize) {
+                  //drag downwards
                   setState(() {
-                    var newHeight = height + widget.discreteStepSize;
-                    height = newHeight > widget.discreteStepSize ? newHeight : widget.discreteStepSize;
                     cumulativeDy = 0;
+                    //bottom border
+                    if (top + height == widget.hourHeight * 24) return;
+                    //decrease height
+                    height = height + discreteStepSize;
                   });
-                } else if (cumulativeDy <= -widget.discreteStepSize) {
+                } else if (cumulativeDy <= -discreteStepSize) {
+                  //drag upwards
                   setState(() {
-                    var newHeight = height - widget.discreteStepSize;
-                    height = newHeight > widget.discreteStepSize ? newHeight : widget.discreteStepSize;
                     cumulativeDy = 0;
+                    //border
+                    if (height == discreteStepSize) return;
+                    //increase height
+                    height = height - discreteStepSize;
                   });
                 }
               },
@@ -132,38 +140,6 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
                 width: widget.ballDiameter,
                 height: widget.ballDiameter,
                 decoration: widget.ballDecoration,
-              ),
-            ),
-          ),
-        // ###################################### Dragger
-        if (widget.dragging)
-          Positioned(
-            top: top + 0.5 * widget.ballDiameter,
-            left: widget.width * widget.rowIndex,
-            child: _Dragger(
-              onEnd: (_) => widget.onChange(top / widget.discreteStepSize, (top + height) / widget.discreteStepSize),
-              onDrag: (dx, dy) {
-                cumulativeDy -= dy;
-                if (cumulativeDy >= widget.discreteStepSize) {
-                  setState(() {
-                    var newTop = top - widget.discreteStepSize;
-                    top = newTop > 0 ? newTop : 0;
-
-                    cumulativeDy = 0;
-                  });
-                } else if (cumulativeDy <= -widget.discreteStepSize) {
-                  setState(() {
-                    var newTop = top + widget.discreteStepSize;
-                    top = newTop > 0 ? newTop : 0;
-
-                    cumulativeDy = 0;
-                  });
-                }
-              },
-              child: Container(
-                color: Colors.transparent,
-                height: (height - 1 * widget.ballDiameter) > 0 ? height - 1 * widget.ballDiameter : 0,
-                width: widget.width,
               ),
             ),
           ),
@@ -198,6 +174,39 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
             ),
           ),
         ),
+        // ###################################### Dragger
+        if (widget.dragging)
+          Positioned(
+            top: top + 0.5 * widget.ballDiameter,
+            left: widget.width * widget.rowIndex,
+            child: _Dragger(
+              onEnd: (_) => widget.onChange(top ~/ (widget.hourHeight / 60), height ~/ (widget.hourHeight / 60)),
+              onDrag: (dx, dy) {
+                cumulativeDy -= dy;
+                if (cumulativeDy >= discreteStepSize) {
+                  setState(() {
+                    cumulativeDy = 0;
+                    //border
+                    if (top == 0) return;
+                    //new position
+                    top = top - discreteStepSize;
+                  });
+                } else if (cumulativeDy <= -discreteStepSize) {
+                  setState(() {
+                    cumulativeDy = 0;
+                    //bottom border
+                    if (top + height == widget.hourHeight * 24) return;
+                    top = top + discreteStepSize;
+                  });
+                }
+              },
+              child: Container(
+                color: Colors.transparent,
+                height: (height - 1 * widget.ballDiameter) > 0 ? height - 1 * widget.ballDiameter : 0,
+                width: widget.width,
+              ),
+            ),
+          ),
       ],
     );
   }

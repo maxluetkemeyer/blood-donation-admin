@@ -50,14 +50,14 @@ class _PlannerState extends ConsumerState<Planner> {
           Expanded(
             child: CoolCalendar(
               key: GlobalKey(),
-              discreteStepSize: 10,
               hourHeight: 40,
               eventGridEventWidth: width / 7 - 10,
               timeLineWidth: 56,
               headerTitles: buildHeader(monday: monday),
               events: buildEvents(monday),
               eventGridColor: const Color.fromRGBO(225, 245, 254, 1),
-              eventGridLineColorHalfHour: const Color.fromRGBO(11, 72, 116, 0.06),
+              //eventGridLineColorHalfHour: const Color.fromRGBO(11, 72, 116, 0.06),
+              eventGridLineColorHalfHour: Colors.transparent,
               eventGridLineColorFullHour: const Color.fromRGBO(11, 72, 116, 0.2),
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               timeLineColor: Theme.of(context).scaffoldBackgroundColor,

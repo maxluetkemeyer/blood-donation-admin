@@ -147,7 +147,6 @@ class _RequestsState extends ConsumerState<Requests> {
                         eventGridColor: const Color.fromRGBO(227, 245, 255, 1),
                         eventGridLineColorFullHour: Colors.black38.withOpacity(0.2),
                         eventGridLineColorHalfHour: Colors.transparent,
-                        discreteStepSize: hourHeight / (60 / appointmentLengthInMinutes),
                         hourHeight: hourHeight,
                         scrollController: calendarScrollController,
                         eventGridEventWidth: width * 0.05,
