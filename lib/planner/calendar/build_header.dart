@@ -25,7 +25,11 @@ List<Widget> buildHeader({required DateTime monday}) {
           ),
         );
 
-        ProviderService().container.read(plannerUpdateProvider.state).state++;
+        if (ProviderService().container.read(plannerChangedProvider.state).state) {
+          ProviderService().container.read(plannerUpdateProvider.state).state++;
+        } else {
+          ProviderService().container.read(plannerChangedProvider.state).state = true;
+        }
       },
     );
 

@@ -64,7 +64,6 @@ class _CoolCalendarEventWidgetState extends State<CoolCalendarEventWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("new: " + top.toString() + " " + height.toString());
     return Stack(
       children: <Widget>[
         // ###################################### Top controll

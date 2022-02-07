@@ -32,7 +32,9 @@ List<CoolCalendarEvent> buildEvents(DateTime monday) {
             ).add(Duration(minutes: topMinutes));
 
             capacity.duration = Duration(minutes: heightMinutes);
-            ProviderService().container.read(plannerUpdateProvider.state).state++;
+            if (!ProviderService().container.read(plannerChangedProvider.state).state) {
+              ProviderService().container.read(plannerChangedProvider.state).state = true;
+            }
           },
           decoration: const BoxDecoration(
             color: Color.fromRGBO(11, 72, 116, 1),

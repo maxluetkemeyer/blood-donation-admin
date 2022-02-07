@@ -1,6 +1,7 @@
 import 'package:blooddonation_admin/models/capacity_model.dart';
 import 'package:blooddonation_admin/services/backend/backend_handler.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
+import 'package:blooddonation_admin/services/provider/provider_service.dart';
 
 class CreateCapacitiesHandler extends BackendHandler {
   CreateCapacitiesHandler() : super(action: "createCapacities");
@@ -42,6 +43,7 @@ class CreateCapacitiesHandler extends BackendHandler {
       CapacityService().addCapacity(cap);
     }
 
-    //TODO: Rebuild widgets?
+    //Rebuild widget
+    ProviderService().container.read(plannerChangedProvider.state).state = false;
   }
 }
