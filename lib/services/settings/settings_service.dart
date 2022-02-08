@@ -35,8 +35,19 @@ class SettingService {
   ///Adds one Language to the [_languages] List
   void addLanguage(Language newLanguage) {
     _languages.add(newLanguage);
+
+    for (int j = 0; j < _donationQuestions.length; j++) {
+      _donationController[j].translations.add(DonationControllerTranslation(bodyController: TextEditingController(), lang: newLanguage));
+      _donationQuestions[j].translations.add(DonationQuestionTranslation(body: "", lang: newLanguage));
+    }
+
+    for (int i = 0; i < _faqQuestions.length; i++) {
+      _faqController[i].translations.add(FaqControllerTranslation(bodyController: TextEditingController(), lang: newLanguage, headController: TextEditingController()));
+      _faqQuestions[i].translations.add(FaqQuestionTranslation(body: "",head: "", lang: newLanguage));
+    }
   }
 
+  ///Delete one [Language] by their respective id
   void deleteLanguage(int i) {
     _languages.removeAt(i);
   }
@@ -58,31 +69,36 @@ class SettingService {
     throw ("List of languages does not include an Object with the abbreviation '$abbr'");
   }
 
+  ///Returns the length of the current list of [Language]'s
   int getLanguageListLength() {
     return _languages.length;
   }
 
   /*
-  This part covers the Faq Question management
+  This part covers the Faq Question management.
   */
 
   ///Example:
   ///[
-  /// {
-  ///   "de":FaqQuestion(
-  ///     answer:..,
-  ///     question:..,
-  ///   )
-  ///   "en":FaqQuestion(
-  ///     answer:..,
-  ///     question:..,
-  ///   )
-  /// }
+  /// FaqQuestion(
+  ///   translations: [
+  ///     FaqQuestionTranslation(
+  ///       head: ...,
+  ///       body: ...,
+  ///     	lang: ...,
+  ///     ),
+  ///     FaqQuestionTranslation(
+  ///       head: ...,
+  ///       body: ...,
+  ///     	lang: ...,
+  ///     ),
+  ///   ],
+  /// ),
   ///]
   final List<FaqQuestion> _faqQuestions = [];
   final List<FaqController> _faqController = [];
 
-  ///Adds a new FaqQuestion and a fitting Controller adds them according to their list
+  ///Adds a new FaqQuestion and a fitting Controller adds them according to their list.
   void addFaqQuestion(FaqQuestion newQuestion) {
     _faqQuestions.add(newQuestion);
     FaqController newQuestionController = FaqController(translations: []);
@@ -101,40 +117,52 @@ class SettingService {
     _faqController.add(newQuestionController);
   }
 
-  ///Deletes the Question with [id]
+  ///Deletes the Question with [id].
   void deleteFaqQuestion(int id) {
     _faqQuestions.removeAt(id);
     _faqController.removeAt(id);
   }
 
+  ///get the current list of all [FaqQuestion]'s.
   List<FaqQuestion> getFaqQuestions() {
     return _faqQuestions;
   }
 
+  ///get the current list of all [FaqController]'s.
   List<FaqController> getFaqControllers() {
     return _faqController;
   }
 
+  ///get one element of all [FaqQuestion]'s by their [id] in the list
   FaqQuestion getFaqQuestionById(int id) {
     return _faqQuestions[id];
   }
 
+  ///get one element of all [FaqController]'s by their [id] in the list
   FaqController getFaqControllerById(int id) {
     return _faqController[id];
   }
 
+  ///Returns the length of the current list of [FaqQuestion]'s
   int getFaqQuestionListLength() {
     return _faqQuestions.length;
   }
 
-  FaqQuestionTranslation findFaqQuestionTranslation(int id, String lang){
-      return _faqQuestions[id].translations.where((element){return (element.lang.abbr==lang)?true:false;}).first;
+  ///Returns the [FaqQuestionTranslation], with the respective [id] and [Language]
+  FaqQuestionTranslation findFaqQuestionTranslation(int id, String lang) {
+    return _faqQuestions[id].translations.where((element) {
+      return (element.lang.abbr == lang) ? true : false;
+    }).first;
   }
 
-  FaqControllerTranslation findFaqControllerTranslation(int id, String lang){
-      return _faqController[id].translations.where((element){return (element.lang.abbr==lang)?true:false;}).first;
+  ///Returns the [FaqControllerTranslation], with the respective [id] and [Language]
+  FaqControllerTranslation findFaqControllerTranslation(int id, String lang) {
+    return _faqController[id].translations.where((element) {
+      return (element.lang.abbr == lang) ? true : false;
+    }).first;
   }
 
+  ///Saves the current value of each [FaqController] inside the respective [FaqQuestion]
   void saveFaqControllerState() {
     for (int i = 0; i < _faqQuestions.length; i++) {
       for (int j = 0; j < _languages.length; j++) {
@@ -144,7 +172,7 @@ class SettingService {
     }
   }
 
-  //TODO: Dispose System for FAQ Controller
+  ///Dispses every [DonationController] with the index [i]
   void disposeFaqControllers(int i) {
     for (int j = 0; j < _languages.length; j++) {
       _faqController[i].translations[j].bodyController.dispose();
@@ -152,6 +180,7 @@ class SettingService {
     }
   }
 
+  ///Function to swap two items inside the [FaqQuestion]- and [FaqController] List.
   void swapFaqQuestions(int oldIndex, int newIndex) {
     FaqQuestion item = _faqQuestions.removeAt(oldIndex);
     _faqQuestions.insert(newIndex, item);
@@ -204,26 +233,46 @@ class SettingService {
     _donationController.removeAt(id);
   }
 
+  ///get the current list of all [DonationQuestion]'s.
   List<DonationQuestion> getDonationQuestions() {
     return _donationQuestions;
   }
 
+  ///get the current list of all [DonationController]'s.
   List<DonationController> getDonationControllers() {
     return _donationController;
   }
 
+  ///get one element of all [DonationQuestion]'s by their [id] in the list
   DonationQuestion getDonationQuestionById(int id) {
     return _donationQuestions[id];
   }
 
+  ///get one element of all [DonationController]'s by their [id] in the list
   DonationController getDonationControllerById(int id) {
     return _donationController[id];
   }
 
+  ///Returns the length of the current list of [DonationQuestion]'s
   int getDonationQuestionListLength() {
     return _donationQuestions.length;
   }
 
+  ///Returns the [DonationQuestionTranslation], with the respective [id] and [Language]
+  DonationQuestionTranslation findDonationQuestionTranslation(int id, String lang) {
+    return _donationQuestions[id].translations.where((element) {
+      return (element.lang.abbr == lang) ? true : false;
+    }).first;
+  }
+
+  ///Returns the [DonationControllerTranslation], with the respective [id] and [Language]
+  DonationControllerTranslation findDonationControllerTranslation(int id, String lang) {
+    return _donationController[id].translations.where((element) {
+      return (element.lang.abbr == lang) ? true : false;
+    }).first;
+  }
+
+  ///Saves the current value of each [DonationController] inside the respective [DonationQuestion]
   void saveDonationControllerState() {
     for (int i = 0; i < _donationQuestions.length; i++) {
       for (int j = 0; j < _languages.length; j++) {
@@ -232,21 +281,14 @@ class SettingService {
     }
   }
 
-  DonationQuestionTranslation findDonationQuestionTranslation(int id, String lang){
-      return _donationQuestions[id].translations.where((element){return (element.lang.abbr==lang)?true:false;}).first;
-  }
-
-  DonationControllerTranslation findDonationControllerTranslation(int id, String lang){
-      return _donationController[id].translations.where((element){return (element.lang.abbr==lang)?true:false;}).first;
-  }
-
-  //TODO: Dispose System for Donation Controller
+  ///Dispses every [DonationController] with the index [i]
   void disposeDonationControllers(int i) {
     for (int j = 0; j < _languages.length; j++) {
       _donationController[i].translations[j].bodyController.dispose();
     }
   }
 
+  ///Function to swap two items inside the [DonationQuestion]- and [DonationController] List.
   void swapDonationQuestions(int oldIndex, int newIndex) {
     DonationQuestion item = _donationQuestions.removeAt(oldIndex);
     _donationQuestions.insert(newIndex, item);

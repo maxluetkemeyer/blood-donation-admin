@@ -1,5 +1,3 @@
-import 'package:blooddonation_admin/services/settings/models/donation_controller_model.dart';
-import 'package:blooddonation_admin/services/settings/models/donation_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/settings/donation_question/donation_input_fields.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
@@ -10,12 +8,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class DonationQuestionTile extends StatefulWidget {
   final Function notifyParents;
   final int iterator;
-  final List<DonationQuestion> data;
   final List<Language> lang;
-  final List<DonationController> controllers;
 
   const DonationQuestionTile(
-      {Key? key, required this.notifyParents, required this.iterator, required this.data, required this.lang, required this.controllers})
+      {Key? key, required this.notifyParents, required this.iterator, required this.lang})
       : super(key: key);
 
   @override
@@ -29,8 +25,6 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
     for (int j = 0; j < widget.lang.length; j++) {
       inputList.add(
         DonationInputFields(
-          data: widget.data,
-          controllers: widget.controllers,
           country: widget.lang[j].abbr,
           iterator: widget.iterator,
           countryName: widget.lang[j].name,

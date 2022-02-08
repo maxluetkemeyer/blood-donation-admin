@@ -80,9 +80,7 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
       l.add(DonationQuestionTile(
         notifyParents: () => refreshDelete(i),
         iterator: i,
-        data: donationQuest,
         lang: lang,
-        controllers: donationContr,
         key: ValueKey("${AppLocalizations.of(context)!.question}$i"),
       ));
     }

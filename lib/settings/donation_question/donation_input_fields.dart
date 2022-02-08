@@ -1,5 +1,3 @@
-import 'package:blooddonation_admin/services/settings/models/donation_controller_model.dart';
-import 'package:blooddonation_admin/services/settings/models/donation_question_model.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +5,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 ///[LangInput] is a widget that generates two input and one [Text] Widget for one question and one language
 class DonationInputFields extends StatefulWidget {
-  final List<DonationQuestion> data;
   final String country;
   final int iterator;
   final String countryName;
-  final List<DonationController> controllers;
 
   const DonationInputFields(
-      {Key? key, required this.data, required this.country, required this.iterator, required this.countryName, required this.controllers})
+      {Key? key, required this.country, required this.iterator, required this.countryName})
       : super(key: key);
 
   @override

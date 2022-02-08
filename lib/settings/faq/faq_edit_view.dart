@@ -75,9 +75,7 @@ class _FaqEditViewState extends State<FaqEditView> {
       l.add(FaqQuestionTile(
         notifyParents: () => refreshDelete(i),
         iterator: i,
-        data: faqQuest,
         lang: lang,
-        controllers: faqContr,
         key: ValueKey("${AppLocalizations.of(context)!.question}$i"),
       ));
     }

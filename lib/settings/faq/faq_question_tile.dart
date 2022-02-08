@@ -1,5 +1,3 @@
-import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
-import 'package:blooddonation_admin/services/settings/models/faq_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,11 +8,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class FaqQuestionTile extends StatefulWidget {
   final Function notifyParents;
   final int iterator;
-  final List<FaqQuestion> data;
   final List<Language> lang;
-  final List<FaqController> controllers;
 
-  const FaqQuestionTile({Key? key, required this.notifyParents, required this.iterator, required this.data, required this.lang, required this.controllers})
+  const FaqQuestionTile({Key? key, required this.notifyParents, required this.iterator, required this.lang})
       : super(key: key);
 
   @override

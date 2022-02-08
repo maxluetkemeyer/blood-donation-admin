@@ -20,6 +20,7 @@ class _SettingsViewState extends State<SettingsView> {
     return Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SettingsButton(buttonText: AppLocalizations.of(context)!.settingsLanguage, nextPage: const LanguageEditView()),
           SettingsButton(buttonText: AppLocalizations.of(context)!.settingsFaq, nextPage: const FaqEditView()),
