@@ -1,4 +1,5 @@
 class Person {
+  int id;
   String? name;
   DateTime? birthday;
   String? gender;
@@ -6,6 +7,7 @@ class Person {
   String? telephoneNumber;
 
   Person({
+    this.id = -1,
     this.name,
     this.birthday,
     this.gender,
@@ -14,6 +16,7 @@ class Person {
   });
 
   factory Person.fromJson(Map<String, dynamic> json) => Person(
+        id: json["id"],
         name: json["name"],
         birthday: json["birthday"],
         gender: json["gender"],

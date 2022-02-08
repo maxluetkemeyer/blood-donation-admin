@@ -55,7 +55,6 @@ class _CalendarOverviewState extends ConsumerState<CalendarOverview> {
           child: CoolCalendar(
             //key: const PageStorageKey("calendar_overview"), //save scroll position, but buggy with manual events
             key: GlobalKey(),
-            discreteStepSize: hourHeight / (60 / appointmentLengthInMinutes),
             hourHeight: 120,
             eventGridEventWidth: 140,
             eventGridLineColorHalfHour: Colors.grey.withOpacity(0.3),

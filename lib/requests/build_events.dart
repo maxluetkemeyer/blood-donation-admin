@@ -36,8 +36,8 @@ List<CoolCalendarEvent> requestBuildEventsOfDay({
         child: Center(
           child: child,
         ),
-        initTopMultiplier: topStep,
-        initHeightMultiplier: durationSteps,
+        initTopMinutes: topStep,
+        initHeightMinutes: durationSteps,
         rowIndex: rows[topStep],
         dragging: false,
         decoration: decoration,

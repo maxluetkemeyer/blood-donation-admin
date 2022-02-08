@@ -9,6 +9,17 @@ class Capacity {
     required this.slots,
   });
 
+  Capacity copyWith({
+    DateTime? start,
+    Duration? duration,
+    int? slots,
+  }) =>
+      Capacity(
+        start: start ?? this.start,
+        duration: duration ?? this.duration,
+        slots: slots ?? this.slots,
+      );
+
   factory Capacity.fromJson(Map<String, dynamic> json) => Capacity(
         start: DateTime.parse(json["start"]),
         duration: Duration(minutes: json["duration"]),

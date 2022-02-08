@@ -36,6 +36,17 @@
   "navLogging": "Logging",
   "navHelp": "Help",
   
+  "loggingStatistic": "Statistics",
+  "loggingStatisticNumberOfFirstTimeDonations": "Number of first time donations",
+  "loggingStatisticTotalBookedAppointments": "Total booked appointments",
+  "loggingStatisticAged18To27": "Aged between 18 and 27",
+  "loggingStatisticAged28To37": "Aged between 28 and 37",
+  "loggingStatisticAged38To47": "Aged between 38 and 47",
+  "loggingStatisticAged48To57": "Aged between 48 and 57",
+  "loggingStatisticAged58To68": "Aged between 58 and 68",
+  "loggingStatisticAcceptedRequests": "Accepted Requests",
+  "loggingStatisticRejectedRequests": "Rejected Requests",
+  "loggingStatisticCancelledRequests": "Cancelled Requests",
 
   "calendarSidebarNothingSelected": "Nothing selected",
   

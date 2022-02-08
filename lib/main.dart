@@ -23,14 +23,7 @@ void main() {
   LoggingService();
   SettingService();
 
-  // Test Data
-  for (int i = 0; i < 1000; i++) {
-    LoggingService().addEvent(DateTime.now().toString());
-  }
-  addTestAppointments();
-  addTestRequests();
-  addTestPlannerEvents();
-  addTestSettings();
+  LoggingService().statistic.totalBookedAppointments = 1;
 
   runApp(const MainWidget());
 }

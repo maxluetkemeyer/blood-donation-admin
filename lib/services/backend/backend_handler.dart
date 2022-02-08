@@ -29,7 +29,6 @@ abstract class BackendHandler {
 
   void receive(Map json) {
     receiveLogic(json);
-    print("6");
     if (cb != null) {
       cb!();
     }

@@ -7,10 +7,16 @@ TableRow statisticRow({
   return TableRow(
     children: <TableCell>[
       TableCell(
-        child: SelectableText(key),
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: SelectableText(key),
+        ),
       ),
       TableCell(
-        child: SelectableText(value),
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: SelectableText(value.toString()),
+        ),
       ),
     ],
   );

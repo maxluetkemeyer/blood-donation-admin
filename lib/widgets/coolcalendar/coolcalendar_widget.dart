@@ -15,9 +15,6 @@ class CoolCalendar extends StatefulWidget {
   /// Use eventGridColor or timeLineColor for specific styling.
   final Color backgroundColor;
 
-  /// Height of the time steps.
-  final double discreteStepSize;
-
   /// Height of one hour
   final double hourHeight;
 
@@ -51,7 +48,6 @@ class CoolCalendar extends StatefulWidget {
     this.backgroundColor = Colors.white,
     this.timeLineColor = Colors.white,
     this.eventGridColor = Colors.lightBlueAccent,
-    required this.discreteStepSize,
     required this.hourHeight,
     this.eventGridLineColorFullHour = Colors.black38,
     this.eventGridLineColorHalfHour = Colors.transparent,
@@ -103,7 +99,6 @@ class _CoolCalendarState extends State<CoolCalendar> {
                         color: widget.eventGridColor,
                         child: EventStack(
                           animated: widget.animated,
-                          discreteStepSize: widget.discreteStepSize,
                           eventGridEventWidth: widget.eventGridEventWidth,
                           eventGridLineColorFullHour: widget.eventGridLineColorFullHour,
                           eventGridLineColorHalfHour: widget.eventGridLineColorHalfHour,

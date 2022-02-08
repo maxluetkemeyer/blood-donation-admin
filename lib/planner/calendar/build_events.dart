@@ -14,29 +14,27 @@ List<CoolCalendarEvent> buildEvents(DateTime monday) {
     List<Capacity> dayEvents = ss.getCapacitiesPerDay(monday.add(Duration(days: i)));
 
     for (Capacity capacity in dayEvents) {
+      int topMinutes = Duration(
+        hours: capacity.start.hour,
+        minutes: capacity.start.minute,
+      ).inMinutes;
+
       events.add(
         CoolCalendarEvent(
-          initTopMultiplier: capacity.start.hour * 2,
-          initHeightMultiplier: (capacity.duration.inMinutes / 30).ceil(),
+          initTopMinutes: topMinutes,
+          initHeightMinutes: capacity.duration.inMinutes,
           rowIndex: i,
-          onChange: (start, end) {
+          onChange: (int topMinutes, int heightMinutes) {
             capacity.start = DateTime(
               capacity.start.year,
               capacity.start.month,
               capacity.start.day,
-              (start / 2).round(),
-            );
-            DateTime endDate = DateTime(
-              capacity.start.year,
-              capacity.start.month,
-              capacity.start.day,
-              (end / 2).round(),
-            );
-            capacity.duration = endDate.difference(capacity.start);
-            /*setState(() {
-                changed = true;
-              });*/
-            ProviderService().container.read(plannerUpdateProvider.state).state++;
+            ).add(Duration(minutes: topMinutes));
+
+            capacity.duration = Duration(minutes: heightMinutes);
+            if (!ProviderService().container.read(plannerChangedProvider.state).state) {
+              ProviderService().container.read(plannerChangedProvider.state).state = true;
+            }
           },
           decoration: const BoxDecoration(
             color: Color.fromRGBO(11, 72, 116, 1),

@@ -5,7 +5,6 @@ import 'package:blooddonation_admin/widgets/coolcalendar/event_widget/coolcalend
 import 'package:blooddonation_admin/widgets/coolcalendar/widget/grid_lines.dart';
 
 class EventStack extends StatelessWidget {
-  final double discreteStepSize;
   final double hourHeight;
   final Color eventGridLineColorFullHour;
   final Color eventGridLineColorHalfHour;
@@ -15,7 +14,6 @@ class EventStack extends StatelessWidget {
 
   const EventStack({
     Key? key,
-    required this.discreteStepSize,
     required this.hourHeight,
     required this.eventGridLineColorFullHour,
     required this.eventGridLineColorHalfHour,
@@ -46,9 +44,8 @@ class EventStack extends StatelessWidget {
       stack.add(
         Positioned.fill(
           child: CoolCalendarEventWidget(
-            discreteStepSize: discreteStepSize,
-            initHeightMultiplier: event.initHeightMultiplier,
-            initTopMultiplier: event.initTopMultiplier,
+            initHeightMinutes: event.initHeightMinutes,
+            initTopMinutes: event.initTopMinutes,
             rowIndex: event.rowIndex,
             decoration: event.decoration,
             decorationHover: event.decorationHover,

@@ -39,4 +39,8 @@ class CapacityService {
 
     capacities[day]!.remove(capacity);
   }
+
+  void clearDay(DateTime day) {
+    capacities.remove(day.toString());
+  }
 }

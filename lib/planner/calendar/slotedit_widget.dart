@@ -59,7 +59,7 @@ class _SlotEditState extends State<SlotEdit> {
             ),
           ],
         ),
-        Positioned.fill(
+        Positioned(
           child: Align(
             alignment: Alignment.topRight,
             child: IconButton(
@@ -78,7 +78,11 @@ class _SlotEditState extends State<SlotEdit> {
                         isDestructiveAction: true,
                         onPressed: () {
                           CapacityService().removeCapacity(widget.capacity);
-                          ProviderService().container.read(plannerUpdateProvider.state).state++;
+                          if (ProviderService().container.read(plannerChangedProvider.state).state) {
+                            ProviderService().container.read(plannerUpdateProvider.state).state++;
+                          } else {
+                            ProviderService().container.read(plannerChangedProvider.state).state = true;
+                          }
                           Navigator.pop(context);
                         },
                         child: const Text("Löschen"),

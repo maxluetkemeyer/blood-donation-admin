@@ -1,9 +1,14 @@
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/planner/calendar/build_header.dart';
+import 'package:blooddonation_admin/planner/functions/copy_previous_week.dart';
+import 'package:blooddonation_admin/planner/functions/delete_this_week.dart';
 import 'package:blooddonation_admin/planner/header/headder_widget.dart';
+import 'package:blooddonation_admin/services/backend/backend_service.dart';
 import 'package:blooddonation_admin/services/backend/handlers/create_capacities.dart';
+import 'package:blooddonation_admin/services/backend/handlers/get_all_capacities.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_widget.dart';
+import 'package:blooddonation_admin/widgets/expandable_fab/expandable_fab_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -25,12 +30,12 @@ class _PlannerState extends ConsumerState<Planner> {
 
   DateTime monday = getMonday(DateTime.now());
 
-  bool changed = false;
-
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
     int update = ref.watch(plannerUpdateProvider.state).state;
+    bool changed = ref.watch(plannerChangedProvider.state).state;
+
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -38,7 +43,6 @@ class _PlannerState extends ConsumerState<Planner> {
         children: [
           PlannerHeader(
             width: (width / 7 - 10) * 7,
-            //width: (width / 9 - 10) * 4,
             monday: monday,
             onTableCalendarPageChange: (focusedDay) {
               print(getMonday(focusedDay));
@@ -50,14 +54,13 @@ class _PlannerState extends ConsumerState<Planner> {
           Expanded(
             child: CoolCalendar(
               key: GlobalKey(),
-              discreteStepSize: 10,
               hourHeight: 40,
               eventGridEventWidth: width / 7 - 10,
               timeLineWidth: 56,
               headerTitles: buildHeader(monday: monday),
               events: buildEvents(monday),
               eventGridColor: const Color.fromRGBO(225, 245, 254, 1),
-              eventGridLineColorHalfHour: const Color.fromRGBO(11, 72, 116, 0.06),
+              eventGridLineColorHalfHour: Colors.transparent,
               eventGridLineColorFullHour: const Color.fromRGBO(11, 72, 116, 0.2),
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               timeLineColor: Theme.of(context).scaffoldBackgroundColor,
@@ -65,13 +68,83 @@ class _PlannerState extends ConsumerState<Planner> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text("UPLOAD CHANGES"),
-        icon: const Icon(Icons.save),
-        onPressed: () {
-          CreateCapacitiesHandler().send();
-        },
+      floatingActionButton: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (changed)
+            FloatingActionButton.extended(
+              label: const Text("UPLOAD CHANGES"),
+              icon: const Icon(Icons.save),
+              onPressed: () {
+                CreateCapacitiesHandler().send();
+              },
+            ),
+          const SizedBox(width: 10),
+          ExpandableFab(
+            distance: 20,
+            children: [
+              //from top to bottom
+              FloatingActionButton.extended(
+                label: const Text("Reload from Server"),
+                icon: const Icon(Icons.refresh),
+                onPressed: () {
+                  BackendService().handlers["getAllCapacities"] = GetAllCapacitiesHandler(cb: () async {
+                    if (ref.read(plannerChangedProvider.state).state == true) {
+                      ref.read(plannerChangedProvider.state).state = false;
+                    } else {
+                      ref.read(plannerUpdateProvider.state).state++;
+                    }
+                    print("hey");
+                  })
+                  ..send();
+                },
+              ),
+              FloatingActionButton.extended(
+                label: const Text("Next week"),
+                icon: const Icon(Icons.arrow_forward),
+                onPressed: () => setState(() {
+                  monday = monday.add(const Duration(days: 7));
+                }),
+              ),
+              FloatingActionButton.extended(
+                label: const Text("Pevious week"),
+                icon: const Icon(Icons.arrow_back),
+                backgroundColor: (monday.add(const Duration(days: -7)).isBefore(today)) ? Colors.grey : Theme.of(context).primaryColor,
+                onPressed: (monday.add(const Duration(days: -7)).isBefore(today))
+                    ? null
+                    : () => setState(() {
+                          monday = monday.add(const Duration(days: -7));
+                        }),
+              ),
+              FloatingActionButton.extended(
+                label: const Text("Copy previous week"),
+                icon: const Icon(Icons.copy_all_outlined),
+                onPressed: () {
+                  copyPreviousWeek(monday);
+                  _update();
+                },
+              ),
+              FloatingActionButton.extended(
+                label: const Text("Clear this week"),
+                icon: const Icon(Icons.delete_sweep_rounded),
+                onPressed: () {
+                  deleteThisWeek(monday);
+                  _update();
+                },
+              ),
+            ],
+          ),
+        ],
       ),
     );
+  }
+
+  void _update() {
+    if (ProviderService().container.read(plannerChangedProvider.state).state) {
+      ProviderService().container.read(plannerUpdateProvider.state).state++;
+    } else {
+      ProviderService().container.read(plannerChangedProvider.state).state = true;
+    }
   }
 }
