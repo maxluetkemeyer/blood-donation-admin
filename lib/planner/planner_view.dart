@@ -3,7 +3,9 @@ import 'package:blooddonation_admin/planner/calendar/build_header.dart';
 import 'package:blooddonation_admin/planner/functions/copy_previous_week.dart';
 import 'package:blooddonation_admin/planner/functions/delete_this_week.dart';
 import 'package:blooddonation_admin/planner/header/headder_widget.dart';
+import 'package:blooddonation_admin/services/backend/backend_service.dart';
 import 'package:blooddonation_admin/services/backend/handlers/create_capacities.dart';
+import 'package:blooddonation_admin/services/backend/handlers/get_all_capacities.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_widget.dart';
 import 'package:blooddonation_admin/widgets/expandable_fab/expandable_fab_widget.dart';
@@ -28,13 +30,11 @@ class _PlannerState extends ConsumerState<Planner> {
 
   DateTime monday = getMonday(DateTime.now());
 
-  bool changed = false;
-
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
     int update = ref.watch(plannerUpdateProvider.state).state;
-    changed = ref.watch(plannerChangedProvider.state).state;
+    bool changed = ref.watch(plannerChangedProvider.state).state;
 
     double width = MediaQuery.of(context).size.width;
 
@@ -85,6 +85,21 @@ class _PlannerState extends ConsumerState<Planner> {
             distance: 20,
             children: [
               //from top to bottom
+              FloatingActionButton.extended(
+                label: const Text("Reload from Server"),
+                icon: const Icon(Icons.refresh),
+                onPressed: () {
+                  BackendService().handlers["getAllCapacities"] = GetAllCapacitiesHandler(cb: () async {
+                    if (ref.read(plannerChangedProvider.state).state == true) {
+                      ref.read(plannerChangedProvider.state).state = false;
+                    } else {
+                      ref.read(plannerUpdateProvider.state).state++;
+                    }
+                    print("hey");
+                  })
+                  ..send();
+                },
+              ),
               FloatingActionButton.extended(
                 label: const Text("Next week"),
                 icon: const Icon(Icons.arrow_forward),
