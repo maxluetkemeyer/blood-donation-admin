@@ -28,9 +28,8 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
     ///List of all Languages
     List<Language> lang = SettingService().getLanguages();
     //Initializing List of DonationControllers
-    List<DonationControllerTranslation> translations = [];
     for (int i = 0; i < lang.length; i++) {
-      controller.translations.add(DonationControllerTranslation(questionController: TextEditingController(), lang: lang[i]));
+      controller.translations.add(DonationControllerTranslation(bodyController: TextEditingController(), lang: lang[i]));
 
       newQuestion.translations.add(DonationQuestionTranslation(body: "", lang: lang[i]));
     }
@@ -130,7 +129,7 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
       {required List<Language> lang, required DonationController controller, required DonationQuestion newQuestion}) {
     DonationQuestion result = DonationQuestion(translations: [], isYesCorrect: newQuestion.isYesCorrect);
     for (int i = 0; i < lang.length; i++) {
-      String question = controller.translations[i].questionController.text;
+      String question = controller.translations[i].bodyController.text;
 
       newQuestion.translations[i].body = question;
       //The FaqQuestion for each language

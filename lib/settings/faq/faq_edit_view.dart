@@ -69,7 +69,7 @@ class _FaqEditViewState extends State<FaqEditView> {
   }
 
   ///Returns a [List] of [QuestionTile]'s which are Expandable Tiles that allow the user to change FAQ questions
-  List<Widget> getQuestionTiles(List<Map<String, FaqQuestion>> faqQuest, List<Language> lang, List<Map<String, FaqController>> faqContr) {
+  List<Widget> getQuestionTiles(List<FaqQuestion> faqQuest, List<Language> lang, List<FaqController> faqContr) {
     List<Widget> l = [];
     for (int i = 0; i < faqQuest.length; i++) {
       l.add(FaqQuestionTile(
@@ -92,7 +92,7 @@ class _FaqEditViewState extends State<FaqEditView> {
   }
 
   ///Function is called when a [QuestionTile] is added
-  void refreshAdd(Map<String, FaqQuestion> data) {
+  void refreshAdd(FaqQuestion data) {
     setState(() {
       SettingService().addFaqQuestion(data);
     });

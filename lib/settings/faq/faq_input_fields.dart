@@ -1,5 +1,4 @@
-import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
-import 'package:blooddonation_admin/services/settings/models/faq_question_model.dart';
+import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -7,13 +6,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 ///[LangInput] is a widget that generates two input and one [Text] Widget for one question and one language
 class FaqInputFields extends StatefulWidget {
-  final List<Map<String, FaqQuestion>> data;
   final String country;
   final int iterator;
   final String countryName;
-  final List<Map<String, FaqController>> controllers;
 
-  const FaqInputFields({Key? key, required this.data, required this.country, required this.iterator, required this.countryName, required this.controllers})
+  const FaqInputFields({Key? key, required this.country, required this.iterator, required this.countryName})
       : super(key: key);
 
   @override
@@ -47,7 +44,7 @@ class _FaqInputFieldsState extends State<FaqInputFields> {
                 ),
                 child: CupertinoTextFormFieldRow(
                   placeholder: "",
-                  controller: widget.controllers[widget.iterator][widget.country]?.questionController,
+                  controller: SettingService().findFaqControllerTranslation(widget.iterator, widget.country).headController,
                 ),
               ),
               CupertinoFormRow(
@@ -59,7 +56,7 @@ class _FaqInputFieldsState extends State<FaqInputFields> {
                 ),
                 child: CupertinoTextFormFieldRow(
                   placeholder: "",
-                  controller: widget.controllers[widget.iterator][widget.country]?.answerController,
+                  controller: SettingService().findFaqControllerTranslation(widget.iterator, widget.country).bodyController,
                 ),
               ),
             ],

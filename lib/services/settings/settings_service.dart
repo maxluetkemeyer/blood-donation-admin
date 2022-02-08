@@ -79,23 +79,24 @@ class SettingService {
   ///   )
   /// }
   ///]
-  final List<Map<String, FaqQuestion>> _faqQuestions = [];
-  final List<Map<String, FaqController>> _faqController = [];
+  final List<FaqQuestion> _faqQuestions = [];
+  final List<FaqController> _faqController = [];
 
   ///Adds a new FaqQuestion and a fitting Controller adds them according to their list
-  void addFaqQuestion(Map<String, FaqQuestion> newQuestion) {
+  void addFaqQuestion(FaqQuestion newQuestion) {
     _faqQuestions.add(newQuestion);
-    Map<String, FaqController> newQuestionController = {};
+    FaqController newQuestionController = FaqController(translations: []);
     for (int i = 0; i < _languages.length; i++) {
-      FaqController entry = FaqController(
-        answerController: TextEditingController(
-          text: newQuestion[_languages[i].abbr]?.answer,
+      FaqControllerTranslation entry = FaqControllerTranslation(
+        headController: TextEditingController(
+          text: newQuestion.translations[i].head,
         ),
-        questionController: TextEditingController(
-          text: newQuestion[_languages[i].abbr]?.question,
+        bodyController: TextEditingController(
+          text: newQuestion.translations[i].body,
         ),
+        lang: _languages[i],
       );
-      newQuestionController[_languages[i].abbr] = entry;
+      newQuestionController.translations.add(entry);
     }
     _faqController.add(newQuestionController);
   }
@@ -106,19 +107,19 @@ class SettingService {
     _faqController.removeAt(id);
   }
 
-  List<Map<String, FaqQuestion>> getFaqQuestions() {
+  List<FaqQuestion> getFaqQuestions() {
     return _faqQuestions;
   }
 
-  List<Map<String, FaqController>> getFaqControllers() {
+  List<FaqController> getFaqControllers() {
     return _faqController;
   }
 
-  Map<String, FaqQuestion> getFaqQuestionById(int id) {
+  FaqQuestion getFaqQuestionById(int id) {
     return _faqQuestions[id];
   }
 
-  Map<String, FaqController> getFaqControllerById(int id) {
+  FaqController getFaqControllerById(int id) {
     return _faqController[id];
   }
 
@@ -126,11 +127,19 @@ class SettingService {
     return _faqQuestions.length;
   }
 
+  FaqQuestionTranslation findFaqQuestionTranslation(int id, String lang){
+      return _faqQuestions[id].translations.where((element){return (element.lang.abbr==lang)?true:false;}).first;
+  }
+
+  FaqControllerTranslation findFaqControllerTranslation(int id, String lang){
+      return _faqController[id].translations.where((element){return (element.lang.abbr==lang)?true:false;}).first;
+  }
+
   void saveFaqControllerState() {
     for (int i = 0; i < _faqQuestions.length; i++) {
       for (int j = 0; j < _languages.length; j++) {
-        _faqQuestions[i][_languages[j].abbr]?.answer = _faqController[i][_languages[j].abbr]?.answerController.text ?? "";
-        _faqQuestions[i][_languages[j].abbr]?.question = _faqController[i][_languages[j].abbr]?.questionController.text ?? "";
+        _faqQuestions[i].translations[j].body = _faqController[i].translations[j].bodyController.text;
+        _faqQuestions[i].translations[j].head = _faqController[i].translations[j].headController.text;
       }
     }
   }
@@ -138,16 +147,16 @@ class SettingService {
   //TODO: Dispose System for FAQ Controller
   void disposeFaqControllers(int i) {
     for (int j = 0; j < _languages.length; j++) {
-      _faqController[i][_languages[j].abbr]?.answerController.dispose();
-      _faqController[i][_languages[j].abbr]?.questionController.dispose();
+      _faqController[i].translations[j].bodyController.dispose();
+      _faqController[i].translations[j].headController.dispose();
     }
   }
 
   void swapFaqQuestions(int oldIndex, int newIndex) {
-    Map<String, FaqQuestion> item = _faqQuestions.removeAt(oldIndex);
+    FaqQuestion item = _faqQuestions.removeAt(oldIndex);
     _faqQuestions.insert(newIndex, item);
 
-    Map<String, FaqController> itemController = _faqController.removeAt(oldIndex);
+    FaqController itemController = _faqController.removeAt(oldIndex);
     _faqController.insert(newIndex, itemController);
   }
 
@@ -180,7 +189,7 @@ class SettingService {
     for (int i = 0; i < _languages.length; i++) {
       DonationControllerTranslation entry = DonationControllerTranslation(
         lang: _languages[i],
-        questionController: TextEditingController(
+        bodyController: TextEditingController(
           text: newQuestion.translations[i].body,
         ),
       );
@@ -218,7 +227,7 @@ class SettingService {
   void saveDonationControllerState() {
     for (int i = 0; i < _donationQuestions.length; i++) {
       for (int j = 0; j < _languages.length; j++) {
-        _donationQuestions[i].translations[j].body = _donationController[i].translations[j].questionController.text;
+        _donationQuestions[i].translations[j].body = _donationController[i].translations[j].bodyController.text;
       }
     }
   }
@@ -234,7 +243,7 @@ class SettingService {
   //TODO: Dispose System for Donation Controller
   void disposeDonationControllers(int i) {
     for (int j = 0; j < _languages.length; j++) {
-      _donationController[i].translations[j].questionController.dispose();
+      _donationController[i].translations[j].bodyController.dispose();
     }
   }
 

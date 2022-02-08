@@ -10,9 +10,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class FaqQuestionTile extends StatefulWidget {
   final Function notifyParents;
   final int iterator;
-  final List<Map<String, FaqQuestion>> data;
+  final List<FaqQuestion> data;
   final List<Language> lang;
-  final List<Map<String, FaqController>> controllers;
+  final List<FaqController> controllers;
 
   const FaqQuestionTile({Key? key, required this.notifyParents, required this.iterator, required this.data, required this.lang, required this.controllers})
       : super(key: key);
@@ -27,8 +27,6 @@ class _FaqQuestionTileState extends State<FaqQuestionTile> {
     List<Widget> inputList = [];
     for (int j = 0; j < widget.lang.length; j++) {
       inputList.add(FaqInputFields(
-          data: widget.data,
-          controllers: widget.controllers,
           country: widget.lang[j].abbr,
           iterator: widget.iterator,
           countryName: widget.lang[j].name));

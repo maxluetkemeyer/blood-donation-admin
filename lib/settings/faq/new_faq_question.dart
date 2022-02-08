@@ -18,12 +18,12 @@ class NewFaqQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ///Map of all Controllers for the Question adding process
-    Map<String, FaqController> controller = {};
+    FaqController controller = FaqController(translations: []);
 
     ///List of all Languages
     List<Language> lang = SettingService().getLanguages();
     for (int i = 0; i < lang.length; i++) {
-      controller[lang[i].abbr] = FaqController(questionController: TextEditingController(), answerController: TextEditingController());
+      controller.translations.add(FaqControllerTranslation(headController: TextEditingController(), bodyController: TextEditingController(),lang: lang[i]));
     }
 
     return Padding(
@@ -63,14 +63,14 @@ class NewFaqQuestion extends StatelessWidget {
   }
 
   ///generates the language oriented [Map] for adding the new [FaqQuestion]
-  Map<String, FaqQuestion> generateFaqQuestion({required List<Language> lang, required Map<String, FaqController> controller}) {
-    Map<String, FaqQuestion> result = {};
+  FaqQuestion generateFaqQuestion({required List<Language> lang, required FaqController controller}) {
+    FaqQuestion result = FaqQuestion(translations: []);
     for (int i = 0; i < lang.length; i++) {
-      String answer = controller[lang[i].abbr]?.answerController.text ?? "";
-      String question = controller[lang[i].abbr]?.questionController.text ?? "";
+      String answer = controller.translations[i].bodyController.text;
+      String question = controller.translations[i].headController.text;
 
       //The FaqQuestion for each language
-      result[lang[i].abbr] = FaqQuestion(answer: answer, question: question);
+      result.translations.add(FaqQuestionTranslation(body: answer, head: question, lang: lang[i]));
     }
     return result;
   }

@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewFaqLangInput extends StatelessWidget {
   final List<Language> lang;
-  final Map<String, FaqController> controller;
+  final FaqController controller;
 
   const NewFaqLangInput({Key? key, required this.lang, required this.controller}) : super(key: key);
 
@@ -36,7 +36,7 @@ class NewFaqLangInput extends StatelessWidget {
               ),
               child: CupertinoTextFormFieldRow(
                 placeholder: AppLocalizations.of(context)!.yourQuestion,
-                controller: controller[lang[i].abbr]?.questionController,
+                controller: controller.translations[i].headController,
               ),
             ),
             CupertinoFormRow(
@@ -48,7 +48,7 @@ class NewFaqLangInput extends StatelessWidget {
               ),
               child: CupertinoTextFormFieldRow(
                 placeholder: AppLocalizations.of(context)!.yourAnswer,
-                controller: controller[lang[i].abbr]?.answerController,
+                controller: controller.translations[i].bodyController,
               ),
             ),
           ],

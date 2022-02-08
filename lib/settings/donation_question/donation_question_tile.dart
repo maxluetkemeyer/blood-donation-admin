@@ -37,7 +37,7 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
         ),
       );
     }
-    print(inputList);
+    
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: ExpansionTile(

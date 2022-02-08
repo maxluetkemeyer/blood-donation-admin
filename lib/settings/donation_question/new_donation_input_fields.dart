@@ -46,7 +46,7 @@ class _NewDonationInputFieldsState extends State<NewDonationInputFields> {
                     ),
                     child: CupertinoTextFormFieldRow(
                       placeholder: AppLocalizations.of(context)!.yourQuestion,
-                      controller: widget.controller.translations[i].questionController,
+                      controller: widget.controller.translations[i].bodyController,
                     ),
                   ),
                 ],
