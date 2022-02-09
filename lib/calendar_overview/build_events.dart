@@ -12,6 +12,8 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
   required DateTime day,
   required int appointmentLengthInMinutes,
 }) {
+  print(day);
+
   List<CoolCalendarEvent> events = [];
   int eventsPerDayLength = (24 * (60 / appointmentLengthInMinutes)).toInt();
   List<int> rows = List.generate(eventsPerDayLength, (index) => 0);
@@ -27,16 +29,18 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
             ).inMinutes /
             appointmentLengthInMinutes)
         .ceil();
+    int topMinutes = Duration(
+      hours: appointment.start.hour,
+      minutes: appointment.start.minute,
+    ).inMinutes;
 
     int durationSteps = (appointment.duration.inMinutes / appointmentLengthInMinutes).ceil();
 
     events.add(
       CoolCalendarEvent(
-        child: Center(
-          child: child,
-        ),
-        initTopMinutes: topStep,
-        initHeightMinutes: durationSteps,
+        child: Center(child: child),
+        initTopMinutes: topMinutes,
+        initHeightMinutes: appointment.duration.inMinutes,
         rowIndex: rows[topStep],
         dragging: false,
         decoration: decoration,
@@ -109,6 +113,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
 
   for (int i = 0; i < eventsPerDayLength; i++) {
     DateTime aktuell = day.add(Duration(minutes: i * appointmentLengthInMinutes));
+
     bool paint = false;
     Capacity? inCapacity;
 
@@ -116,6 +121,7 @@ List<CoolCalendarEvent> calendarBuildEventsOfDay({
       if ((aktuell.isAfter(capacity.start) || aktuell.isAtSameMomentAs(capacity.start)) && aktuell.isBefore(capacity.start.add(capacity.duration))) {
         paint = true;
         inCapacity = capacity;
+        continue;
       }
     }
 

@@ -10,6 +10,11 @@ import 'package:blooddonation_admin/services/backend/handlers/get_all_appointmen
 import 'package:blooddonation_admin/services/backend/handlers/get_all_capacities.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 
+export './handlers/create_appointment.dart';
+export './handlers/create_capacities.dart';
+export './handlers/get_all_appointments.dart';
+export './handlers/get_all_capacities.dart';
+
 class BackendService {
   //Singleton
   static final BackendService _instance = BackendService._private();
