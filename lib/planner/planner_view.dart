@@ -53,7 +53,7 @@ class _PlannerState extends ConsumerState<Planner> {
           ),
           Expanded(
             child: CoolCalendar(
-              key: GlobalKey(),
+              key: const PageStorageKey("planner_view"),
               hourHeight: 40,
               eventGridEventWidth: width / 7 - 10,
               timeLineWidth: 56,

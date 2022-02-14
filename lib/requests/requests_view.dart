@@ -141,7 +141,7 @@ class _RequestsState extends ConsumerState<Requests> {
                     ),
                     Expanded(
                       child: CoolCalendar(
-                        key: GlobalKey(),
+                        key: const PageStorageKey("request_view"),
                         backgroundColor: Colors.white,
                         timeLineColor: Colors.white,
                         eventGridColor: const Color.fromRGBO(227, 245, 255, 1),
