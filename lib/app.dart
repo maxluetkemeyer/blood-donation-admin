@@ -1,14 +1,16 @@
+import 'package:badges/badges.dart';
+import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:blooddonation_admin/calendar_overview/calendar_overview_view.dart';
 import 'package:blooddonation_admin/dashboard/dashboard_view.dart';
 import 'package:blooddonation_admin/help/help_view.dart';
 import 'package:blooddonation_admin/logging/logging_view.dart';
-import 'package:blooddonation_admin/requests/requests_view.dart';
 import 'package:blooddonation_admin/planner/planner_view.dart';
+import 'package:blooddonation_admin/requests/requests_view.dart';
 import 'package:blooddonation_admin/settings/settings_view.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// The structure of the program
 ///
@@ -25,7 +27,7 @@ class _AppState extends ConsumerState<App> {
   final List<Widget> screens = [
     const Dashboard(),
     const Requests(),
-    const CalendarOverview(), //key: PageStorageKey("cO"),
+    const CalendarOverview(),
     const Planner(),
     const SettingsView(),
     const LoggingView(),
@@ -48,40 +50,14 @@ class _AppState extends ConsumerState<App> {
             label: Text(AppLocalizations.of(context)!.navDashboard),
             style: screenIndex == 0 ? _buttonSelectedStyle : null,
           ),
-          Stack(
-            children: [
-              FittedBox(
-                fit: BoxFit.fitWidth,
-                child: SizedBox(
-                  height: 60,
-                  child: TextButton.icon(
-                    onPressed: () => setState(() {
-                      screenIndex = 1;
-                    }),
-                    icon: const Icon(Icons.table_chart),
-                    label: Text(AppLocalizations.of(context)!.navRequests),
-                    style: screenIndex == 1 ? _buttonSelectedStyle : null,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 5,
-                right: 0,
-                child: Container(
-                  padding: const EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.red.shade400,
-                  ),
-                  child: const Text(
-                    "18",
-                    style: TextStyle(
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          RequestAppBarTab(
+            screenIndex: screenIndex,
+            cb: () {
+              ref.read(unseenRequestsProvider.state).state = 0;
+              setState(() {
+                screenIndex = 1;
+              });
+            },
           ),
           TextButton.icon(
             onPressed: () => setState(() {
@@ -150,3 +126,33 @@ class _AppState extends ConsumerState<App> {
 ButtonStyle _buttonSelectedStyle = ButtonStyle(
   backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(233, 240, 243, 1)),
 );
+
+class RequestAppBarTab extends ConsumerWidget {
+  final VoidCallback cb;
+  final int screenIndex;
+
+  const RequestAppBarTab({
+    Key? key,
+    required this.cb,
+    required this.screenIndex,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    int requestBadgeCount = ref.watch(unseenRequestsProvider.state).state;
+
+    return TextButton.icon(
+      onPressed: cb,
+      icon: const Icon(Icons.table_chart),
+      label: Badge(
+        showBadge: requestBadgeCount == 0 ? false : true,
+        alignment: Alignment.topLeft,
+        position: const BadgePosition(top: -15, end: -15),
+        badgeContent: Text(requestBadgeCount.toString()),
+        badgeColor: Colors.red.shade300,
+        child: Text(AppLocalizations.of(context)!.navRequests),
+      ),
+      style: screenIndex == 1 ? _buttonSelectedStyle : null,
+    );
+  }
+}
