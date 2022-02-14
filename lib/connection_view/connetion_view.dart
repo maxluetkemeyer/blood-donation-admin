@@ -3,6 +3,7 @@ import 'package:blooddonation_admin/connection_view/connection_failed_widget.dar
 import 'package:blooddonation_admin/connection_view/connection_loading_widget.dart';
 import 'package:blooddonation_admin/services/backend/backend_service.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
+import 'package:blooddonation_admin/tester.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -35,7 +36,8 @@ class ConnectionView extends ConsumerWidget {
 
 void initLoadOfBackendData() {
   // Load all Data from the backend
-  GetAllAppointmentsHandler().send();
+  //GetAllAppointmentsHandler().send();
+  addTestRequests();
   //...
 
   //Last Handler with callback to update UI
@@ -47,5 +49,5 @@ void initLoadOfBackendData() {
   });
   //Replace old instance with new instance including the callback
   BackendService().handlers["getAllCapacities"] = handler;
-  handler.send(); 
+  handler.send();
 }

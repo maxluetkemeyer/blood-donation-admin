@@ -44,6 +44,7 @@ class EventStack extends StatelessWidget {
       stack.add(
         Positioned.fill(
           child: CoolCalendarEventWidget(
+            key: UniqueKey(),
             initHeightMinutes: event.initHeightMinutes,
             initTopMinutes: event.initTopMinutes,
             rowIndex: event.rowIndex,
