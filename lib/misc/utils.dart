@@ -17,3 +17,4 @@ String dayWithTimeString(DateTime dateTime) {
 
   return DateFormat("dd.MM.yyyy").format(dateTime) + " um " + DateFormat("HH:mm").format(dateTime);
 }
+

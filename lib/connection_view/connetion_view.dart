@@ -2,8 +2,6 @@ import 'package:blooddonation_admin/app.dart';
 import 'package:blooddonation_admin/connection_view/connection_failed_widget.dart';
 import 'package:blooddonation_admin/connection_view/connection_loading_widget.dart';
 import 'package:blooddonation_admin/services/backend/backend_service.dart';
-import 'package:blooddonation_admin/services/backend/handlers/get_all_appointments.dart';
-import 'package:blooddonation_admin/services/backend/handlers/get_all_capacities.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
