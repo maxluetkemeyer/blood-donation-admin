@@ -28,6 +28,10 @@ List<CoolCalendarEvent> requestBuildEventsOfDay({
             ).inMinutes /
             appointmentLengthInMinutes)
         .ceil();
+    int topMinutes = Duration(
+      hours: appointment.start.hour,
+      minutes: appointment.start.minute,
+    ).inMinutes;
 
     int durationSteps = (appointment.duration.inMinutes / appointmentLengthInMinutes).ceil();
 
@@ -36,8 +40,8 @@ List<CoolCalendarEvent> requestBuildEventsOfDay({
         child: Center(
           child: child,
         ),
-        initTopMinutes: topStep,
-        initHeightMinutes: durationSteps,
+        initTopMinutes: topMinutes,
+        initHeightMinutes: appointment.duration.inMinutes,
         rowIndex: rows[topStep],
         dragging: false,
         decoration: decoration,

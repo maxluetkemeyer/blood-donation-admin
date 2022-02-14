@@ -31,7 +31,8 @@ class TimeLine extends StatelessWidget {
       String time = i < 10 ? "0$i" : "$i";
 
       items.add(timeBox("$time:00"));
-      items.add(timeBox("$time:30"));
+      //items.add(timeBox("$time:30"));
+      items.add(timeBox(""));
     }
 
     return items;

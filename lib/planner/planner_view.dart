@@ -2,10 +2,9 @@ import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/planner/calendar/build_header.dart';
 import 'package:blooddonation_admin/planner/functions/copy_previous_week.dart';
 import 'package:blooddonation_admin/planner/functions/delete_this_week.dart';
+import 'package:blooddonation_admin/planner/functions/reload_from_server.dart';
 import 'package:blooddonation_admin/planner/header/headder_widget.dart';
 import 'package:blooddonation_admin/services/backend/backend_service.dart';
-import 'package:blooddonation_admin/services/backend/handlers/create_capacities.dart';
-import 'package:blooddonation_admin/services/backend/handlers/get_all_capacities.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/widgets/coolcalendar/coolcalendar_widget.dart';
 import 'package:blooddonation_admin/widgets/expandable_fab/expandable_fab_widget.dart';
@@ -37,6 +36,7 @@ class _PlannerState extends ConsumerState<Planner> {
     bool changed = ref.watch(plannerChangedProvider.state).state;
 
     double width = MediaQuery.of(context).size.width;
+    bool previousWeekAvaiable = (monday.add(const Duration(days: -7)).isBefore(getMonday(today)));
 
     return Scaffold(
       body: Column(
@@ -88,17 +88,7 @@ class _PlannerState extends ConsumerState<Planner> {
               FloatingActionButton.extended(
                 label: const Text("Reload from Server"),
                 icon: const Icon(Icons.refresh),
-                onPressed: () {
-                  BackendService().handlers["getAllCapacities"] = GetAllCapacitiesHandler(cb: () async {
-                    if (ref.read(plannerChangedProvider.state).state == true) {
-                      ref.read(plannerChangedProvider.state).state = false;
-                    } else {
-                      ref.read(plannerUpdateProvider.state).state++;
-                    }
-                    print("hey");
-                  })
-                  ..send();
-                },
+                onPressed: () => reloadFromServer(),
               ),
               FloatingActionButton.extended(
                 label: const Text("Next week"),
@@ -110,8 +100,8 @@ class _PlannerState extends ConsumerState<Planner> {
               FloatingActionButton.extended(
                 label: const Text("Pevious week"),
                 icon: const Icon(Icons.arrow_back),
-                backgroundColor: (monday.add(const Duration(days: -7)).isBefore(today)) ? Colors.grey : Theme.of(context).primaryColor,
-                onPressed: (monday.add(const Duration(days: -7)).isBefore(today))
+                backgroundColor: previousWeekAvaiable ? Colors.grey : Theme.of(context).primaryColor,
+                onPressed: previousWeekAvaiable
                     ? null
                     : () => setState(() {
                           monday = monday.add(const Duration(days: -7));
@@ -120,31 +110,17 @@ class _PlannerState extends ConsumerState<Planner> {
               FloatingActionButton.extended(
                 label: const Text("Copy previous week"),
                 icon: const Icon(Icons.copy_all_outlined),
-                onPressed: () {
-                  copyPreviousWeek(monday);
-                  _update();
-                },
+                onPressed: () => copyPreviousWeek(monday),
               ),
               FloatingActionButton.extended(
                 label: const Text("Clear this week"),
                 icon: const Icon(Icons.delete_sweep_rounded),
-                onPressed: () {
-                  deleteThisWeek(monday);
-                  _update();
-                },
+                onPressed: () => deleteThisWeek(monday),
               ),
             ],
           ),
         ],
       ),
     );
-  }
-
-  void _update() {
-    if (ProviderService().container.read(plannerChangedProvider.state).state) {
-      ProviderService().container.read(plannerUpdateProvider.state).state++;
-    } else {
-      ProviderService().container.read(plannerChangedProvider.state).state = true;
-    }
   }
 }

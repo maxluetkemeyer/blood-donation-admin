@@ -21,7 +21,7 @@ class Capacity {
       );
 
   factory Capacity.fromJson(Map<String, dynamic> json) => Capacity(
-        start: DateTime.parse(json["start"]),
+        start: _removeTimeZone(DateTime.parse(json["start"])),
         duration: Duration(minutes: json["duration"]),
         slots: json["slots"],
       );
@@ -32,8 +32,13 @@ class Capacity {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        "start": start.toString(),
+        "start": _removeTimeZone(start).toString(),
         "duration": duration.inMinutes,
         "slots": slots,
       };
+}
+
+DateTime _removeTimeZone(DateTime dateTime) {
+  //TODO: Not pretty when send to Server
+  return dateTime.toLocal().subtract(dateTime.timeZoneOffset);
 }
