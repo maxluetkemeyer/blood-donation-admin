@@ -118,7 +118,7 @@ void addTestRequests() {
   Appointment a2 = Appointment(
     id: 98,
     start: extractDay(DateTime.now()).add(Duration(hours: 24 + DateTime.now().hour + 2)),
-    duration: const Duration(hours: 1),
+    duration: const Duration(minutes: 15),
     person: Person(
       birthday: DateTime.now(),
       gender: "male",
@@ -133,7 +133,7 @@ void addTestRequests() {
   Appointment a3 = Appointment(
     id: 97,
     start: extractDay(DateTime.now()).add(Duration(hours: DateTime.now().hour)),
-    duration: const Duration(hours: 1),
+    duration: const Duration(minutes: 15),
     request: Request(
       created: DateTime.now(),
       status: 'pending',
@@ -148,7 +148,7 @@ void addTestRequests() {
   Appointment a4 = Appointment(
     id: 96,
     start: extractDay(DateTime.now()).add(Duration(hours: 48 + DateTime.now().hour - 2)),
-    duration: const Duration(hours: 1),
+    duration: const Duration(minutes: 15),
     person: Person(
       birthday: DateTime.now(),
       gender: "female",
