@@ -3,15 +3,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 ///[LangInput] is a widget that generates two input and one [Text] Widget for one question and one language
 class FaqInputFields extends StatefulWidget {
   final String country;
   final int iterator;
   final String countryName;
 
-  const FaqInputFields({Key? key, required this.country, required this.iterator, required this.countryName})
-      : super(key: key);
+  const FaqInputFields({
+    Key? key,
+    required this.country,
+    required this.iterator,
+    required this.countryName,
+  }) : super(key: key);
 
   @override
   _FaqInputFieldsState createState() => _FaqInputFieldsState();
@@ -29,7 +32,10 @@ class _FaqInputFieldsState extends State<FaqInputFields> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 widget.countryName,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             ),
             footer: const Divider(),
@@ -62,10 +68,7 @@ class _FaqInputFieldsState extends State<FaqInputFields> {
             ],
           ),
         ),
-        const Expanded(
-          flex: 1,
-          child: SizedBox()
-        )
+        const Expanded(flex: 1, child: SizedBox())
       ],
     );
   }

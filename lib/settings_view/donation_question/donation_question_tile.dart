@@ -1,5 +1,5 @@
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
-import 'package:blooddonation_admin/settings/donation_question/donation_input_fields.dart';
+import 'package:blooddonation_admin/settings_view/donation_question/donation_input_fields.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,9 +10,12 @@ class DonationQuestionTile extends StatefulWidget {
   final int iterator;
   final List<Language> lang;
 
-  const DonationQuestionTile(
-      {Key? key, required this.notifyParents, required this.iterator, required this.lang})
-      : super(key: key);
+  const DonationQuestionTile({
+    Key? key,
+    required this.notifyParents,
+    required this.iterator,
+    required this.lang,
+  }) : super(key: key);
 
   @override
   _DonationQuestionTileState createState() => _DonationQuestionTileState();
@@ -21,17 +24,6 @@ class DonationQuestionTile extends StatefulWidget {
 class _DonationQuestionTileState extends State<DonationQuestionTile> {
   @override
   Widget build(BuildContext context) {
-    List<Widget> inputList = [];
-    for (int j = 0; j < widget.lang.length; j++) {
-      inputList.add(
-        DonationInputFields(
-          country: widget.lang[j].abbr,
-          iterator: widget.iterator,
-          countryName: widget.lang[j].name,
-        ),
-      );
-    }
-    
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: ExpansionTile(
@@ -53,9 +45,7 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
             Row(
               children: [
                 buildDeleteButton(),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 10,
-                )
+                SizedBox(width: MediaQuery.of(context).size.width / 10),
               ],
             ),
           ],
@@ -72,7 +62,12 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
                   flex: 15,
                   child: Column(
                     children: [
-                      ...inputList,
+                      for (int j = 0; j < widget.lang.length; j++)
+                        DonationInputFields(
+                          country: widget.lang[j].abbr,
+                          iterator: widget.iterator,
+                          countryName: widget.lang[j].name,
+                        ),
                     ],
                   ),
                 ),
@@ -91,11 +86,9 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
                         leading: Radio<bool>(
                           value: true,
                           groupValue: SettingService().getDonationQuestionById(widget.iterator).isYesCorrect,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              SettingService().getDonationQuestionById(widget.iterator).isYesCorrect = value ?? false;
-                            });
-                          },
+                          onChanged: (bool? value) => setState(() {
+                            SettingService().getDonationQuestionById(widget.iterator).isYesCorrect = value ?? false;
+                          }),
                         ),
                       ),
                       ListTile(
@@ -103,20 +96,15 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
                         leading: Radio<bool>(
                           value: false,
                           groupValue: SettingService().getDonationQuestionById(widget.iterator).isYesCorrect,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              SettingService().getDonationQuestionById(widget.iterator).isYesCorrect = value ?? true;
-                            });
-                          },
+                          onChanged: (bool? value) => setState(() {
+                            SettingService().getDonationQuestionById(widget.iterator).isYesCorrect = value ?? true;
+                          }),
                         ),
                       ),
                     ],
                   ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Container(),
-                ),
+                Expanded(flex: 1, child: Container()),
               ],
             ),
           ),
@@ -127,54 +115,48 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
 
   Widget buildDeleteButton() {
     return IconButton(
-      onPressed: () {
-        showCupertinoDialog(
-          context: context,
-          builder: (BuildContext context) => CupertinoAlertDialog(
-            title: Text(
-              AppLocalizations.of(context)!.settingsFaqDeleteTitle,
-              style: const TextStyle(
-                fontSize: 24,
-              ),
-            ),
-            content: Column(
-              children: [
-                const SizedBox(height: 10),
-                Text(
-                  AppLocalizations.of(context)!.settingsFaqDeleteSubtitle,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-              ],
-            ),
-            actions: [
-              CupertinoDialogAction(
-                key: const ValueKey('deleteDonationQuestion'),
-                isDestructiveAction: true,
-                onPressed: () {
-                  //Delete Faq Question
-                  widget.notifyParents();
-                  //pop dialog
-                  Navigator.pop(context);
-                },
-                //child: const Text('Cancel Booking'),
-                child: Text(AppLocalizations.of(context)!.delete),
-              ),
-              CupertinoDialogAction(
-                isDefaultAction: true,
-                //pop dialog
-                onPressed: () => Navigator.pop(context),
-                //child: const Text('Back'),
-                child: Text(AppLocalizations.of(context)!.back),
-              ),
-            ],
-          ),
-        );
-      },
       icon: const Icon(
         Icons.delete,
         color: Colors.grey,
+      ),
+      onPressed: () => showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text(
+            AppLocalizations.of(context)!.settingsFaqDeleteTitle,
+            style: const TextStyle(fontSize: 24),
+          ),
+          content: Column(
+            children: [
+              const SizedBox(height: 10),
+              Text(
+                AppLocalizations.of(context)!.settingsFaqDeleteSubtitle,
+                style: const TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+          actions: [
+            CupertinoDialogAction(
+              key: const ValueKey('deleteDonationQuestion'),
+              isDestructiveAction: true,
+              onPressed: () {
+                //Delete Faq Question
+                widget.notifyParents();
+                //pop dialog
+                Navigator.pop(context);
+              },
+              //child: const Text('Cancel Booking'),
+              child: Text(AppLocalizations.of(context)!.delete),
+            ),
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              //pop dialog
+              onPressed: () => Navigator.pop(context),
+              //child: const Text('Back'),
+              child: Text(AppLocalizations.of(context)!.back),
+            ),
+          ],
+        ),
       ),
     );
   }

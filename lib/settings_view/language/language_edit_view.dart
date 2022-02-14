@@ -1,6 +1,6 @@
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
-import 'package:blooddonation_admin/settings/language/language_tile.dart';
-import 'package:blooddonation_admin/settings/language/new_language.dart';
+import 'package:blooddonation_admin/settings_view/language/language_tile.dart';
+import 'package:blooddonation_admin/settings_view/language/new_language.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +17,7 @@ class _LanguageEditViewState extends State<LanguageEditView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.settingsLanguage,
-        ),
+        title: Text(AppLocalizations.of(context)!.settingsLanguage),
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
@@ -27,7 +25,7 @@ class _LanguageEditViewState extends State<LanguageEditView> {
               print("Saving Languages");
               //TODO: Backend Connection
             },
-          )
+          ),
         ],
       ),
       body: Center(
@@ -45,14 +43,12 @@ class _LanguageEditViewState extends State<LanguageEditView> {
               ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (_) {
-              return NewLanguage(notifyParents: refreshNewLanguage);
-            },
-          );
-        },
+        onPressed: () => showModalBottomSheet(
+          context: context,
+          builder: (_) {
+            return NewLanguage(notifyParents: refreshNewLanguage);
+          },
+        ),
         child: const Icon(Icons.add),
       ),
     );
@@ -79,7 +75,7 @@ class _LanguageEditViewState extends State<LanguageEditView> {
           languages: languages,
           notifyParents: refreshDeleteLanguage,
         ),
-      ); 
+      );
     }
     return result;
   }

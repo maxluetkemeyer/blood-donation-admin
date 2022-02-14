@@ -8,7 +8,10 @@ class NewLanguage extends StatefulWidget {
   final List<Language> languages = SettingService().getLanguages();
   final Function notifyParents;
 
-  NewLanguage({Key? key, required this.notifyParents}) : super(key: key);
+  NewLanguage({
+    Key? key,
+    required this.notifyParents,
+  }) : super(key: key);
 
   @override
   State<NewLanguage> createState() => _NewLanguageState();
@@ -84,7 +87,7 @@ class _NewLanguageState extends State<NewLanguage> {
                     fontSize: 20,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

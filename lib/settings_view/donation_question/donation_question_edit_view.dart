@@ -2,13 +2,14 @@ import 'package:blooddonation_admin/services/settings/models/donation_controller
 import 'package:blooddonation_admin/services/settings/models/donation_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
-import 'package:blooddonation_admin/settings/donation_question/donation_question_tile.dart';
-import 'package:blooddonation_admin/settings/donation_question/new_donation_question.dart';
+import 'package:blooddonation_admin/settings_view/donation_question/donation_question_tile.dart';
+import 'package:blooddonation_admin/settings_view/donation_question/new_donation_question.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DonationQuestionEditView extends StatefulWidget {
   const DonationQuestionEditView({Key? key}) : super(key: key);
+
   @override
   State<DonationQuestionEditView> createState() => _DonationQuestionEditViewState();
 }
@@ -41,20 +42,16 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
         child: donationQuestions.isNotEmpty
             ? ReorderableListView(
                 children: getQuestionTiles(donationQuestions, lang, donationController),
-                onReorder: (oldIndex, newIndex) {
-                  setState(() {
-                    if (oldIndex < newIndex) {
-                      newIndex -= 1;
-                    }
-                    SettingService().swapDonationQuestions(oldIndex, newIndex);
-                  });
-                },
+                onReorder: (oldIndex, newIndex) => setState(() {
+                  if (oldIndex < newIndex) {
+                    newIndex -= 1;
+                  }
+                  SettingService().swapDonationQuestions(oldIndex, newIndex);
+                }),
               )
             : Center(
                 key: const ValueKey("noItemsInList"),
-                child: Text(
-                  AppLocalizations.of(context)!.settingsDonationEmpty,
-                ),
+                child: Text(AppLocalizations.of(context)!.settingsDonationEmpty),
               ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -62,9 +59,7 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (_) {
-              return NewDonationQuestion(notifyParents: refreshAdd);
-            },
+            builder: (_) => NewDonationQuestion(notifyParents: refreshAdd),
           );
         },
       ),
@@ -73,7 +68,10 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
 
   ///Returns a [List] of [QuestionTile]'s which are Expandable Tiles that allow the user to change FAQ questions
   List<Widget> getQuestionTiles(
-      List<DonationQuestion> donationQuest, List<Language> lang, List<DonationController> donationContr) {
+    List<DonationQuestion> donationQuest,
+    List<Language> lang,
+    List<DonationController> donationContr,
+  ) {
     List<Widget> l = [];
     //Generating DonationQuestionTiles for every Question in donationQuest
     for (int i = 0; i < donationQuest.length; i++) {

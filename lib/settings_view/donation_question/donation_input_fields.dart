@@ -9,9 +9,12 @@ class DonationInputFields extends StatefulWidget {
   final int iterator;
   final String countryName;
 
-  const DonationInputFields(
-      {Key? key, required this.country, required this.iterator, required this.countryName})
-      : super(key: key);
+  const DonationInputFields({
+    Key? key,
+    required this.country,
+    required this.iterator,
+    required this.countryName,
+  }) : super(key: key);
 
   @override
   _DonationInputFieldsState createState() => _DonationInputFieldsState();
@@ -34,9 +37,7 @@ class _DonationInputFieldsState extends State<DonationInputFields> {
         CupertinoFormRow(
           prefix: Text(
             AppLocalizations.of(context)!.question,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           child: CupertinoTextFormFieldRow(
             placeholder: "",

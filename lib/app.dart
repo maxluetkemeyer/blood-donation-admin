@@ -7,7 +7,7 @@ import 'package:blooddonation_admin/help/help_view.dart';
 import 'package:blooddonation_admin/logging/logging_view.dart';
 import 'package:blooddonation_admin/requests/requests_view.dart';
 import 'package:blooddonation_admin/planner/planner_view.dart';
-import 'package:blooddonation_admin/settings/settings_view.dart';
+import 'package:blooddonation_admin/settings_view/settings_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// The structure of the program

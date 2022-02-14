@@ -2,7 +2,7 @@ import 'package:blooddonation_admin/services/settings/models/donation_controller
 import 'package:blooddonation_admin/services/settings/models/donation_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
-import 'package:blooddonation_admin/settings/donation_question/new_donation_input_fields.dart';
+import 'package:blooddonation_admin/settings_view/donation_question/new_donation_input_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,7 +11,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class NewDonationQuestion extends StatefulWidget {
   final Function notifyParents;
 
-  const NewDonationQuestion({Key? key, required this.notifyParents}) : super(key: key);
+  const NewDonationQuestion({
+    Key? key,
+    required this.notifyParents,
+  }) : super(key: key);
 
   @override
   State<NewDonationQuestion> createState() => _NewDonationQuestionState();
@@ -125,8 +128,11 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
   }
 
   ///generates the language oriented [Map] for adding the new [DonationQuestion]
-  DonationQuestion generateDonationQuestion(
-      {required List<Language> lang, required DonationController controller, required DonationQuestion newQuestion}) {
+  DonationQuestion generateDonationQuestion({
+    required List<Language> lang,
+    required DonationController controller,
+    required DonationQuestion newQuestion,
+  }) {
     DonationQuestion result = DonationQuestion(translations: [], isYesCorrect: newQuestion.isYesCorrect);
     for (int i = 0; i < lang.length; i++) {
       String question = controller.translations[i].bodyController.text;
