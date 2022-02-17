@@ -36,7 +36,7 @@ class PatientOverviewListTile extends StatelessWidget {
                 //Change to custom grid view in future
                 crossAxisCount: 3,
                 shrinkWrap: true,
-                childAspectRatio: 7 / 6,
+                childAspectRatio: 1.1,
                 children: buildPatientCards(),
               ),
             ),

@@ -1,7 +1,6 @@
 import 'package:blooddonation_admin/misc/appointment_styles.dart';
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
-import 'package:blooddonation_admin/models/capacity_model.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';

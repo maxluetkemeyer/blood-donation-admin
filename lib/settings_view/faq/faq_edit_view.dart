@@ -24,6 +24,7 @@ class _FaqEditViewState extends State<FaqEditView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.settingsFaq),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
