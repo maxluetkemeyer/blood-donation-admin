@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SettingsButton extends StatelessWidget {
@@ -13,11 +12,12 @@ class SettingsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: CupertinoButton.filled(
-          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => nextPage)),
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: ElevatedButton(
+        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => nextPage)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
           child: FittedBox(
             child: Text(
               buttonText,

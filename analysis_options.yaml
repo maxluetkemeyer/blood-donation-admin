@@ -8,3 +8,4 @@ linter:
     avoid_print: false
     sort_child_properties_last: true
     parameter_assignments: true
+    avoid_web_libraries_in_flutter: false

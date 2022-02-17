@@ -1,3 +1,6 @@
+import 'dart:html';
+import 'dart:ui' as ui;
+
 import 'package:blooddonation_admin/connection_view/connetion_view.dart';
 import 'package:blooddonation_admin/services/backend/backend_service.dart';
 import 'package:blooddonation_admin/services/logging_service.dart';
@@ -13,6 +16,15 @@ import 'package:blooddonation_admin/services/capacity_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  IFrameElement ifE = IFrameElement()
+    ..width = "640"
+    ..height = "360"
+    //..src = "https://github.com/maxluetkemeyer/blood-donation-app/wiki"
+    ..src = "https://www.wi.uni-muenster.de/"
+    ..style.border = "none";
+  // ignore: undefined_prefixed_name
+  ui.platformViewRegistry.registerViewFactory('github-wiki', (_) => ifE);
 
   //Services
   ProviderService();

@@ -50,9 +50,9 @@
 
   "calendarSidebarNothingSelected": "Nothing selected",
   
-  "settingsFaq":"Faq Settings",
-  "settingsDonationQuestion":"Donation Question Settings",
-  "settingsLanguage":"Language Settings",
+  "settingsFaq":"Faq",
+  "settingsDonationQuestion":"Donation Questions",
+  "settingsLanguage":"Languages",
 
   "settingsLanguageEmpty":"Add new Languages to enable the user to see Questions",
   "settingsLanguageName":"Name",
