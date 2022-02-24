@@ -8,6 +8,7 @@ import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'tester.dart' as tester;
 
 import 'package:blooddonation_admin/misc/theme.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
@@ -35,6 +36,8 @@ void main() {
   SettingService();
 
   LoggingService().statistic.totalBookedAppointments = 1;
+
+  tester.addTestSettings();
 
   runApp(const MainWidget());
 }

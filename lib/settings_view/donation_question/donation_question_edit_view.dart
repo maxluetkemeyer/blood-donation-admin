@@ -1,5 +1,6 @@
+import 'package:blooddonation_admin/models/donationquestions_model.dart';
+import 'package:blooddonation_admin/models/donationquestionusing_model.dart';
 import 'package:blooddonation_admin/services/settings/models/donation_controller_model.dart';
-import 'package:blooddonation_admin/services/settings/models/donation_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:blooddonation_admin/settings_view/donation_question/donation_question_tile.dart';
@@ -18,8 +19,6 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
   ///List to capture all [DonationQuestion]s sorted by questions and then language
   List<DonationQuestion> donationQuestions = SettingService().getDonationQuestions();
 
-  ///List to capture all [DonationController] sorted by questions and then language
-  List<DonationController> donationController = SettingService().getDonationControllers();
   var lang = SettingService().getLanguages();
 
   @override
@@ -41,7 +40,7 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
       body: Center(
         child: donationQuestions.isNotEmpty
             ? ReorderableListView(
-                children: getQuestionTiles(donationQuestions, lang, donationController),
+                children: getQuestionTiles(donationQuestions, lang),
                 onReorder: (oldIndex, newIndex) => setState(() {
                   if (oldIndex < newIndex) {
                     newIndex -= 1;
@@ -70,7 +69,6 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
   List<Widget> getQuestionTiles(
     List<DonationQuestion> donationQuest,
     List<Language> lang,
-    List<DonationController> donationContr,
   ) {
     List<Widget> l = [];
     //Generating DonationQuestionTiles for every Question in donationQuest
@@ -93,9 +91,9 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
   }
 
   ///Function is called when a [DonationQuestionTile] is added
-  void refreshAdd(DonationQuestion data) {
+  void refreshAdd(DonationQuestionUsing data) {
     setState(() {
-      SettingService().addDonationQuestion(data);
+      SettingService().addDonationQuestion(donationTrans: data);
     });
   }
 }

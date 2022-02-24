@@ -50,7 +50,12 @@ class _FaqInputFieldsState extends State<FaqInputFields> {
                 ),
                 child: CupertinoTextFormFieldRow(
                   placeholder: "",
-                  controller: SettingService().findFaqControllerTranslation(widget.iterator, widget.country).headController,
+                  controller: SettingService()
+                      .getFaqControllerTranslation(
+                        languageCode: widget.country,
+                        questionId: widget.iterator,
+                      )
+                      .headController,
                 ),
               ),
               CupertinoFormRow(
@@ -62,7 +67,12 @@ class _FaqInputFieldsState extends State<FaqInputFields> {
                 ),
                 child: CupertinoTextFormFieldRow(
                   placeholder: "",
-                  controller: SettingService().findFaqControllerTranslation(widget.iterator, widget.country).bodyController,
+                  controller: SettingService()
+                      .getFaqControllerTranslation(
+                        languageCode: widget.country,
+                        questionId: widget.iterator,
+                      )
+                      .bodyController,
                 ),
               ),
             ],

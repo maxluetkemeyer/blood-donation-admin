@@ -1,18 +1,18 @@
-import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:flutter/cupertino.dart';
-
 
 class DonationController {
   List<DonationControllerTranslation> translations;
+  final int question;
 
   DonationController({
     required this.translations,
+    required this.question,
   });
 }
 
 class DonationControllerTranslation {
   TextEditingController bodyController;
-  Language lang;
+  String lang;
 
   DonationControllerTranslation({
     required this.bodyController,

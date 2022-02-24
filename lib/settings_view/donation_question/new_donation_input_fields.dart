@@ -1,5 +1,5 @@
+import 'package:blooddonation_admin/models/donationquestions_model.dart';
 import 'package:blooddonation_admin/services/settings/models/donation_controller_model.dart';
-import 'package:blooddonation_admin/services/settings/models/donation_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +8,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class NewDonationInputFields extends StatefulWidget {
   final List<Language> lang;
   final DonationController controller;
-  final DonationQuestion newQuestion;
 
   const NewDonationInputFields({
     Key? key,
     required this.lang,
     required this.controller,
-    required this.newQuestion,
   }) : super(key: key);
 
   @override

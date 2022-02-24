@@ -1,5 +1,7 @@
+import 'package:blooddonation_admin/models/faqquestion_model.dart';
+import 'package:blooddonation_admin/models/faqquestiontranslation_model.dart';
+import 'package:blooddonation_admin/models/faqquestionusing_model.dart';
 import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
-import 'package:blooddonation_admin/services/settings/models/faq_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:blooddonation_admin/settings_view/faq/new_faq_lang_input.dart';
@@ -20,7 +22,7 @@ class NewFaqQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ///Map of all Controllers for the Question adding process
-    FaqController controller = FaqController(translations: []);
+    FaqController controller = FaqController(translations: [], question: -1);
 
     ///List of all Languages
     List<Language> lang = SettingService().getLanguages();
@@ -29,7 +31,7 @@ class NewFaqQuestion extends StatelessWidget {
         FaqControllerTranslation(
           headController: TextEditingController(),
           bodyController: TextEditingController(),
-          lang: lang[i],
+          lang: lang[i].abbr,
         ),
       );
     }
@@ -71,22 +73,22 @@ class NewFaqQuestion extends StatelessWidget {
   }
 
   ///generates the language oriented [Map] for adding the new [FaqQuestion]
-  FaqQuestion generateFaqQuestion({
+  List<FaqQuestionUsing> generateFaqQuestion({
     required List<Language> lang,
     required FaqController controller,
   }) {
-    FaqQuestion result = FaqQuestion(translations: []);
+    List<FaqQuestionUsing> result = [];
 
     for (int i = 0; i < lang.length; i++) {
       String answer = controller.translations[i].bodyController.text;
       String question = controller.translations[i].headController.text;
 
       //The FaqQuestion for each language
-      result.translations.add(
-        FaqQuestionTranslation(
+      result.add(
+        FaqQuestionUsing(
           body: answer,
           head: question,
-          lang: lang[i],
+          lang: lang[i].abbr,
         ),
       );
     }

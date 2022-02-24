@@ -85,9 +85,9 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
                         title: Text(AppLocalizations.of(context)!.yes),
                         leading: Radio<bool>(
                           value: true,
-                          groupValue: SettingService().getDonationQuestionById(widget.iterator).isYesCorrect,
+                          groupValue: SettingService().getDonationQuestionById(id: widget.iterator).isYesCorrect,
                           onChanged: (bool? value) => setState(() {
-                            SettingService().getDonationQuestionById(widget.iterator).isYesCorrect = value ?? false;
+                            SettingService().getDonationQuestionById(id: widget.iterator).isYesCorrect = value ?? false;
                           }),
                         ),
                       ),
@@ -95,9 +95,9 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
                         title: Text(AppLocalizations.of(context)!.no),
                         leading: Radio<bool>(
                           value: false,
-                          groupValue: SettingService().getDonationQuestionById(widget.iterator).isYesCorrect,
+                          groupValue: SettingService().getDonationQuestionById(id: widget.iterator).isYesCorrect,
                           onChanged: (bool? value) => setState(() {
-                            SettingService().getDonationQuestionById(widget.iterator).isYesCorrect = value ?? true;
+                            SettingService().getDonationQuestionById(id: widget.iterator).isYesCorrect = value ?? true;
                           }),
                         ),
                       ),

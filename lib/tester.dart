@@ -4,8 +4,6 @@ import 'package:blooddonation_admin/models/person_model.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/models/request_model.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
-import 'package:blooddonation_admin/services/settings/models/donation_question_model.dart';
-import 'package:blooddonation_admin/services/settings/models/faq_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
 
@@ -203,6 +201,7 @@ void addTestSettings() {
   ));
 
   //FAQ
+  /*
   ss.addFaqQuestion(FaqQuestion(
     translations: [
       FaqQuestionTranslation(
@@ -303,4 +302,5 @@ void addTestSettings() {
       isYesCorrect: false,
     ),
   );
+  */
 }

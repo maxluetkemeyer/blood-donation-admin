@@ -41,7 +41,7 @@ class _DonationInputFieldsState extends State<DonationInputFields> {
           ),
           child: CupertinoTextFormFieldRow(
             placeholder: "",
-            controller: SettingService().findDonationControllerTranslation(widget.iterator, widget.country).bodyController,
+            controller: SettingService().getDonationControllerById(id: widget.iterator, languageCode: widget.country).bodyController,
           ),
         ),
       ],

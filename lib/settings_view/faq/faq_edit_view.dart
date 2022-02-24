@@ -1,10 +1,10 @@
-import 'package:blooddonation_admin/services/settings/models/faq_question_model.dart';
+import 'package:blooddonation_admin/models/faqquestion_model.dart';
+import 'package:blooddonation_admin/models/faqquestionusing_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:blooddonation_admin/settings_view/faq/new_faq_question.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
 import 'package:blooddonation_admin/settings_view/faq/faq_question_tile.dart';
 
 class FaqEditView extends StatefulWidget {
@@ -39,7 +39,7 @@ class _FaqEditViewState extends State<FaqEditView> {
       body: Center(
         child: faqQuestions.isNotEmpty
             ? ReorderableListView(
-                children: getQuestionTiles(faqQuestions, lang, faqController),
+                children: getQuestionTiles(faqQuestions, lang),
                 onReorder: (oldIndex, newIndex) => setState(() {
                   if (oldIndex < newIndex) {
                     newIndex -= 1;
@@ -66,7 +66,6 @@ class _FaqEditViewState extends State<FaqEditView> {
   List<Widget> getQuestionTiles(
     List<FaqQuestion> faqQuest,
     List<Language> lang,
-    List<FaqController> faqContr,
   ) {
     List<Widget> l = [];
     for (int i = 0; i < faqQuest.length; i++) {
@@ -88,9 +87,9 @@ class _FaqEditViewState extends State<FaqEditView> {
   }
 
   ///Function is called when a [QuestionTile] is added
-  void refreshAdd(FaqQuestion data) {
+  void refreshAdd(List<FaqQuestionUsing> data) {
     setState(() {
-      SettingService().addFaqQuestion(data);
+      SettingService().addFaqQuestion(faqTrans: data);
     });
   }
 }

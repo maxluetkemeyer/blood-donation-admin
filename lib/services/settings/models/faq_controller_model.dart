@@ -1,10 +1,11 @@
-import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:flutter/widgets.dart';
 
 class FaqController {
-  List<FaqControllerTranslation> translations;
+  final List<FaqControllerTranslation> translations;
+  final int question;
 
   FaqController({
+    required this.question,
     required this.translations,
   });
 }
@@ -12,7 +13,7 @@ class FaqController {
 class FaqControllerTranslation {
   TextEditingController headController;
   TextEditingController bodyController;
-  Language lang;
+  String lang;
 
   FaqControllerTranslation({
     required this.headController,

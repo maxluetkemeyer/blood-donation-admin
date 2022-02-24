@@ -1,5 +1,7 @@
+import 'package:blooddonation_admin/models/donationquestions_model.dart';
+import 'package:blooddonation_admin/models/donationquestiontranslation_model.dart';
+import 'package:blooddonation_admin/models/donationquestionusing_model.dart';
 import 'package:blooddonation_admin/services/settings/models/donation_controller_model.dart';
-import 'package:blooddonation_admin/services/settings/models/donation_question_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:blooddonation_admin/settings_view/donation_question/new_donation_input_fields.dart';
@@ -24,17 +26,18 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
   @override
   Widget build(BuildContext context) {
     ///Map of all Controllers for the Question adding process
-    DonationController controller = DonationController(translations: []);
-
-    DonationQuestion newQuestion = DonationQuestion(translations: [], isYesCorrect: true);
+    DonationController controller = DonationController(translations: [], question: -1);
+    DonationQuestion question = DonationQuestion(id: 1, position: 1, isYesCorrect: true);
 
     ///List of all Languages
     List<Language> lang = SettingService().getLanguages();
-    //Initializing List of DonationControllers
     for (int i = 0; i < lang.length; i++) {
-      controller.translations.add(DonationControllerTranslation(bodyController: TextEditingController(), lang: lang[i]));
-
-      newQuestion.translations.add(DonationQuestionTranslation(body: "", lang: lang[i]));
+      controller.translations.add(
+        DonationControllerTranslation(
+          bodyController: TextEditingController(),
+          lang: lang[i].abbr,
+        ),
+      );
     }
 
     return Padding(
@@ -52,7 +55,6 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
                         NewDonationInputFields(
                           lang: lang,
                           controller: controller,
-                          newQuestion: newQuestion,
                         ),
                       ],
                     ),
@@ -71,10 +73,10 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
                           title: Text(AppLocalizations.of(context)!.yes),
                           leading: Radio<bool>(
                             value: true,
-                            groupValue: newQuestion.isYesCorrect,
+                            groupValue: question.isYesCorrect,
                             onChanged: (bool? value) {
                               setState(() {
-                                newQuestion.isYesCorrect = value ?? false;
+                                question.isYesCorrect = value ?? false;
                               });
                             },
                           ),
@@ -83,10 +85,10 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
                           title: Text(AppLocalizations.of(context)!.no),
                           leading: Radio<bool>(
                             value: false,
-                            groupValue: newQuestion.isYesCorrect,
+                            groupValue: question.isYesCorrect,
                             onChanged: (bool? value) {
                               setState(() {
-                                newQuestion.isYesCorrect = value ?? true;
+                                question.isYesCorrect = value ?? true;
                               });
                             },
                           ),
@@ -108,7 +110,7 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
                   widget.notifyParents(generateDonationQuestion(
                     lang: lang,
                     controller: controller,
-                    newQuestion: newQuestion,
+                    newQuestion: question,
                   ));
                   Navigator.of(context).pop();
                 },
@@ -128,18 +130,22 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
   }
 
   ///generates the language oriented [Map] for adding the new [DonationQuestion]
-  DonationQuestion generateDonationQuestion({
+  DonationQuestionUsing generateDonationQuestion({
     required List<Language> lang,
     required DonationController controller,
     required DonationQuestion newQuestion,
   }) {
-    DonationQuestion result = DonationQuestion(translations: [], isYesCorrect: newQuestion.isYesCorrect);
+    DonationQuestionUsing result = DonationQuestionUsing(translations: [], isYesCorrect: newQuestion.isYesCorrect);
     for (int i = 0; i < lang.length; i++) {
+      DonationQuestionUsingTrans dtq = DonationQuestionUsingTrans(
+        body: "",
+        lang: lang[i].abbr,
+      );
       String question = controller.translations[i].bodyController.text;
 
-      newQuestion.translations[i].body = question;
+      dtq.body = question;
       //The FaqQuestion for each language
-      result.translations.add(newQuestion.translations[i]);
+      result.translations.add(dtq);
     }
     return result;
   }
