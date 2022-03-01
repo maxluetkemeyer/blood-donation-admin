@@ -1,4 +1,4 @@
-import 'package:blooddonation_admin/services/settings/settings_service.dart';
+import 'package:blooddonation_admin/services/settings/faq_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -50,10 +50,10 @@ class _FaqInputFieldsState extends State<FaqInputFields> {
                 ),
                 child: CupertinoTextFormFieldRow(
                   placeholder: "",
-                  controller: SettingService()
-                      .getFaqControllerTranslation(
+                  controller: FaqService()
+                      .getFaqControllerTranslationByLanguage(
                         languageCode: widget.country,
-                        questionId: widget.iterator,
+                        id: widget.iterator,
                       )
                       .headController,
                 ),
@@ -67,10 +67,10 @@ class _FaqInputFieldsState extends State<FaqInputFields> {
                 ),
                 child: CupertinoTextFormFieldRow(
                   placeholder: "",
-                  controller: SettingService()
-                      .getFaqControllerTranslation(
+                  controller: FaqService()
+                      .getFaqControllerTranslationByLanguage(
                         languageCode: widget.country,
-                        questionId: widget.iterator,
+                        id: widget.iterator,
                       )
                       .bodyController,
                 ),

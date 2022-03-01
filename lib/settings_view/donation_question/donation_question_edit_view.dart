@@ -1,8 +1,8 @@
 import 'package:blooddonation_admin/models/donationquestions_model.dart';
 import 'package:blooddonation_admin/models/donationquestionusing_model.dart';
-import 'package:blooddonation_admin/services/settings/models/donation_controller_model.dart';
+import 'package:blooddonation_admin/services/settings/donation_service.dart';
+import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
-import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:blooddonation_admin/settings_view/donation_question/donation_question_tile.dart';
 import 'package:blooddonation_admin/settings_view/donation_question/new_donation_question.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +16,7 @@ class DonationQuestionEditView extends StatefulWidget {
 }
 
 class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
-  ///List to capture all [DonationQuestion]s sorted by questions and then language
-  List<DonationQuestion> donationQuestions = SettingService().getDonationQuestions();
-
-  var lang = SettingService().getLanguages();
+  var lang = LanguageService().getLanguages();
 
   @override
   Widget build(BuildContext context) {
@@ -31,21 +28,21 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
             icon: const Icon(Icons.save),
             onPressed: () {
               print("Saving Donation Questions");
-              SettingService().saveDonationControllerState();
+              DonationService().saveDonationControllerState();
               //TODO: Backend Connection
             },
           )
         ],
       ),
       body: Center(
-        child: donationQuestions.isNotEmpty
+        child: DonationService().getDonationQuestions().isNotEmpty
             ? ReorderableListView(
-                children: getQuestionTiles(donationQuestions, lang),
+                children: getQuestionTiles( DonationService().getDonationQuestions(), lang),
                 onReorder: (oldIndex, newIndex) => setState(() {
                   if (oldIndex < newIndex) {
                     newIndex -= 1;
                   }
-                  SettingService().swapDonationQuestions(oldIndex, newIndex);
+                  DonationService().swapDonationQuestions(oldIndex, newIndex);
                 }),
               )
             : Center(
@@ -86,14 +83,14 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
   ///Function is called when a [DonationQuestionTile] is deleted
   void refreshDelete(int i) {
     setState(() {
-      SettingService().deleteDonationQuestion(i);
+      DonationService().deleteDonationQuestion(i);
     });
   }
 
   ///Function is called when a [DonationQuestionTile] is added
   void refreshAdd(DonationQuestionUsing data) {
     setState(() {
-      SettingService().addDonationQuestion(donationTrans: data);
+      DonationService().addDonationQuestion(donationTrans: data);
     });
   }
 }

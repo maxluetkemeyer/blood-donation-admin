@@ -1,7 +1,8 @@
 import 'package:blooddonation_admin/models/faqquestion_model.dart';
 import 'package:blooddonation_admin/models/faqquestionusing_model.dart';
+import 'package:blooddonation_admin/services/settings/faq_service.dart';
+import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
-import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:blooddonation_admin/settings_view/faq/new_faq_question.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,9 +16,7 @@ class FaqEditView extends StatefulWidget {
 }
 
 class _FaqEditViewState extends State<FaqEditView> {
-  var faqQuestions = SettingService().getFaqQuestions();
-  var faqController = SettingService().getFaqControllers();
-  var lang = SettingService().getLanguages();
+  var lang = LanguageService().getLanguages();
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +29,21 @@ class _FaqEditViewState extends State<FaqEditView> {
             icon: const Icon(Icons.save),
             onPressed: () {
               print("Saving Faq");
-              SettingService().saveFaqControllerState();
+              FaqService().saveFaqControllerState();
               //TODO: Backend Connection
             },
           )
         ],
       ),
       body: Center(
-        child: faqQuestions.isNotEmpty
+        child: FaqService().getFaqQuestions().isNotEmpty
             ? ReorderableListView(
-                children: getQuestionTiles(faqQuestions, lang),
+                children: getQuestionTiles(FaqService().getFaqQuestions(), lang),
                 onReorder: (oldIndex, newIndex) => setState(() {
                   if (oldIndex < newIndex) {
                     newIndex -= 1;
                   }
-                  SettingService().swapFaqQuestions(oldIndex, newIndex);
+                  FaqService().swapFaqQuestions(oldIndex, newIndex);
                 }),
               )
             : Center(
@@ -82,14 +81,14 @@ class _FaqEditViewState extends State<FaqEditView> {
   ///Function is called when a [QuestionTile] is deleted
   void refreshDelete(int i) {
     setState(() {
-      SettingService().deleteFaqQuestion(i);
+      FaqService().deleteFaqQuestion(i);
     });
   }
 
   ///Function is called when a [QuestionTile] is added
   void refreshAdd(List<FaqQuestionUsing> data) {
     setState(() {
-      SettingService().addFaqQuestion(faqTrans: data);
+      FaqService().addFaqQuestion(faqTrans: data);
     });
   }
 }

@@ -1,11 +1,11 @@
+import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
-import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewLanguage extends StatefulWidget {
-  final List<Language> languages = SettingService().getLanguages();
+  final List<Language> languages = LanguageService().getLanguages();
   final Function notifyParents;
 
   NewLanguage({

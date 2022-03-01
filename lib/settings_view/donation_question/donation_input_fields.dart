@@ -1,4 +1,4 @@
-import 'package:blooddonation_admin/services/settings/settings_service.dart';
+import 'package:blooddonation_admin/services/settings/donation_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -28,7 +28,10 @@ class _DonationInputFieldsState extends State<DonationInputFields> {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           widget.countryName,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
         ),
       ),
       footer: const Divider(),
@@ -37,11 +40,18 @@ class _DonationInputFieldsState extends State<DonationInputFields> {
         CupertinoFormRow(
           prefix: Text(
             AppLocalizations.of(context)!.question,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           child: CupertinoTextFormFieldRow(
             placeholder: "",
-            controller: SettingService().getDonationControllerById(id: widget.iterator, languageCode: widget.country).bodyController,
+            controller: DonationService()
+                .getDonationQuestionControllerTranslationByLanguage(
+                  id: widget.iterator,
+                  lang: widget.country,
+                )
+                .bodyController,
           ),
         ),
       ],

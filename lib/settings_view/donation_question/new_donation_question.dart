@@ -1,9 +1,8 @@
 import 'package:blooddonation_admin/models/donationquestions_model.dart';
-import 'package:blooddonation_admin/models/donationquestiontranslation_model.dart';
 import 'package:blooddonation_admin/models/donationquestionusing_model.dart';
+import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:blooddonation_admin/services/settings/models/donation_controller_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
-import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:blooddonation_admin/settings_view/donation_question/new_donation_input_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,7 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
     DonationQuestion question = DonationQuestion(id: 1, position: 1, isYesCorrect: true);
 
     ///List of all Languages
-    List<Language> lang = SettingService().getLanguages();
+    List<Language> lang = LanguageService().getLanguages();
     for (int i = 0; i < lang.length; i++) {
       controller.translations.add(
         DonationControllerTranslation(

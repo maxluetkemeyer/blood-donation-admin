@@ -1,9 +1,8 @@
 import 'package:blooddonation_admin/models/faqquestion_model.dart';
-import 'package:blooddonation_admin/models/faqquestiontranslation_model.dart';
 import 'package:blooddonation_admin/models/faqquestionusing_model.dart';
+import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
-import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:blooddonation_admin/settings_view/faq/new_faq_lang_input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,7 +24,7 @@ class NewFaqQuestion extends StatelessWidget {
     FaqController controller = FaqController(translations: [], question: -1);
 
     ///List of all Languages
-    List<Language> lang = SettingService().getLanguages();
+    List<Language> lang = LanguageService().getLanguages();
     for (int i = 0; i < lang.length; i++) {
       controller.translations.add(
         FaqControllerTranslation(

@@ -4,8 +4,8 @@ import 'package:blooddonation_admin/models/person_model.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/models/request_model.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
+import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
-import 'package:blooddonation_admin/services/settings/settings_service.dart';
 
 void addTestAppointments() {
   CalendarService cs = CalendarService();
@@ -188,14 +188,14 @@ void addTestPlannerEvents() {
 }
 
 void addTestSettings() {
-  SettingService ss = SettingService();
+  LanguageService ls = LanguageService();
 
   //Languages
-  ss.addLanguage(Language(
+  ls.addLanguage(Language(
     abbr: "de",
     name: "Deutsch",
   ));
-  ss.addLanguage(Language(
+  ls.addLanguage(Language(
     abbr: "en",
     name: "English",
   ));

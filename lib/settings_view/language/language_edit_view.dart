@@ -1,7 +1,7 @@
+import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/settings_view/language/language_tile.dart';
 import 'package:blooddonation_admin/settings_view/language/new_language.dart';
-import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -30,10 +30,10 @@ class _LanguageEditViewState extends State<LanguageEditView> {
       ),
       body: Center(
         //const Text("List of all Languages"),
-        child: SettingService().getLanguages().isNotEmpty
+        child: LanguageService().getLanguages().isNotEmpty
             ? ListView(
                 children: getLanguageWidgets(
-                  SettingService().getLanguages(),
+                  LanguageService().getLanguages(),
                 ),
               )
             : Center(
@@ -56,13 +56,13 @@ class _LanguageEditViewState extends State<LanguageEditView> {
 
   void refreshNewLanguage(Language lang) {
     setState(() {
-      SettingService().addLanguage(lang);
+      LanguageService().addLanguage(lang);
     });
   }
 
   void refreshDeleteLanguage(int i) {
     setState(() {
-      SettingService().deleteLanguage(i);
+      LanguageService().deleteLanguage(i);
     });
   }
 

@@ -1,6 +1,6 @@
+import 'package:blooddonation_admin/services/settings/donation_service.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/settings_view/donation_question/donation_input_fields.dart';
-import 'package:blooddonation_admin/services/settings/settings_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -85,9 +85,9 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
                         title: Text(AppLocalizations.of(context)!.yes),
                         leading: Radio<bool>(
                           value: true,
-                          groupValue: SettingService().getDonationQuestionById(id: widget.iterator).isYesCorrect,
+                          groupValue: DonationService().getDonationQuestionByPosition(position: widget.iterator).isYesCorrect,
                           onChanged: (bool? value) => setState(() {
-                            SettingService().getDonationQuestionById(id: widget.iterator).isYesCorrect = value ?? false;
+                            DonationService().getDonationQuestionByPosition(position: widget.iterator).isYesCorrect = value ?? false;
                           }),
                         ),
                       ),
@@ -95,9 +95,9 @@ class _DonationQuestionTileState extends State<DonationQuestionTile> {
                         title: Text(AppLocalizations.of(context)!.no),
                         leading: Radio<bool>(
                           value: false,
-                          groupValue: SettingService().getDonationQuestionById(id: widget.iterator).isYesCorrect,
+                          groupValue: DonationService().getDonationQuestionByPosition(position: widget.iterator).isYesCorrect,
                           onChanged: (bool? value) => setState(() {
-                            SettingService().getDonationQuestionById(id: widget.iterator).isYesCorrect = value ?? true;
+                            DonationService().getDonationQuestionByPosition(position: widget.iterator).isYesCorrect = value ?? true;
                           }),
                         ),
                       ),
