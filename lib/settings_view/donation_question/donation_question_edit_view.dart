@@ -1,5 +1,5 @@
 import 'package:blooddonation_admin/models/donationquestions_model.dart';
-import 'package:blooddonation_admin/models/donationquestionusing_model.dart';
+import 'package:blooddonation_admin/services/settings/models/donationquestionusing_model.dart';
 import 'package:blooddonation_admin/services/settings/donation_service.dart';
 import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
@@ -30,6 +30,8 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
               print("Saving Donation Questions");
               DonationService().saveDonationControllerState();
               //TODO: Backend Connection
+              DonationService().getDonationQuestions();
+              DonationService().getDonationQuestionTranslations();
             },
           )
         ],

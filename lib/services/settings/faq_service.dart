@@ -1,6 +1,6 @@
 import 'package:blooddonation_admin/models/faqquestion_model.dart';
 import 'package:blooddonation_admin/models/faqquestiontranslation_model.dart';
-import 'package:blooddonation_admin/models/faqquestionusing_model.dart';
+import 'package:blooddonation_admin/services/settings/models/faqquestionusing_model.dart';
 import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
 import 'package:flutter/material.dart';
 

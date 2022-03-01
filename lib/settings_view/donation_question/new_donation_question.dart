@@ -1,5 +1,5 @@
 import 'package:blooddonation_admin/models/donationquestions_model.dart';
-import 'package:blooddonation_admin/models/donationquestionusing_model.dart';
+import 'package:blooddonation_admin/services/settings/models/donationquestionusing_model.dart';
 import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:blooddonation_admin/services/settings/models/donation_controller_model.dart';
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
