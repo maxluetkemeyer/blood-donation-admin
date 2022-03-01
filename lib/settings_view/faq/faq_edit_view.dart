@@ -1,4 +1,4 @@
-import 'package:blooddonation_admin/models/faqquestion_model.dart';
+import 'package:blooddonation_admin/services/backend/backend_service.dart';
 import 'package:blooddonation_admin/services/settings/models/faqquestionusing_model.dart';
 import 'package:blooddonation_admin/services/settings/faq_service.dart';
 import 'package:blooddonation_admin/services/settings/language_service.dart';
@@ -30,7 +30,8 @@ class _FaqEditViewState extends State<FaqEditView> {
             onPressed: () {
               print("Saving Faq");
               FaqService().saveFaqControllerState();
-              //TODO: Backend Connection
+              //Backend upload
+              BackendService().handlers["createFaqQuestions"] = CreateFaqQuestionsHandler()..send();
             },
           )
         ],

@@ -14,8 +14,8 @@ class DonationService {
     print("Starting Donation Service");
   }
 
-  final List<DonationQuestion> _donationQuestions = [];
-  final List<DonationQuestionTranslation> _donationQuestionTranslation = [];
+  final List<DonationQuestion> donationQuestions = [];
+  final List<DonationQuestionTranslation> donationQuestionTranslation = [];
   final List<DonationController> _donationController = [];
 
   /*
@@ -24,12 +24,12 @@ class DonationService {
 
   ///get the current list of all [DonationQuestion]'s.
   List<DonationQuestion> getDonationQuestions() {
-    return _donationQuestions;
+    return donationQuestions;
   }
 
   ///get the current list of all [DonationQuestion]'s.
   List<DonationQuestionTranslation> getDonationQuestionTranslations() {
-    return _donationQuestionTranslation;
+    return donationQuestionTranslation;
   }
 
   ///get the current list of all [DonationController]'s.
@@ -40,9 +40,9 @@ class DonationService {
   ///Returns one DonationQuestionTranslation with the respective [languageCode] and [questionId] from the [DonationQuestion].
   DonationQuestionTranslation getDonationTranslation({required String languageCode, required int questionId}) {
     DonationQuestionTranslation dqt = DonationQuestionTranslation(id: -1, body: "", language: "", donationQuestion: -1);
-    for (int i = 0; i < _donationQuestionTranslation.length; i++) {
-      if (_donationQuestionTranslation[i].donationQuestion == questionId && _donationQuestionTranslation[i].language == languageCode) {
-        dqt = _donationQuestionTranslation[i];
+    for (int i = 0; i < donationQuestionTranslation.length; i++) {
+      if (donationQuestionTranslation[i].donationQuestion == questionId && donationQuestionTranslation[i].language == languageCode) {
+        dqt = donationQuestionTranslation[i];
       }
     }
     return dqt;
@@ -52,18 +52,18 @@ class DonationService {
   List<DonationQuestionTranslation> getDonationTranslationList({required String languageCode}) {
     List<DonationQuestionTranslation> dqt = [];
     List<int> questions = [];
-    for (int i = 0; i < _donationQuestions.length; i++) {
-      questions.add(_donationQuestions[i].id);
+    for (int i = 0; i < donationQuestions.length; i++) {
+      questions.add(donationQuestions[i].id);
     }
-    for (int i = 0; i < _donationQuestionTranslation.length; i++) {
-      if (questions.contains(_donationQuestionTranslation[i].donationQuestion) && _donationQuestionTranslation[i].language == languageCode) {
+    for (int i = 0; i < donationQuestionTranslation.length; i++) {
+      if (questions.contains(donationQuestionTranslation[i].donationQuestion) && donationQuestionTranslation[i].language == languageCode) {
         questions.removeAt(questions.indexWhere(((element) {
-          if (element == _donationQuestionTranslation[i].donationQuestion) {
+          if (element == donationQuestionTranslation[i].donationQuestion) {
             return true;
           }
           return false;
         })));
-        dqt.add(_donationQuestionTranslation[i]);
+        dqt.add(donationQuestionTranslation[i]);
       }
     }
     return dqt;
@@ -112,7 +112,7 @@ class DonationService {
 
   ///Returns the [DonationQuestionTranslation], with the respective [id] and [Language]
   DonationQuestionTranslation getDonationQuestionTranslationByLanguage({required int questionId, required String lang}) {
-    var res = _donationQuestionTranslation.where((element) {
+    var res = donationQuestionTranslation.where((element) {
       return (element.language == lang && element.donationQuestion == questionId);
     }).isEmpty;
 
@@ -120,16 +120,16 @@ class DonationService {
       throw ErrorDescription("DonationControllerTranslation with given List Id and language does not exist");
     }
 
-    return _donationQuestionTranslation.where((element) {
+    return donationQuestionTranslation.where((element) {
       return (element.language == lang && element.donationQuestion == questionId);
     }).first;
   }
 
   ///get one [DonationQuestion] by position.
   DonationQuestion getDonationQuestionByPosition({required int position}) {
-    for (int i = 0; i < _donationQuestions.length; i++) {
-      if (_donationQuestions[i].position == position) {
-        return _donationQuestions[i];
+    for (int i = 0; i < donationQuestions.length; i++) {
+      if (donationQuestions[i].position == position) {
+        return donationQuestions[i];
       }
     }
     throw ErrorDescription("Donation Question with given position does not exist");
@@ -137,15 +137,15 @@ class DonationService {
 
   ///Returns the length of the current list of [DonationQuestion]'s
   int getDonationQuestionListLength() {
-    return _donationQuestions.length;
+    return donationQuestions.length;
   }
 
   int getHighestDonationQuestionId() {
     //Finding highest id of DonationQuestions
     int highest = 0;
-    for (int i = 0; i < _donationQuestions.length; i++) {
-      if (_donationQuestions[i].id > highest) {
-        highest = _donationQuestions[i].id;
+    for (int i = 0; i < donationQuestions.length; i++) {
+      if (donationQuestions[i].id > highest) {
+        highest = donationQuestions[i].id;
       }
     }
     return highest;
@@ -154,9 +154,9 @@ class DonationService {
   int getHighestDonationQuestionTranslationId() {
     //Finding highest id of DonationQuestionTranslations
     int highest = 0;
-    for (int i = 0; i < _donationQuestionTranslation.length; i++) {
-      if (_donationQuestionTranslation[i].id > highest) {
-        highest = _donationQuestionTranslation[i].id;
+    for (int i = 0; i < donationQuestionTranslation.length; i++) {
+      if (donationQuestionTranslation[i].id > highest) {
+        highest = donationQuestionTranslation[i].id;
       }
     }
     return highest;
@@ -170,15 +170,15 @@ class DonationService {
   void addDonationQuestion({required DonationQuestionUsing donationTrans}) {
     //Adding new Question to List
     int highest = 0;
-    for (int i = 0; i < _donationQuestions.length; i++) {
-      if (_donationQuestions[i].id > highest) {
-        highest = _donationQuestions[i].id;
+    for (int i = 0; i < donationQuestions.length; i++) {
+      if (donationQuestions[i].id > highest) {
+        highest = donationQuestions[i].id;
       }
     }
 
     int newQuestionId = highest + 1;
-    int pos = _donationQuestions.length;
-    _donationQuestions.add(DonationQuestion(
+    int pos = donationQuestions.length;
+    donationQuestions.add(DonationQuestion(
       id: newQuestionId,
       position: pos,
       isYesCorrect: donationTrans.isYesCorrect,
@@ -187,7 +187,7 @@ class DonationService {
     highest = 0;
 
     //Adding Translations and Controller to List
-    for (var trans in _donationQuestionTranslation) {
+    for (var trans in donationQuestionTranslation) {
       if (trans.id > highest) {
         highest = trans.id;
       }
@@ -196,7 +196,7 @@ class DonationService {
     List<DonationControllerTranslation> controllerTrans = [];
 
     for (var lang in donationTrans.translations) {
-      _donationQuestionTranslation.add(DonationQuestionTranslation(
+      donationQuestionTranslation.add(DonationQuestionTranslation(
         id: highest + 1,
         body: lang.body,
         language: lang.lang,
@@ -219,22 +219,22 @@ class DonationService {
 
   ///DELETEs the Question with [position]
   void deleteDonationQuestion(int position) {
-    int questionid = _donationQuestions.removeAt(_donationQuestions.indexWhere((element) => element.position == position)).id;
-    for (var element in _donationQuestions) {
+    int questionid = donationQuestions.removeAt(donationQuestions.indexWhere((element) => element.position == position)).id;
+    for (var element in donationQuestions) {
       if (element.position > position) {
         element.position = element.position - 1;
       }
     }
-    _donationQuestionTranslation.removeWhere((element) => element.donationQuestion == questionid);
+    donationQuestionTranslation.removeWhere((element) => element.donationQuestion == questionid);
     _donationController.removeAt(position);
   }
 
   ///SAVEs the current value of each [DonationController] inside the respective [DonationQuestion]
   void saveDonationControllerState() {
-    for (int i = 0; i < _donationQuestionTranslation.length; i++) {
-      _donationQuestionTranslation[i].body = getDonationControllerTranslation(
-        questionId: _donationQuestionTranslation[i].donationQuestion,
-        languageCode: _donationQuestionTranslation[i].language,
+    for (int i = 0; i < donationQuestionTranslation.length; i++) {
+      donationQuestionTranslation[i].body = getDonationControllerTranslation(
+        questionId: donationQuestionTranslation[i].donationQuestion,
+        languageCode: donationQuestionTranslation[i].language,
       ).bodyController.text;
     }
   }
@@ -245,11 +245,11 @@ class DonationService {
     DonationQuestion don1 = DonationQuestion(id: -1, position: -1, isYesCorrect: true);
     DonationQuestion don2 = DonationQuestion(id: -1, position: -1, isYesCorrect: true);
 
-    for (int i = 0; i < _donationQuestions.length; i++) {
-      if (_donationQuestions[i].position == oldIndex) {
-        don1 = _donationQuestions[i];
-      } else if (_donationQuestions[i].position == newIndex) {
-        don2 = _donationQuestions[i];
+    for (int i = 0; i < donationQuestions.length; i++) {
+      if (donationQuestions[i].position == oldIndex) {
+        don1 = donationQuestions[i];
+      } else if (donationQuestions[i].position == newIndex) {
+        don2 = donationQuestions[i];
       }
     }
 

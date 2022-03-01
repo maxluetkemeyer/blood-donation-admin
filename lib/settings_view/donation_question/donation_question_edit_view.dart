@@ -1,4 +1,5 @@
 import 'package:blooddonation_admin/models/donationquestions_model.dart';
+import 'package:blooddonation_admin/services/backend/backend_service.dart';
 import 'package:blooddonation_admin/services/settings/models/donationquestionusing_model.dart';
 import 'package:blooddonation_admin/services/settings/donation_service.dart';
 import 'package:blooddonation_admin/services/settings/language_service.dart';
@@ -29,9 +30,8 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
             onPressed: () {
               print("Saving Donation Questions");
               DonationService().saveDonationControllerState();
-              //TODO: Backend Connection
-              DonationService().getDonationQuestions();
-              DonationService().getDonationQuestionTranslations();
+              //Backend upload
+              BackendService().handlers["createDonationQuestions"] = CreateDonationQuestionsHandler()..send();
             },
           )
         ],
@@ -39,7 +39,7 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
       body: Center(
         child: DonationService().getDonationQuestions().isNotEmpty
             ? ReorderableListView(
-                children: getQuestionTiles( DonationService().getDonationQuestions(), lang),
+                children: getQuestionTiles(DonationService().getDonationQuestions(), lang),
                 onReorder: (oldIndex, newIndex) => setState(() {
                   if (oldIndex < newIndex) {
                     newIndex -= 1;

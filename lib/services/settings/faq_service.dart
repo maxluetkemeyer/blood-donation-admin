@@ -4,6 +4,9 @@ import 'package:blooddonation_admin/services/settings/models/faqquestionusing_mo
 import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
 import 'package:flutter/material.dart';
 
+export 'package:blooddonation_admin/models/faqquestion_model.dart';
+export 'package:blooddonation_admin/models/faqquestiontranslation_model.dart';
+
 class FaqService {
   //Singleton
   static final FaqService _instance = FaqService._private();
@@ -16,8 +19,8 @@ class FaqService {
   This part covers the Faq Question management.
   */
 
-  final List<FaqQuestion> _faqQuestions = [];
-  final List<FaqQuestionTranslation> _faqQuestionTranslation = [];
+  final List<FaqQuestion> faqQuestions = [];
+  final List<FaqQuestionTranslation> faqQuestionTranslation = [];
   final List<FaqController> _faqController = [];
 
   /*
@@ -26,12 +29,12 @@ class FaqService {
 
   ///get the current list of all [FaqQuestion]'s.
   List<FaqQuestion> getFaqQuestions() {
-    return _faqQuestions;
+    return faqQuestions;
   }
 
   ///get the current list of all [FaqQuestionTranslation]'s.
   List<FaqQuestionTranslation> getFaqQuestionsTranslation() {
-    return _faqQuestionTranslation;
+    return faqQuestionTranslation;
   }
 
   ///get the current list of all [FaqController]'s.
@@ -42,9 +45,9 @@ class FaqService {
   ///Returns one FaqQuestionTranslation with the respective [languageCode] and [questionId] from the [FaqQuestion].
   FaqQuestionTranslation getFaqTranslation({required String languageCode, required int questionId}) {
     FaqQuestionTranslation fqt = FaqQuestionTranslation(id: -1, head: "", body: "", language: "", faqQuestion: -1);
-    for (int i = 0; i < _faqQuestionTranslation.length; i++) {
-      if (_faqQuestionTranslation[i].faqQuestion == questionId && _faqQuestionTranslation[i].language == languageCode) {
-        fqt = _faqQuestionTranslation[i];
+    for (int i = 0; i < faqQuestionTranslation.length; i++) {
+      if (faqQuestionTranslation[i].faqQuestion == questionId && faqQuestionTranslation[i].language == languageCode) {
+        fqt = faqQuestionTranslation[i];
       }
     }
     return fqt;
@@ -54,18 +57,18 @@ class FaqService {
   List<FaqQuestionTranslation> getFaqTranslationList({required String languageCode}) {
     List<FaqQuestionTranslation> fqt = [];
     List<int> questions = [];
-    for (int i = 0; i < _faqQuestions.length; i++) {
-      questions.add(_faqQuestions[i].id);
+    for (int i = 0; i < faqQuestions.length; i++) {
+      questions.add(faqQuestions[i].id);
     }
-    for (int i = 0; i < _faqQuestionTranslation.length; i++) {
-      if (questions.contains(_faqQuestionTranslation[i].faqQuestion) && _faqQuestionTranslation[i].language == languageCode) {
+    for (int i = 0; i < faqQuestionTranslation.length; i++) {
+      if (questions.contains(faqQuestionTranslation[i].faqQuestion) && faqQuestionTranslation[i].language == languageCode) {
         questions.removeAt(questions.indexWhere(((element) {
-          if (element == _faqQuestionTranslation[i].faqQuestion) {
+          if (element == faqQuestionTranslation[i].faqQuestion) {
             return true;
           }
           return false;
         })));
-        fqt.add(_faqQuestionTranslation[i]);
+        fqt.add(faqQuestionTranslation[i]);
       }
     }
     return fqt;
@@ -107,9 +110,9 @@ class FaqService {
   int getHighestFaqQuestionId() {
     //Finding highest id of DonationQuestions
     int highest = 0;
-    for (int i = 0; i < _faqQuestions.length; i++) {
-      if (_faqQuestions[i].id > highest) {
-        highest = _faqQuestions[i].id;
+    for (int i = 0; i < faqQuestions.length; i++) {
+      if (faqQuestions[i].id > highest) {
+        highest = faqQuestions[i].id;
       }
     }
     return highest;
@@ -118,9 +121,9 @@ class FaqService {
   int getHighestFaqQuestionTranslationId() {
     //Finding highest id of DonationQuestionTranslations
     int highest = 0;
-    for (int i = 0; i < _faqQuestionTranslation.length; i++) {
-      if (_faqQuestionTranslation[i].id > highest) {
-        highest = _faqQuestionTranslation[i].id;
+    for (int i = 0; i < faqQuestionTranslation.length; i++) {
+      if (faqQuestionTranslation[i].id > highest) {
+        highest = faqQuestionTranslation[i].id;
       }
     }
     return highest;
@@ -134,15 +137,15 @@ class FaqService {
   void addFaqQuestion({required List<FaqQuestionUsing> faqTrans}) {
     //Adding new Question to List
     int highest = 0;
-    for (int i = 0; i < _faqQuestions.length; i++) {
-      if (_faqQuestions[i].id > highest) {
-        highest = _faqQuestions[i].id;
+    for (int i = 0; i < faqQuestions.length; i++) {
+      if (faqQuestions[i].id > highest) {
+        highest = faqQuestions[i].id;
       }
     }
 
     int newQuestionId = highest + 1;
-    int pos = _faqQuestions.length;
-    _faqQuestions.add(FaqQuestion(
+    int pos = faqQuestions.length;
+    faqQuestions.add(FaqQuestion(
       id: newQuestionId,
       position: pos,
     ));
@@ -150,7 +153,7 @@ class FaqService {
     highest = 0;
 
     //Adding Translations and Controller to List
-    for (var trans in _faqQuestionTranslation) {
+    for (var trans in faqQuestionTranslation) {
       if (trans.id > highest) {
         highest = trans.id;
       }
@@ -159,7 +162,7 @@ class FaqService {
     List<FaqControllerTranslation> controllerTrans = [];
 
     for (var lang in faqTrans) {
-      _faqQuestionTranslation.add(FaqQuestionTranslation(
+      faqQuestionTranslation.add(FaqQuestionTranslation(
         id: highest + 1,
         head: lang.head,
         body: lang.body,
@@ -181,26 +184,26 @@ class FaqService {
 
   ///DELETEs the Question with [position].
   void deleteFaqQuestion(int position) {
-    int questionid = _faqQuestions.removeAt(_faqQuestions.indexWhere((element) => element.position == position)).id;
-    for (var element in _faqQuestions) {
+    int questionid = faqQuestions.removeAt(faqQuestions.indexWhere((element) => element.position == position)).id;
+    for (var element in faqQuestions) {
       if (element.position > position) {
         element.position = position - 1;
       }
     }
-    _faqQuestionTranslation.removeWhere((element) => element.faqQuestion == questionid);
+    faqQuestionTranslation.removeWhere((element) => element.faqQuestion == questionid);
     _faqController.removeAt(position);
   }
 
   ///SAVEs the current value of each [FaqController] inside the respective [FaqQuestion]
   void saveFaqControllerState() {
-    for (int i = 0; i < _faqQuestionTranslation.length; i++) {
-      _faqQuestionTranslation[i].body = getFaqControllerTranslation(
-        questionId: _faqQuestionTranslation[i].faqQuestion,
-        languageCode: _faqQuestionTranslation[i].language,
+    for (int i = 0; i < faqQuestionTranslation.length; i++) {
+      faqQuestionTranslation[i].body = getFaqControllerTranslation(
+        questionId: faqQuestionTranslation[i].faqQuestion,
+        languageCode: faqQuestionTranslation[i].language,
       ).bodyController.text;
-      _faqQuestionTranslation[i].head = getFaqControllerTranslation(
-        questionId: _faqQuestionTranslation[i].faqQuestion,
-        languageCode: _faqQuestionTranslation[i].language,
+      faqQuestionTranslation[i].head = getFaqControllerTranslation(
+        questionId: faqQuestionTranslation[i].faqQuestion,
+        languageCode: faqQuestionTranslation[i].language,
       ).headController.text;
     }
   }
@@ -211,11 +214,11 @@ class FaqService {
     FaqQuestion faq1 = FaqQuestion(id: -1, position: -1);
     FaqQuestion faq2 = FaqQuestion(id: -1, position: -1);
 
-    for (int i = 0; i < _faqQuestions.length; i++) {
-      if (_faqQuestions[i].position == oldIndex) {
-        faq1 = _faqQuestions[i];
-      } else if (_faqQuestions[i].position == newIndex) {
-        faq2 = _faqQuestions[i];
+    for (int i = 0; i < faqQuestions.length; i++) {
+      if (faqQuestions[i].position == oldIndex) {
+        faq1 = faqQuestions[i];
+      } else if (faqQuestions[i].position == newIndex) {
+        faq2 = faqQuestions[i];
       }
     }
 

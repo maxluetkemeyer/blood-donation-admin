@@ -14,6 +14,8 @@ export './handlers/create_appointment.dart';
 export './handlers/create_capacities.dart';
 export './handlers/get_all_appointments.dart';
 export './handlers/get_all_capacities.dart';
+export './handlers/create_donationquestions.dart';
+export './handlers/create_faqquestions.dart';
 
 class BackendService {
   //Singleton
