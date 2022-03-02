@@ -37,6 +37,22 @@ class _LanguageTileState extends State<LanguageTile> {
               color: Theme.of(context).primaryColor,
             ),
           ),
+          Column(
+            children: [
+              const SizedBox(height: 10,),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Text(
+                  widget.languages[widget.iterator].abbr,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w200,
+                    fontSize: 10,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
           const Expanded(child: SizedBox()),
           IconButton(
             icon: const Icon(

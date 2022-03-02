@@ -1,5 +1,4 @@
 import 'package:blooddonation_admin/services/settings/models/donationquestionusing_model.dart';
-import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:blooddonation_admin/services/settings/models/donation_controller_model.dart';
 import 'package:blooddonation_admin/models/donationquestions_model.dart';
 import 'package:blooddonation_admin/models/donationquestiontranslation_model.dart';
@@ -14,12 +13,36 @@ class DonationService {
     print("Starting Donation Service");
   }
 
+  ///Example:
+  ///```[
+  /// DonationQuestion(
+  ///   id: ...,
+  ///   isYesCorrect: ...,
+  ///   position: ...,
+  /// );
+  ///]```
   final List<DonationQuestion> donationQuestions = [];
+  ///Example:
+  ///```[
+  /// DonationQuestionTranslation(
+  ///   id: ...,
+  ///   body: ...,
+  ///   language: ...,
+  ///   donationQuestion: ...,
+  /// );
+  ///]```
   final List<DonationQuestionTranslation> donationQuestionTranslation = [];
+  ///Example:
+  ///```[
+  /// DonationController(
+  ///   question: ...,
+  ///   translations: [...],
+  /// );
+  ///]```
   final List<DonationController> _donationController = [];
 
   /*
-  Getter
+  Getter Methods
   */
 
   ///get the current list of all [DonationQuestion]'s.
@@ -37,38 +60,6 @@ class DonationService {
     return _donationController;
   }
 
-  ///Returns one DonationQuestionTranslation with the respective [languageCode] and [questionId] from the [DonationQuestion].
-  DonationQuestionTranslation getDonationTranslation({required String languageCode, required int questionId}) {
-    DonationQuestionTranslation dqt = DonationQuestionTranslation(id: -1, body: "", language: "", donationQuestion: -1);
-    for (int i = 0; i < donationQuestionTranslation.length; i++) {
-      if (donationQuestionTranslation[i].donationQuestion == questionId && donationQuestionTranslation[i].language == languageCode) {
-        dqt = donationQuestionTranslation[i];
-      }
-    }
-    return dqt;
-  }
-
-  ///Returns all DonationQuestionTranslation with the respective [languageCode] from the [DonationQuestion].
-  List<DonationQuestionTranslation> getDonationTranslationList({required String languageCode}) {
-    List<DonationQuestionTranslation> dqt = [];
-    List<int> questions = [];
-    for (int i = 0; i < donationQuestions.length; i++) {
-      questions.add(donationQuestions[i].id);
-    }
-    for (int i = 0; i < donationQuestionTranslation.length; i++) {
-      if (questions.contains(donationQuestionTranslation[i].donationQuestion) && donationQuestionTranslation[i].language == languageCode) {
-        questions.removeAt(questions.indexWhere(((element) {
-          if (element == donationQuestionTranslation[i].donationQuestion) {
-            return true;
-          }
-          return false;
-        })));
-        dqt.add(donationQuestionTranslation[i]);
-      }
-    }
-    return dqt;
-  }
-
   ///Returns one DonationControllerTranslation with the respective [languageCode] and [id] from the [DonationController].
   DonationControllerTranslation getDonationControllerTranslation({required String languageCode, required int questionId}) {
     DonationControllerTranslation dqt = DonationControllerTranslation(bodyController: TextEditingController(), lang: "");
@@ -84,17 +75,6 @@ class DonationService {
     return dqt;
   }
 
-  ///get one [DonationController] by Id.
-  DonationControllerTranslation getDonationControllerById({required int id, required String languageCode}) {
-    for (int i = 0; i < LanguageService().getLanguages().length; i++) {
-      if (_donationController[id].translations[i].lang == languageCode) {
-        return _donationController[id].translations[i];
-      }
-    }
-
-    throw ErrorDescription("Donation Controller with given ID does not exist");
-  }
-
   ///Returns the [DonationQuestionTranslation], with the respective [id] and [Language]
   DonationControllerTranslation getDonationQuestionControllerTranslationByLanguage({required int id, required String lang}) {
     var res = _donationController[id].translations.where((element) {
@@ -107,21 +87,6 @@ class DonationService {
 
     return _donationController[id].translations.where((element) {
       return (element.lang == lang);
-    }).first;
-  }
-
-  ///Returns the [DonationQuestionTranslation], with the respective [id] and [Language]
-  DonationQuestionTranslation getDonationQuestionTranslationByLanguage({required int questionId, required String lang}) {
-    var res = donationQuestionTranslation.where((element) {
-      return (element.language == lang && element.donationQuestion == questionId);
-    }).isEmpty;
-
-    if (res) {
-      throw ErrorDescription("DonationControllerTranslation with given List Id and language does not exist");
-    }
-
-    return donationQuestionTranslation.where((element) {
-      return (element.language == lang && element.donationQuestion == questionId);
     }).first;
   }
 
@@ -163,20 +128,15 @@ class DonationService {
   }
 
   /*
-  Setter
+  Setter Methods
   */
 
   ///Adds a new [DonationQuestion] and a fitting Controller adds them according to their list
   void addDonationQuestion({required DonationQuestionUsing donationTrans}) {
     //Adding new Question to List
-    int highest = 0;
-    for (int i = 0; i < donationQuestions.length; i++) {
-      if (donationQuestions[i].id > highest) {
-        highest = donationQuestions[i].id;
-      }
-    }
 
-    int newQuestionId = highest + 1;
+
+    int newQuestionId = getHighestDonationQuestionId() + 1;
     int pos = donationQuestions.length;
     donationQuestions.add(DonationQuestion(
       id: newQuestionId,
@@ -184,16 +144,9 @@ class DonationService {
       isYesCorrect: donationTrans.isYesCorrect,
     ));
 
-    highest = 0;
-
-    //Adding Translations and Controller to List
-    for (var trans in donationQuestionTranslation) {
-      if (trans.id > highest) {
-        highest = trans.id;
-      }
-    }
-
     List<DonationControllerTranslation> controllerTrans = [];
+
+    int highest = getHighestDonationQuestionTranslationId();
 
     for (var lang in donationTrans.translations) {
       donationQuestionTranslation.add(DonationQuestionTranslation(
@@ -219,13 +172,17 @@ class DonationService {
 
   ///DELETEs the Question with [position]
   void deleteDonationQuestion(int position) {
+    //Remove question from donationQuestions List
     int questionid = donationQuestions.removeAt(donationQuestions.indexWhere((element) => element.position == position)).id;
+    //Subtracting every position by one, if the question comes after the removed question
     for (var element in donationQuestions) {
       if (element.position > position) {
         element.position = element.position - 1;
       }
     }
+    //Remove all DonationQuestionTranslation's with the respective questionid
     donationQuestionTranslation.removeWhere((element) => element.donationQuestion == questionid);
+    //Remove the donationController
     _donationController.removeAt(position);
   }
 

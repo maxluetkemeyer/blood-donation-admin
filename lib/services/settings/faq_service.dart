@@ -19,12 +19,36 @@ class FaqService {
   This part covers the Faq Question management.
   */
 
+  ///Example:
+  ///```[
+  /// FaqQuestion(
+  ///   id: ...,
+  ///   position: ...,
+  /// );
+  ///]```
   final List<FaqQuestion> faqQuestions = [];
+  ///Example:
+  ///```[
+  /// FaqQuestionTranslation(
+  ///   id: ...,
+  ///   head: ...,
+  ///   body: ...,
+  ///   language: ...,
+  ///   faqQuestion: ...,
+  /// );
+  ///]```
   final List<FaqQuestionTranslation> faqQuestionTranslation = [];
+  ///Example:
+  ///```[
+  /// FaqController(
+  ///   question: ...,
+  ///   translations: [...],
+  /// );
+  ///]```
   final List<FaqController> _faqController = [];
 
   /*
-  Getter
+  Getter Methods
   */
 
   ///get the current list of all [FaqQuestion]'s.
@@ -40,38 +64,6 @@ class FaqService {
   ///get the current list of all [FaqController]'s.
   List<FaqController> getFaqControllers() {
     return _faqController;
-  }
-
-  ///Returns one FaqQuestionTranslation with the respective [languageCode] and [questionId] from the [FaqQuestion].
-  FaqQuestionTranslation getFaqTranslation({required String languageCode, required int questionId}) {
-    FaqQuestionTranslation fqt = FaqQuestionTranslation(id: -1, head: "", body: "", language: "", faqQuestion: -1);
-    for (int i = 0; i < faqQuestionTranslation.length; i++) {
-      if (faqQuestionTranslation[i].faqQuestion == questionId && faqQuestionTranslation[i].language == languageCode) {
-        fqt = faqQuestionTranslation[i];
-      }
-    }
-    return fqt;
-  }
-
-  ///Returns all FaqQuestionTranslation with the respective [languageCode] from the [FaqQuestion].
-  List<FaqQuestionTranslation> getFaqTranslationList({required String languageCode}) {
-    List<FaqQuestionTranslation> fqt = [];
-    List<int> questions = [];
-    for (int i = 0; i < faqQuestions.length; i++) {
-      questions.add(faqQuestions[i].id);
-    }
-    for (int i = 0; i < faqQuestionTranslation.length; i++) {
-      if (questions.contains(faqQuestionTranslation[i].faqQuestion) && faqQuestionTranslation[i].language == languageCode) {
-        questions.removeAt(questions.indexWhere(((element) {
-          if (element == faqQuestionTranslation[i].faqQuestion) {
-            return true;
-          }
-          return false;
-        })));
-        fqt.add(faqQuestionTranslation[i]);
-      }
-    }
-    return fqt;
   }
 
   ///Returns one FaqControllerTranslation with the respective [languageCode] and [questionId] from the [FaqController].
@@ -130,35 +122,22 @@ class FaqService {
   }
 
   /*
-  Setter and more
+  Setter Methods
   */
 
   ///Adds a new FaqQuestion and a fitting Controller adds them according to their list.
   void addFaqQuestion({required List<FaqQuestionUsing> faqTrans}) {
     //Adding new Question to List
-    int highest = 0;
-    for (int i = 0; i < faqQuestions.length; i++) {
-      if (faqQuestions[i].id > highest) {
-        highest = faqQuestions[i].id;
-      }
-    }
-
-    int newQuestionId = highest + 1;
+    int newQuestionId = getHighestFaqQuestionId() + 1;
     int pos = faqQuestions.length;
     faqQuestions.add(FaqQuestion(
       id: newQuestionId,
       position: pos,
     ));
 
-    highest = 0;
-
     //Adding Translations and Controller to List
-    for (var trans in faqQuestionTranslation) {
-      if (trans.id > highest) {
-        highest = trans.id;
-      }
-    }
-
+    int highest = getHighestFaqQuestionTranslationId();
+    
     List<FaqControllerTranslation> controllerTrans = [];
 
     for (var lang in faqTrans) {
@@ -184,13 +163,17 @@ class FaqService {
 
   ///DELETEs the Question with [position].
   void deleteFaqQuestion(int position) {
+    //Remove question from faqQuestions List
     int questionid = faqQuestions.removeAt(faqQuestions.indexWhere((element) => element.position == position)).id;
+    //Subtracting every position by one, if the question comes after the removed question
     for (var element in faqQuestions) {
       if (element.position > position) {
         element.position = position - 1;
       }
     }
+    //Remove all FaqQuestionTranslation's with the respective questionid
     faqQuestionTranslation.removeWhere((element) => element.faqQuestion == questionid);
+    //Remove the faqController
     _faqController.removeAt(position);
   }
 

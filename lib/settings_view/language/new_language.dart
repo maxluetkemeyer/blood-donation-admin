@@ -3,6 +3,8 @@ import 'package:blooddonation_admin/services/settings/models/language_model.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:language_picker/language_picker.dart' as lp;
+import 'package:language_picker/languages.dart' as l;
 
 class NewLanguage extends StatefulWidget {
   final List<Language> languages = LanguageService().getLanguages();
@@ -18,73 +20,60 @@ class NewLanguage extends StatefulWidget {
 }
 
 class _NewLanguageState extends State<NewLanguage> {
-  TextEditingController nameController = TextEditingController(text: "");
-  TextEditingController abbrController = TextEditingController(text: "");
+  Language newlang = Language(abbr: "de", name: "German");
+
+   Widget _buildDropdownItem(l.Language language) {
+    return Row(
+      children: <Widget>[
+        const SizedBox(
+          width: 8.0,
+        ),
+        Text("${language.name} (${language.isoCode})"),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 2,
+      height: MediaQuery.of(context).size.height / 4,
       child: Center(
         child: SingleChildScrollView(
-          child: Column(
+          child: Row(
             children: [
-              CupertinoFormSection.insetGrouped(
-                header: Padding(
-                  padding: const EdgeInsets.all(8.0),
+              Container(
+                width: MediaQuery.of(context).size.width / 3*2,
+                margin: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+                child: lp.LanguagePickerDropdown(
+                    itemBuilder: _buildDropdownItem,
+                    initialValue: l.Languages.german,
+                    onValuePicked: (l.Language language) {
+                      newlang.abbr = language.isoCode;
+                      newlang.name = language.name;
+                    }),
+              ),
+              const SizedBox(
+                width: 30,
+              ),
+              Expanded(
+                child: CupertinoButton.filled(
+                  onPressed: () {
+                    setState(() {
+                      Language newLanguage = newlang;
+                      widget.notifyParents(newLanguage);
+                      Navigator.of(context).pop();
+                    });
+                  },
                   child: Text(
-                    AppLocalizations.of(context)!.settingsLanguageNew,
+                    AppLocalizations.of(context)!.settingsLanguageNewSave,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
-                  ),
-                ),
-                footer: const Divider(),
-                margin: const EdgeInsets.all(12),
-                children: [
-                  CupertinoFormRow(
-                    prefix: Text(
-                      AppLocalizations.of(context)!.settingsLanguageName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    child: CupertinoTextFormFieldRow(
-                      placeholder: "",
-                      controller: nameController,
-                    ),
-                  ),
-                  CupertinoFormRow(
-                    prefix: Text(
-                      AppLocalizations.of(context)!.settingsLanguageAbbr,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    child: CupertinoTextFormFieldRow(
-                      placeholder: "",
-                      controller: abbrController,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              CupertinoButton.filled(
-                onPressed: () {
-                  setState(() {
-                    Language newLanguage = Language(name: nameController.text, abbr: abbrController.text);
-                    widget.notifyParents(newLanguage);
-                    Navigator.of(context).pop();
-                  });
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.settingsLanguageNewSave,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
                   ),
                 ),
               ),
