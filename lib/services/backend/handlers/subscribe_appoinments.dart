@@ -1,6 +1,4 @@
-import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/services/backend/backend_handler.dart';
-import 'package:blooddonation_admin/services/calendar_service.dart';
 
 class SubscribeAppointmentsHandler extends BackendHandler {
   SubscribeAppointmentsHandler({
