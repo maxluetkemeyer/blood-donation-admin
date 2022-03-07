@@ -2,11 +2,11 @@ import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/services/backend/backend_handler.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 
-class GetAllAppointmentsHandler extends BackendHandler {
-  GetAllAppointmentsHandler({
+class SubscribeAppointmentsHandler extends BackendHandler {
+  SubscribeAppointmentsHandler({
     Function? cb,
   }) : super(
-          action: "getAllAppointments",
+          action: "subscribe_to_appointment_activity",
           cb: cb,
         );
 
@@ -24,6 +24,8 @@ class GetAllAppointmentsHandler extends BackendHandler {
       print(json);
     }
 
+    print("Subscribe: " + json.toString());
+    /*
     //Clear old local Appointments
     CalendarService().calendar.clear();
 
@@ -35,6 +37,6 @@ class GetAllAppointmentsHandler extends BackendHandler {
       CalendarService().addAppointment(appointment);
     }
 
-    //TODO: Rebuild widgets
+    //TODO: Rebuild widgets*/
   }
 }

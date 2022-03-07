@@ -16,7 +16,7 @@ class GetAllDonationQuestionsHandler extends BackendHandler {
   @override
   void receiveLogic(Map json) {
     //check response
-    if (json["response_status"] != 201) {
+    if (json["response_status"] != 200) {
       print("error " + action);
       print(json);
     }
@@ -26,14 +26,14 @@ class GetAllDonationQuestionsHandler extends BackendHandler {
     DonationService().donationQuestionTranslation.clear();
 
     //Iterate through the json list, create DonationQuestions and add them to the local storage
-    for (Map<String, dynamic> jsonDonationQuestion in json["data"]["questionData"]) {
+    for (Map<String, dynamic> jsonDonationQuestion in json["data"]["donationQuestions"]) {
       //create DonationQuestion
       DonationQuestion donQue = DonationQuestion.fromJson(jsonDonationQuestion);
       //add to local storage
       DonationService().donationQuestions.add(donQue);
     }
     //Iterate through the json list, create DonationQuestionTranslationss and add them to the local storage
-    for (Map<String, dynamic> jsonDonationQuestionTranslation in json["data"]["translationData"]) {
+    for (Map<String, dynamic> jsonDonationQuestionTranslation in json["data"]["donationQuestionTranslations"]) {
       //create DonationQuestion
       DonationQuestionTranslation donQueTra = DonationQuestionTranslation.fromJson(jsonDonationQuestionTranslation);
       //add to local storage

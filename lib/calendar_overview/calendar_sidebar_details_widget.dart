@@ -1,6 +1,7 @@
 import 'package:blooddonation_admin/misc/appointment_styles.dart';
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/person_model.dart';
+import 'package:blooddonation_admin/services/backend/handlers/update_appointment.dart';
 import 'package:blooddonation_admin/services/provider/providers.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -98,10 +99,8 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                     ),
                   );
                   print("add");
-                }
-                print(CalendarService().calendar);
-                CalendarService().updateAppointment(
-                  Appointment(
+                } else {
+                  Appointment updatedAppointment = Appointment(
                     id: widget.appointment.id,
                     start: widget.appointment.start,
                     duration: widget.appointment.duration,
@@ -111,9 +110,13 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                       name: personNameController.text,
                     ),
                     request: widget.appointment.request,
-                  ),
-                );
-                print(CalendarService().calendar);
+                  );
+
+                  CalendarService().updateAppointment(updatedAppointment);
+                  print(CalendarService().calendar);
+
+                  UpdateAppointmentHandler().send(updatedAppointment);
+                }
 
                 personEdited = false;
                 edited = false;
