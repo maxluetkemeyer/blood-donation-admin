@@ -2,7 +2,6 @@ class FaqQuestion {
   int id;
   int position;
 
-  ///Constructor of the Class [FaqQuestion]
   FaqQuestion({
     required this.id,
     required this.position,

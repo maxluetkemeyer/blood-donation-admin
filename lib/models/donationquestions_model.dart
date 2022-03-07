@@ -3,7 +3,6 @@ class DonationQuestion {
   int position;
   bool isYesCorrect;
 
-  ///Constructor of the Class [DonationQuestion]
   DonationQuestion({
     required this.id,
     required this.position,
@@ -17,7 +16,7 @@ class DonationQuestion {
         isYesCorrect: json["isYesCorrect"],
       );
 
-  ///Returns the Object in the form of a Map in [Json] format. 
+  ///Returns the Object in the form of a Map in [Json] format.
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
       "id": id,

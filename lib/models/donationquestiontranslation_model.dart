@@ -4,7 +4,6 @@ class DonationQuestionTranslation {
   String language;
   int donationQuestion;
 
-  ///Constructor of the Class [DonationQuestionTranslation]
   DonationQuestionTranslation({
     required this.id,
     required this.body,
@@ -20,7 +19,7 @@ class DonationQuestionTranslation {
         donationQuestion: json["donationQuestion"],
       );
 
-  ///Returns the Object in the form of a Map in [Json] format. 
+  ///Returns the Object in the form of a Map in [Json] format.
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
       "id": id,

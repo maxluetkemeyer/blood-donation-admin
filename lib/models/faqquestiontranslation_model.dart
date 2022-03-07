@@ -5,7 +5,6 @@ class FaqQuestionTranslation {
   String language;
   int faqQuestion;
 
-  ///Constructor of the Class [FaqQuestionTranslation]
   FaqQuestionTranslation({
     required this.id,
     required this.head,
