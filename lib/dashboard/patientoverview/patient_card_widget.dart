@@ -20,12 +20,10 @@ class PatientCard extends StatelessWidget {
     String birthday = person.birthday != null ? DateFormat("dd.MM.yyyy").format(person.birthday!) : "";
 
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Icon(
           Icons.person,
-          //size: 150,
           size: width * 0.08,
         ),
         Text(

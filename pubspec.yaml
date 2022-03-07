@@ -30,6 +30,7 @@ dependencies:
   fl_chart: ^0.40.2
   number_inc_dec: ^0.8.0
   badges: ^2.0.2
+  language_picker: ^0.4.1
 
 
 dev_dependencies:

@@ -11,7 +11,8 @@ abstract class BackendHandler {
     this.cb,
   });
 
-  Map createSendMap([arg]);
+  //abstract methods
+  Map createSendMap([arg]); //[]: not necessary arguments
   void receiveLogic(Map json);
 
   void send([arg]) {

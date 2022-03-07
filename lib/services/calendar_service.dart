@@ -10,7 +10,7 @@ class CalendarService {
     print("Starting Calendar Service");
   }
 
-  Map calendar = <String, List<Appointment>>{};
+  final Map calendar = <String, List<Appointment>>{};
 
   void addAppointment(Appointment appointment) {
     DateTime day = extractDay(appointment.start);

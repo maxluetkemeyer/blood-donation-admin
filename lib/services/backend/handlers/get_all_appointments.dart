@@ -25,7 +25,7 @@ class GetAllAppointmentsHandler extends BackendHandler {
     }
 
     //Clear old local Appointments
-    CalendarService().calendar = <String, List<Appointment>>{};
+    CalendarService().calendar.clear();
 
     //Iterate through the json list, create capacities and add them to the local storage
     for (Map<String, dynamic> jsonAppointment in json["data"]) {

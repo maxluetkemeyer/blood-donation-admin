@@ -3,7 +3,6 @@ import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:blooddonation_admin/models/capacity_model.dart';
 import 'package:number_inc_dec/number_inc_dec.dart';
 
 class SlotEdit extends StatefulWidget {

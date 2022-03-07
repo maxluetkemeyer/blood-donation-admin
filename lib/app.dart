@@ -9,8 +9,8 @@ import 'package:blooddonation_admin/dashboard/dashboard_view.dart';
 import 'package:blooddonation_admin/help/help_view.dart';
 import 'package:blooddonation_admin/logging/logging_view.dart';
 import 'package:blooddonation_admin/planner/planner_view.dart';
+import 'package:blooddonation_admin/settings_view/settings_view.dart';
 import 'package:blooddonation_admin/requests/requests_view.dart';
-import 'package:blooddonation_admin/settings/settings_view.dart';
 
 /// The structure of the program
 ///

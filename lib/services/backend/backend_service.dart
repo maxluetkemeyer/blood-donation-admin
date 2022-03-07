@@ -8,12 +8,17 @@ import 'package:blooddonation_admin/services/backend/handlers/create_appointment
 import 'package:blooddonation_admin/services/backend/handlers/create_capacities.dart';
 import 'package:blooddonation_admin/services/backend/handlers/get_all_appointments.dart';
 import 'package:blooddonation_admin/services/backend/handlers/get_all_capacities.dart';
+import 'package:blooddonation_admin/services/backend/handlers/get_all_donationquestions.dart';
+import 'package:blooddonation_admin/services/backend/handlers/get_all_faqquestions.dart';
+import 'package:blooddonation_admin/services/backend/handlers/subscribe_appoinments.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 
 export './handlers/create_appointment.dart';
 export './handlers/create_capacities.dart';
 export './handlers/get_all_appointments.dart';
 export './handlers/get_all_capacities.dart';
+export './handlers/create_donationquestions.dart';
+export './handlers/create_faqquestions.dart';
 
 class BackendService {
   //Singleton
@@ -26,8 +31,11 @@ class BackendService {
   late WebSocket ws;
 
   Map<String, BackendHandler> handlers = {
+    "subscribe_to_appointment_activity": SubscribeAppointmentsHandler(),
     "getAllCapacities": GetAllCapacitiesHandler(),
     "getAllAppointments": GetAllAppointmentsHandler(),
+    "getAllDonationQuestions": GetAllDonationQuestionsHandler(),
+    "getAllFaqQuestions": GetAllFaqQuestionsHandler(),
     "createCapacities": CreateCapacitiesHandler(),
     "createAppointment": CreateAppointmentHandler(),
   };
@@ -64,7 +72,7 @@ class BackendService {
 
   void _onMessage(MessageEvent messageEvent) {
     String message = messageEvent.data.toString();
-    print(message);
+    print("[Websocket] " + message);
 
     Map json = const JsonDecoder().convert(message);
 

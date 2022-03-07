@@ -35,6 +35,7 @@ class Dashboard extends StatelessWidget {
                   child: Container(
                     decoration: cardDecoration,
                     padding: const EdgeInsets.all(8),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
                     child: const RequestsOverview(),
                   ),
                 ),
@@ -45,6 +46,7 @@ class Dashboard extends StatelessWidget {
                   child: Container(
                     decoration: cardDecoration,
                     padding: const EdgeInsets.all(8),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
                     child: const WorkloadOverview(),
                   ),
                 ),

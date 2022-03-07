@@ -40,5 +40,6 @@ class Capacity {
 
 DateTime _removeTimeZone(DateTime dateTime) {
   //TODO: Not pretty when send to Server
-  return dateTime.toLocal().subtract(dateTime.timeZoneOffset);
+  //return dateTime.toLocal().subtract(dateTime.timeZoneOffset);
+  return dateTime;
 }

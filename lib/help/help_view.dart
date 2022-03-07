@@ -7,7 +7,13 @@ class Help extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      child: const Text("Help"),
+      child: const SizedBox(
+        width: 640,
+        height: 360,
+        child: HtmlElementView(
+          viewType: "github-wiki",
+        ),
+      ),
     );
   }
 }

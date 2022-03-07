@@ -1,6 +1,8 @@
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/capacity_model.dart';
 
+export 'package:blooddonation_admin/models/capacity_model.dart';
+
 class CapacityService {
   //Singleton
   static final CapacityService _instance = CapacityService._private();
