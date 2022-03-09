@@ -1,7 +1,9 @@
 import 'package:blooddonation_admin/connection_view/connetion_view.dart';
 import 'package:blooddonation_admin/services/backend/backend_service.dart';
 import 'package:blooddonation_admin/services/logging_service.dart';
-import 'package:blooddonation_admin/services/settings/settings_service.dart';
+import 'package:blooddonation_admin/services/settings/donation_service.dart';
+import 'package:blooddonation_admin/services/settings/faq_service.dart';
+import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +22,9 @@ void main() {
   CalendarService();
   CapacityService();
   LoggingService();
-  SettingService();
+  LanguageService();
+  FaqService();
+  DonationService();
 
   runApp(const MainWidget());
 }
