@@ -3,7 +3,8 @@ import 'package:blooddonation_admin/services/settings/donation_service.dart';
 import 'package:blooddonation_admin/services/settings/faq_service.dart';
 import 'package:blooddonation_admin/services/settings/models/donation_controller_model.dart';
 import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
-import 'package:blooddonation_admin/services/settings/models/language_model.dart';
+import 'package:blooddonation_admin/services/settings/models/language_model.dart' as lm;
+import 'package:language_picker/languages.dart' as l;
 import 'package:flutter/material.dart';
 
 class LanguageService {
@@ -31,10 +32,34 @@ class LanguageService {
   ///   name:"English",
   /// ),
   ///]
-  final List<Language> _languages = [];
+  final List<lm.Language> _languages = [];
+
+  void init(List<FaqQuestionTranslation> faqQT) {
+    List<l.Language> languages = [l.Languages.german];
+
+    for (FaqQuestionTranslation translation in faqQT) {
+      l.Language lan = l.Language.fromIsoCode(translation.language);
+
+      bool found = false;
+      for (l.Language oldLan in languages) {
+        if (oldLan.isoCode == lan.isoCode) {
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) languages.add(lan);
+    }
+
+    for(l.Language lang in languages){
+      addLanguage(
+        lm.Language(abbr: lang.isoCode,name: lang.name)
+      );
+    }
+  }
 
   ///Adds one Language to the [_languages] List
-  void addLanguage(Language newLanguage) {
+  void addLanguage(lm.Language newLanguage) {
     _languages.add(newLanguage);
 
     //fetch List of all questionIds
@@ -93,14 +118,14 @@ class LanguageService {
   }
 
   ///Returns a [List] of all registered [Language]s.
-  List<Language> getLanguages() {
+  List<lm.Language> getLanguages() {
     return _languages;
   }
 
   ///Returns the [Language] with the fitting abbreviation.
   ///
   ///If [_languages] does not contain a Language with the fitting value for [abbr], then an error is thrown.
-  Language getLanguagesbyAbbr(String abbr) {
+  lm.Language getLanguagesbyAbbr(String abbr) {
     for (int i = 0; i < _languages.length; i++) {
       if (_languages[i].abbr == abbr) {
         return _languages[i];
