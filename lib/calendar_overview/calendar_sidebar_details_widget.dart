@@ -98,7 +98,6 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                       ),
                     ),
                   );
-                  print("add");
                 } else {
                   Appointment updatedAppointment = Appointment(
                     id: widget.appointment.id,
@@ -113,8 +112,6 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                   );
 
                   CalendarService().updateAppointment(updatedAppointment);
-                  print(CalendarService().calendar);
-
                   UpdateAppointmentHandler().send(updatedAppointment);
                 }
 

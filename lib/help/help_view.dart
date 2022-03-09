@@ -10,9 +10,7 @@ class Help extends StatelessWidget {
       child: const SizedBox(
         width: 640,
         height: 360,
-        child: HtmlElementView(
-          viewType: "github-wiki",
-        ),
+        child: SelectableText("https://github.com/maxluetkemeyer/blood-donation-app/wiki"),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
+import 'package:blooddonation_admin/services/backend/handlers/update_appointment.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +90,7 @@ class RequestTileOpen extends StatelessWidget {
                         Table(
                           columnWidths: const {
                             2: FixedColumnWidth(200),
-                            1: FractionColumnWidth(0.7),
+                            1: FractionColumnWidth(0.6),
                           },
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                           children: [
@@ -101,17 +102,29 @@ class RequestTileOpen extends StatelessWidget {
                             ),
                             TableRow(
                               children: [
-                                const Text("Birthday"),
+                                const Text("Geburtstag"),
                                 Text(appointment.person?.birthday != null ? DateFormat("dd.MM.yyyy").format(appointment.person!.birthday!) : ""),
                               ],
                             ),
                             TableRow(
                               children: [
-                                const Text("Gender"),
+                                const Text("Geschlächt"),
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: genderIcon(appointment.person?.gender ?? ""),
                                 ),
+                              ],
+                            ),
+                            TableRow(
+                              children: [
+                                const Text("Telefonnummer"),
+                                Text(appointment.person?.telephoneNumber ?? ""),
+                              ],
+                            ),
+                            TableRow(
+                              children: [
+                                const Text("Erste Blutspende"),
+                                Text(appointment.person?.firstDonation.toString() ?? ""),
                               ],
                             ),
                           ],
@@ -126,7 +139,7 @@ class RequestTileOpen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "Request",
+                          "Anfrage",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -141,7 +154,7 @@ class RequestTileOpen extends StatelessWidget {
                           children: [
                             TableRow(
                               children: [
-                                const Text("Created"),
+                                const Text("Erstellt"),
                                 Text(
                                   dayWithTimeString(appointment.request!.created),
                                 ),
@@ -165,13 +178,14 @@ class RequestTileOpen extends StatelessWidget {
               primary: const Color.fromRGBO(11, 72, 116, 1),
             ),
             onPressed: () {
-              CalendarService().updateAppointment(
-                appointment.copyWith(
-                  request: appointment.request!.copyWith(
-                    status: "accepted",
-                  ),
+              Appointment updatedAppointment = appointment.copyWith(
+                request: appointment.request!.copyWith(
+                  status: "accepted",
                 ),
               );
+
+              CalendarService().updateAppointment(updatedAppointment);
+              UpdateAppointmentHandler().send(updatedAppointment);
 
               //reset selected request appointment
               ProviderService().container.read(requestTileOpenProvider.state).state = EmptyAppointment();
@@ -196,13 +210,14 @@ class RequestTileOpen extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              CalendarService().updateAppointment(
-                appointment.copyWith(
-                  request: appointment.request!.copyWith(
-                    status: "declined",
-                  ),
+              Appointment updatedAppointment = appointment.copyWith(
+                request: appointment.request!.copyWith(
+                  status: "declined",
                 ),
               );
+
+              CalendarService().updateAppointment(updatedAppointment);
+              UpdateAppointmentHandler().send(updatedAppointment);
 
               //reset selected request appointment
               ProviderService().container.read(requestTileOpenProvider.state).state = EmptyAppointment();
