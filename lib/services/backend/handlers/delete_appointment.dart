@@ -1,17 +1,18 @@
 import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/services/backend/backend_handler.dart';
 
-class CreateAppointmentHandler extends BackendHandler {
-  CreateAppointmentHandler() : super(action: "createAppointment");
+class DeleteAppointmentHandler extends BackendHandler {
+  DeleteAppointmentHandler() : super(action: "deleteAppointment");
 
   @override
   Map createSendMap([arg]) {
-    //Capacities need to be in list format
-    Appointment appointment = arg[0];
+    Appointment appointment;
+
+    appointment = arg;
 
     //create map
     Map outputMap = {
-      "data": appointment.toJson(),
+      "id": appointment.id,
     };
 
     return outputMap;

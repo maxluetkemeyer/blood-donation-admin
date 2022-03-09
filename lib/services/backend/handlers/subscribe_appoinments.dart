@@ -1,17 +1,22 @@
+import 'package:blooddonation_admin/models/appointment_model.dart';
 import 'package:blooddonation_admin/services/backend/backend_handler.dart';
+import 'package:blooddonation_admin/services/calendar_service.dart';
 
 class SubscribeAppointmentsHandler extends BackendHandler {
   SubscribeAppointmentsHandler({
     Function? cb,
-  }) : super(
-          action: "subscribe_to_appointment_activity",
-          cb: cb,
-        );
+  }) : super(action: "newAppointments", cb: cb);
 
   @override
   Map createSendMap([arg]) {
-    //no data needed
-    return {};
+    //create map
+    Map outputMap = {
+      "data": {
+        "id": CalendarService().lastId,
+      },
+    };
+
+    return outputMap;
   }
 
   @override
@@ -23,10 +28,14 @@ class SubscribeAppointmentsHandler extends BackendHandler {
       return;
     }
 
-    print("Subscribe: " + json.toString());
-    /*
-    //Clear old local Appointments
-    CalendarService().calendar.clear();
+    //check response
+    if (json["response_status"] != 200) {
+      print("error");
+      print(json);
+      return;
+    }
+
+    int amount = 0;
 
     //Iterate through the json list, create capacities and add them to the local storage
     for (Map<String, dynamic> jsonAppointment in json["data"]) {
@@ -34,8 +43,14 @@ class SubscribeAppointmentsHandler extends BackendHandler {
       Appointment appointment = Appointment.fromJson(jsonAppointment);
       //add to local storage
       CalendarService().addAppointment(appointment);
+
+      if (appointment.id > CalendarService().lastId) {
+        CalendarService().lastId = appointment.id;
+      }
+
+      amount++;
     }
 
-    //TODO: Rebuild widgets*/
+    CalendarService().newAmount += amount;
   }
 }

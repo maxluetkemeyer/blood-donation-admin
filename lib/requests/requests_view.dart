@@ -32,6 +32,8 @@ class _RequestsState extends ConsumerState<Requests> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
+    int update = ref.watch(updateRequestViewProvider.state).state;
     Appointment openAppointment = ref.watch(requestTileOpenProvider.state).state;
     double width = MediaQuery.of(context).size.width;
     String dayString = DateFormat("dd.MM.yyyy").format(openAppointment.start);

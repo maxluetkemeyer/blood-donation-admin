@@ -44,27 +44,27 @@ class StatisticWidget extends StatelessWidget {
             statisticRowTwo(
               key: AppLocalizations.of(context)!.loggingStatisticAged18To27,
               value: LoggingService().statistic.aged18to27.toString(),
-              valueTwo: (LoggingService().statistic.aged18to27 / LoggingService().statistic.totalBookedAppointments).toString() + "%",
+              valueTwo: (LoggingService().statistic.aged18to27 / LoggingService().statistic.totalBookedAppointments * 100).round().toString() + "%",
             ),
             statisticRowTwo(
               key: AppLocalizations.of(context)!.loggingStatisticAged28To37,
               value: LoggingService().statistic.aged28to37.toString(),
-              valueTwo: (LoggingService().statistic.aged28to37 / LoggingService().statistic.totalBookedAppointments).toString() + "%",
+              valueTwo: (LoggingService().statistic.aged28to37 / LoggingService().statistic.totalBookedAppointments * 100).round().toString() + "%",
             ),
             statisticRowTwo(
               key: AppLocalizations.of(context)!.loggingStatisticAged38To47,
               value: LoggingService().statistic.aged38to47.toString(),
-              valueTwo: (LoggingService().statistic.aged38to47 / LoggingService().statistic.totalBookedAppointments).toString() + "%",
+              valueTwo: (LoggingService().statistic.aged38to47 / LoggingService().statistic.totalBookedAppointments * 100).round().toString() + "%",
             ),
             statisticRowTwo(
               key: AppLocalizations.of(context)!.loggingStatisticAged48To57,
               value: LoggingService().statistic.aged48to57.toString(),
-              valueTwo: (LoggingService().statistic.aged48to57 / LoggingService().statistic.totalBookedAppointments).toString() + "%",
+              valueTwo: (LoggingService().statistic.aged48to57 / LoggingService().statistic.totalBookedAppointments * 100).round().toString() + "%",
             ),
             statisticRowTwo(
               key: AppLocalizations.of(context)!.loggingStatisticAged58To68,
               value: LoggingService().statistic.aged58to68.toString(),
-              valueTwo: (LoggingService().statistic.aged58to68 / LoggingService().statistic.totalBookedAppointments).toString() + "%",
+              valueTwo: (LoggingService().statistic.aged58to68 / LoggingService().statistic.totalBookedAppointments * 100).round().toString() + "%",
             ),
           ],
         ),

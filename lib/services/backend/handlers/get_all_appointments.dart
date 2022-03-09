@@ -34,8 +34,10 @@ class GetAllAppointmentsHandler extends BackendHandler {
       Appointment appointment = Appointment.fromJson(jsonAppointment);
       //add to local storage
       CalendarService().addAppointment(appointment);
-    }
 
-    //TODO: Rebuild widgets
+      if (appointment.id > CalendarService().lastId) {
+        CalendarService().lastId = appointment.id;
+      }
+    }
   }
 }

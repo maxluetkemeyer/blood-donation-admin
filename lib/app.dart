@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -63,7 +64,13 @@ class _AppState extends ConsumerState<App> {
           RequestAppBarTab(
             screenIndex: screenIndex,
             cb: () {
-              ref.read(unseenRequestsProvider.state).state = 0;
+              CalendarService().newAmount = 0;
+              ref.read(newAppointmentsProvider.state).state = 0;
+
+              if (screenIndex == 1) {
+                ref.read(updateRequestViewProvider.state).state++;
+              }
+
               setState(() {
                 screenIndex = 1;
               });
@@ -149,7 +156,7 @@ class RequestAppBarTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    int requestBadgeCount = ref.watch(unseenRequestsProvider.state).state;
+    int requestBadgeCount = ref.watch(newAppointmentsProvider.state).state;
 
     return TextButton.icon(
       onPressed: cb,

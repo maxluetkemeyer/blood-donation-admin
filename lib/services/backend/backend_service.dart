@@ -6,6 +6,7 @@ import 'package:blooddonation_admin/misc/env.dart';
 import 'package:blooddonation_admin/services/backend/backend_handler.dart';
 import 'package:blooddonation_admin/services/backend/handlers/create_appointment.dart';
 import 'package:blooddonation_admin/services/backend/handlers/create_capacities.dart';
+import 'package:blooddonation_admin/services/backend/handlers/delete_appointment.dart';
 import 'package:blooddonation_admin/services/backend/handlers/get_all_appointments.dart';
 import 'package:blooddonation_admin/services/backend/handlers/get_all_capacities.dart';
 import 'package:blooddonation_admin/services/backend/handlers/get_all_donationquestions.dart';
@@ -32,7 +33,7 @@ class BackendService {
   late WebSocket ws;
 
   Map<String, BackendHandler> handlers = {
-    "subscribe_to_appointment_activity": SubscribeAppointmentsHandler(),
+    "newAppointments": SubscribeAppointmentsHandler(),
     "getAllCapacities": GetAllCapacitiesHandler(),
     "getAllAppointments": GetAllAppointmentsHandler(),
     "getAllDonationQuestions": GetAllDonationQuestionsHandler(),
@@ -40,7 +41,7 @@ class BackendService {
     "getStatistic": GetStatisticHandler(),
     "createCapacities": CreateCapacitiesHandler(),
     "createAppointment": CreateAppointmentHandler(),
-    
+    "deleteAppointment": DeleteAppointmentHandler(),
   };
 
   void init() {

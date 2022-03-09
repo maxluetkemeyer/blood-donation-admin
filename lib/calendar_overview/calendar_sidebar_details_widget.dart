@@ -1,6 +1,8 @@
 import 'package:blooddonation_admin/misc/appointment_styles.dart';
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/person_model.dart';
+import 'package:blooddonation_admin/services/backend/backend_service.dart';
+import 'package:blooddonation_admin/services/backend/handlers/delete_appointment.dart';
 import 'package:blooddonation_admin/services/backend/handlers/update_appointment.dart';
 import 'package:blooddonation_admin/services/provider/providers.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
@@ -85,19 +87,19 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
             child: CupertinoButton.filled(
               onPressed: () {
                 if (widget.appointment.id == -1) {
-                  //later: Send to backend and recieve new appointment
-                  CalendarService().addAppointment(
-                    Appointment(
-                      id: DateTime.now().millisecondsSinceEpoch,
-                      start: widget.appointment.start,
-                      duration: widget.appointment.duration,
-                      person: Person(
-                        birthday: DateTime.tryParse(personBirthdayController.text),
-                        gender: personGenderController.text,
-                        name: personNameController.text,
-                      ),
+                  Appointment addAppointment = Appointment(
+                    id: DateTime.now().millisecondsSinceEpoch,
+                    start: widget.appointment.start,
+                    duration: widget.appointment.duration,
+                    person: Person(
+                      birthday: DateTime.tryParse(personBirthdayController.text),
+                      gender: personGenderController.text,
+                      name: personNameController.text,
                     ),
                   );
+
+                  CalendarService().addAppointment(addAppointment);
+                  CreateAppointmentHandler().send(addAppointment);
                 } else {
                   Appointment updatedAppointment = Appointment(
                     id: widget.appointment.id,
@@ -219,7 +221,10 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                         CupertinoDialogAction(
                           isDestructiveAction: true,
                           onPressed: () {
+                            DeleteAppointmentHandler().send(widget.appointment);
+
                             CalendarService().removeAppointment(widget.appointment);
+
                             //clear appointment details
                             ref.read(calendarOverviewSelectedAppointmentProvider.state).state = EmptyAppointment();
 

@@ -1,4 +1,9 @@
+import 'dart:async';
+
 import 'package:blooddonation_admin/misc/utils.dart';
+import 'package:blooddonation_admin/services/backend/backend_service.dart';
+import 'package:blooddonation_admin/services/backend/handlers/subscribe_appoinments.dart';
+import 'package:blooddonation_admin/services/provider/provider_service.dart';
 
 import '../models/appointment_model.dart';
 
@@ -98,5 +103,22 @@ class CalendarService {
     });
 
     return appointments;
+  }
+
+  int lastId = 0;
+  int newAmount = 0;
+  late Timer fetchNewAppointmentsTimer;
+
+  void startTimer() {
+    var handler = SubscribeAppointmentsHandler(cb: () async {
+      ProviderService().container.read(newAppointmentsProvider.state).state = newAmount;
+    });
+
+    //Replace old instance with new instance including the callback
+    BackendService().handlers["newAppointments"] = handler;
+
+    fetchNewAppointmentsTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      handler.send();
+    });
   }
 }

@@ -1,6 +1,5 @@
 import 'package:blooddonation_admin/services/backend/backend_handler.dart';
 import 'package:blooddonation_admin/services/settings/faq_service.dart';
-import 'package:blooddonation_admin/services/settings/language_service.dart';
 
 class GetAllFaqQuestionsHandler extends BackendHandler {
   GetAllFaqQuestionsHandler() : super(action: "getAllFaqQuestions");

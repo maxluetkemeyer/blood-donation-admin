@@ -1,14 +1,22 @@
-import 'package:blooddonation_admin/misc/utils.dart';
-import 'package:blooddonation_admin/misc/env.dart' as env;
-import 'package:blooddonation_admin/services/calendar_service.dart';
-import 'package:blooddonation_admin/services/capacity_service.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+
+import 'package:blooddonation_admin/misc/env.dart' as env;
+import 'package:blooddonation_admin/misc/utils.dart';
+import 'package:blooddonation_admin/services/calendar_service.dart';
+import 'package:blooddonation_admin/services/capacity_service.dart';
 
 import 'indicator.dart';
 
 class WorkloadToday extends StatefulWidget {
-  const WorkloadToday({Key? key}) : super(key: key);
+  final DateTime day;
+  final String heading;
+
+  const WorkloadToday({
+    Key? key,
+    required this.day,
+    required this.heading,
+  }) : super(key: key);
 
   @override
   State<WorkloadToday> createState() => _WorkloadTodayState();
@@ -28,9 +36,9 @@ class _WorkloadTodayState extends State<WorkloadToday> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          "Auslastung heute",
-          style: TextStyle(
+        Text(
+          widget.heading,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 30,
           ),
@@ -104,7 +112,7 @@ class _WorkloadTodayState extends State<WorkloadToday> {
   }
 
   double _usagePercent() {
-    int appointments = CalendarService().getAppointmentsPerDay(extractDay(DateTime.now())).length;
+    int appointments = CalendarService().getAppointmentsPerDay(extractDay(widget.day)).length;
 
     int freeAppointments = 0;
     List<Capacity> capacities = CapacityService().getCapacitiesPerDay(DateTime.now());
