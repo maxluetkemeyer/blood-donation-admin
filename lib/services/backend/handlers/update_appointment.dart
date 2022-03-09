@@ -23,7 +23,6 @@ class UpdateAppointmentHandler extends BackendHandler {
     return outputMap;
   }
 
-  ///Clear all old local Capacities and replace them with the newest server capacities
   @override
   void receiveLogic(Map json) {
     //update?

@@ -29,6 +29,7 @@ class CreateCapacitiesHandler extends BackendHandler {
     if (json["response_status"] != 201) {
       print("error");
       print(json);
+      return;
     }
 
     //Clear old local Capacities

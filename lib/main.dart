@@ -46,7 +46,7 @@ class MainWidget extends StatelessWidget {
           data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
           child: child!,
         ),
-        locale: const Locale("en"),
+        locale: const Locale("de"),
         home: const ConnectionView(),
       ),
     );

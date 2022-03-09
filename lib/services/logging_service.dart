@@ -1,6 +1,8 @@
 import 'package:blooddonation_admin/models/statistic_model.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 
+export 'package:blooddonation_admin/models/statistic_model.dart';
+
 class LoggingService {
   //Singleton
   static final LoggingService _instance = LoggingService._private();
@@ -22,6 +24,4 @@ class LoggingService {
       ProviderService().container.read(loggingUpdateProvider.state).state++;
     });
   }
-  
-  
 }

@@ -19,6 +19,7 @@ class GetAllDonationQuestionsHandler extends BackendHandler {
     if (json["response_status"] != 200) {
       print("error " + action);
       print(json);
+      return;
     }
 
     //Clear old local DonationQuestions and DonationQuestionTranslations

@@ -22,7 +22,7 @@ class RequestWeekBarChartState extends State<RequestWeekBarChart> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 3.5 / 1,
+      aspectRatio: 2.8 / 1,
       child: BarChart(
         BarChartData(
           backgroundColor: Colors.transparent,

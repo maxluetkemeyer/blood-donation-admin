@@ -40,7 +40,17 @@ class _AppState extends ConsumerState<App> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.appTitle),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Image(
+              image: AssetImage("assets/images/logo_transparent.png"),
+              fit: BoxFit.fitHeight,
+            ),
+            const SizedBox(width: 20),
+            Text(AppLocalizations.of(context)!.appTitle),
+          ],
+        ),
         actions: [
           TextButton.icon(
             onPressed: () => setState(() {

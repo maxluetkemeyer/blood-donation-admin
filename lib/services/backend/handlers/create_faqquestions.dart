@@ -28,8 +28,7 @@ class CreateFaqQuestionsHandler extends BackendHandler {
     if (json["response_status"] != 201) {
       print("error " + action);
       print(json);
-
-      //Show error toast
+      return;
     }
 
     //Show ok toast

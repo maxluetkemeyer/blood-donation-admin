@@ -10,6 +10,7 @@ import 'package:blooddonation_admin/services/backend/handlers/get_all_appointmen
 import 'package:blooddonation_admin/services/backend/handlers/get_all_capacities.dart';
 import 'package:blooddonation_admin/services/backend/handlers/get_all_donationquestions.dart';
 import 'package:blooddonation_admin/services/backend/handlers/get_all_faqquestions.dart';
+import 'package:blooddonation_admin/services/backend/handlers/get_statistic.dart';
 import 'package:blooddonation_admin/services/backend/handlers/subscribe_appoinments.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 
@@ -36,8 +37,10 @@ class BackendService {
     "getAllAppointments": GetAllAppointmentsHandler(),
     "getAllDonationQuestions": GetAllDonationQuestionsHandler(),
     "getAllFaqQuestions": GetAllFaqQuestionsHandler(),
+    "getStatistic": GetStatisticHandler(),
     "createCapacities": CreateCapacitiesHandler(),
     "createAppointment": CreateAppointmentHandler(),
+    
   };
 
   void init() {

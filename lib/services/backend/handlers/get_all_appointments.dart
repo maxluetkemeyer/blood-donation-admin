@@ -22,6 +22,7 @@ class GetAllAppointmentsHandler extends BackendHandler {
     if (json["response_status"] != 200) {
       print("error");
       print(json);
+      return;
     }
 
     //Clear old local Appointments

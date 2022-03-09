@@ -20,6 +20,7 @@ class SubscribeAppointmentsHandler extends BackendHandler {
     if (json["response_status"] != 200) {
       print("error");
       print(json);
+      return;
     }
 
     print("Subscribe: " + json.toString());
