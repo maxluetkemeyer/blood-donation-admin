@@ -1,5 +1,6 @@
 import 'package:blooddonation_admin/services/backend/backend_handler.dart';
 import 'package:blooddonation_admin/services/settings/faq_service.dart';
+import 'package:blooddonation_admin/services/settings/language_service.dart';
 
 class GetAllFaqQuestionsHandler extends BackendHandler {
   GetAllFaqQuestionsHandler() : super(action: "getAllFaqQuestions");
@@ -24,12 +25,15 @@ class GetAllFaqQuestionsHandler extends BackendHandler {
     FaqService().faqQuestions.clear();
     FaqService().faqQuestionTranslation.clear();
 
+    List<FaqQuestion> _faqQuest = [];
+    List<FaqQuestionTranslation> _faqQuestTrans = [];
+
     //Iterate through the json list, create FaqQuestions and add them to the local storage
     for (Map<String, dynamic> jsonFaqQuestion in json["data"]["faqQuestions"]) {
       //create FaqQuestion
       FaqQuestion faqQue = FaqQuestion.fromJson(jsonFaqQuestion);
       //add to local storage
-      FaqService().faqQuestions.add(faqQue);
+      _faqQuest.add(faqQue);
     }
 
     //Iterate through the json list, create FaqQuestionTranslationss and add them to the local storage
@@ -37,9 +41,10 @@ class GetAllFaqQuestionsHandler extends BackendHandler {
       //create FaqQuestionTranslation
       FaqQuestionTranslation faqQueTra = FaqQuestionTranslation.fromJson(jsonFaqQuestionTranslation);
       //add to local storage
-      FaqService().faqQuestionTranslation.add(faqQueTra);
+      _faqQuestTrans.add(faqQueTra);
     }
 
-    //LanguageService().init(FaqService().faqQuestionTranslation);
+    LanguageService().init(_faqQuestTrans);
+    FaqService().initFaqQuestion(faqQuest: _faqQuest, faqTrans: _faqQuestTrans);
   }
 }

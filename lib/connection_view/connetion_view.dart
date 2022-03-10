@@ -40,8 +40,8 @@ class ConnectionView extends ConsumerWidget {
 void initLoadOfBackendData() {
   // Load all Data from the backend
   GetAllAppointmentsHandler().send();
-  GetAllDonationQuestionsHandler().send();
   GetAllFaqQuestionsHandler().send();
+  GetAllDonationQuestionsHandler().send();
   GetStatisticHandler().send();
 
   //Last Handler with callback to update UI

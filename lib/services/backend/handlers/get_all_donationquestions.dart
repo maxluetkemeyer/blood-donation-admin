@@ -26,19 +26,24 @@ class GetAllDonationQuestionsHandler extends BackendHandler {
     DonationService().donationQuestions.clear();
     DonationService().donationQuestionTranslation.clear();
 
+    List<DonationQuestion> _donationQuest = [];
+    List<DonationQuestionTranslation> _donationQuestTrans = [];
+
     //Iterate through the json list, create DonationQuestions and add them to the local storage
     for (Map<String, dynamic> jsonDonationQuestion in json["data"]["donationQuestions"]) {
       //create DonationQuestion
       DonationQuestion donQue = DonationQuestion.fromJson(jsonDonationQuestion);
       //add to local storage
-      DonationService().donationQuestions.add(donQue);
+      _donationQuest.add(donQue);
     }
     //Iterate through the json list, create DonationQuestionTranslationss and add them to the local storage
     for (Map<String, dynamic> jsonDonationQuestionTranslation in json["data"]["donationQuestionTranslations"]) {
       //create DonationQuestion
       DonationQuestionTranslation donQueTra = DonationQuestionTranslation.fromJson(jsonDonationQuestionTranslation);
       //add to local storage
-      DonationService().donationQuestionTranslation.add(donQueTra);
+      _donationQuestTrans.add(donQueTra);
     }
+
+    DonationService().initDonationQuestion(donQuest: _donationQuest, donTrans: _donationQuestTrans);
   }
 }
