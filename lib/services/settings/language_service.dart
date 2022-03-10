@@ -35,23 +35,24 @@ class LanguageService {
   final List<lm.Language> _languages = [];
 
   void init(List<FaqQuestionTranslation> faqQT) {
-    List<l.Language> languages = [l.Languages.german];
+    List<l.Language> langcur = [l.Languages.german];
 
     for (FaqQuestionTranslation translation in faqQT) {
       l.Language lan = l.Language.fromIsoCode(translation.language);
 
       bool found = false;
-      for (l.Language oldLan in languages) {
+      for (l.Language oldLan in langcur) {
         if (oldLan.isoCode == lan.isoCode) {
           found = true;
           break;
         }
       }
-
-      if (!found) languages.add(lan);
+      if (!found) {
+        langcur.add(lan);
+      }
     }
 
-    for(l.Language lang in languages){
+    for(l.Language lang in langcur){
       addLanguage(
         lm.Language(abbr: lang.isoCode,name: lang.name)
       );

@@ -92,7 +92,7 @@ class _DonationQuestionEditViewState extends State<DonationQuestionEditView> {
   ///Function is called when a [DonationQuestionTile] is added
   void refreshAdd(DonationQuestionUsing data) {
     setState(() {
-      DonationService().addDonationQuestion(donationTrans: data);
+      DonationService().addDonationQuestionByUsing(donationTrans: data);
     });
   }
 }

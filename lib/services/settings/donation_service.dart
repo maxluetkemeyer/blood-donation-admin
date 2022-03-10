@@ -1,3 +1,4 @@
+import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:blooddonation_admin/services/settings/models/donationquestionusing_model.dart';
 import 'package:blooddonation_admin/services/settings/models/donation_controller_model.dart';
 import 'package:blooddonation_admin/models/donationquestions_model.dart';
@@ -22,6 +23,7 @@ class DonationService {
   /// );
   ///]```
   final List<DonationQuestion> donationQuestions = [];
+
   ///Example:
   ///```[
   /// DonationQuestionTranslation(
@@ -32,6 +34,7 @@ class DonationService {
   /// );
   ///]```
   final List<DonationQuestionTranslation> donationQuestionTranslation = [];
+
   ///Example:
   ///```[
   /// DonationController(
@@ -131,10 +134,49 @@ class DonationService {
   Setter Methods
   */
 
-  ///Adds a new [DonationQuestion] and a fitting Controller adds them according to their list
-  void addDonationQuestion({required DonationQuestionUsing donationTrans}) {
-    //Adding new Question to List
+  void initDonationQuestion({required List<DonationQuestion> donQuest, required List<DonationQuestionTranslation> donTrans}) {
+    donationQuestions.clear();
+    donationQuestionTranslation.clear();
+    _donationController.clear();
 
+    for (int i = 0; i < donQuest.length; i++) {
+      donationQuestions.add(donQuest[i]);
+    }
+
+    for (int i = 0; i < donTrans.length; i++) {
+      donationQuestionTranslation.add(donTrans[i]);
+    }
+
+    for (int i = 0; i < donationQuestions.length; i++) {
+      for (int j = 0; j < donationQuestions.length; j++) {
+        if (donationQuestions[j].position == i) {
+          _donationController.add(DonationController(question: donationQuestions[j].id, translations: []));
+          break;
+        }
+      }
+    }
+
+    for (int i = 0; i < donationQuestions.length; i++) {
+      for (int j = 0; j < LanguageService().getLanguageListLength(); j++) {
+        _donationController[i].translations.add(
+              DonationControllerTranslation(
+                bodyController: TextEditingController(
+                  text: getDonationQuestionTranslations()
+                      .where((element) =>
+                          element.donationQuestion == donationQuestions[i].id && element.language == LanguageService().getLanguages()[j].abbr)
+                      .first
+                      .body,
+                ),
+                lang: LanguageService().getLanguages()[j].abbr,
+              ),
+            );
+      }
+    }
+  }
+
+  ///Adds a new [DonationQuestion] and a fitting Controller adds them according to their list
+  void addDonationQuestionByUsing({required DonationQuestionUsing donationTrans}) {
+    //Adding new Question to List
 
     int newQuestionId = getHighestDonationQuestionId() + 1;
     int pos = donationQuestions.length;

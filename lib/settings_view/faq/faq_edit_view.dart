@@ -89,7 +89,7 @@ class _FaqEditViewState extends State<FaqEditView> {
   ///Function is called when a [QuestionTile] is added
   void refreshAdd(List<FaqQuestionUsing> data) {
     setState(() {
-      FaqService().addFaqQuestion(faqTrans: data);
+      FaqService().addFaqQuestionByUsing(faqTrans: data);
     });
   }
 }

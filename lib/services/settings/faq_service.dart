@@ -1,5 +1,6 @@
 import 'package:blooddonation_admin/models/faqquestion_model.dart';
 import 'package:blooddonation_admin/models/faqquestiontranslation_model.dart';
+import 'package:blooddonation_admin/services/settings/language_service.dart';
 import 'package:blooddonation_admin/services/settings/models/faqquestionusing_model.dart';
 import 'package:blooddonation_admin/services/settings/models/faq_controller_model.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class FaqService {
   /// );
   ///]```
   final List<FaqQuestion> faqQuestions = [];
+
   ///Example:
   ///```[
   /// FaqQuestionTranslation(
@@ -38,6 +40,7 @@ class FaqService {
   /// );
   ///]```
   final List<FaqQuestionTranslation> faqQuestionTranslation = [];
+
   ///Example:
   ///```[
   /// FaqController(
@@ -125,8 +128,55 @@ class FaqService {
   Setter Methods
   */
 
+  ///Adds a new FAQQuestion
+  void initFaqQuestion({required List<FaqQuestion> faqQuest, required List<FaqQuestionTranslation> faqTrans}) {
+    faqQuestions.clear();
+    faqQuestionTranslation.clear();
+    _faqController.clear();
+
+    for (int i = 0; i < faqQuest.length; i++) {
+      faqQuestions.add(faqQuest[i]);
+    }
+
+    for (int i = 0; i < faqTrans.length; i++) {
+      faqQuestionTranslation.add(faqTrans[i]);
+    }
+
+    for (int i = 0; i < faqQuestions.length; i++) {
+      for (int j = 0; j < faqQuestions.length; j++) {
+        if (faqQuestions[j].position == i) {
+          _faqController.add(FaqController(question: faqQuestions[j].id, translations: []));
+          break;
+        }
+        
+      }
+    }
+    print(_faqController);
+    for (int i = 0; i < faqQuestions.length; i++) {
+      for (int j = 0; j < LanguageService().getLanguageListLength(); j++) {
+        _faqController[i].translations.add(
+              FaqControllerTranslation(
+                bodyController: TextEditingController(
+                  text: getFaqQuestionsTranslation()
+                      .where((element) => element.faqQuestion == faqQuestions[i].id && element.language == LanguageService().getLanguages()[j].abbr)
+                      .first
+                      .body,
+                ),
+                headController: TextEditingController(
+                  text: getFaqQuestionsTranslation()
+                      .where((element) => element.faqQuestion == faqQuestions[i].id && element.language == LanguageService().getLanguages()[j].abbr)
+                      .first
+                      .head,
+                ),
+                lang: LanguageService().getLanguages()[j].abbr,
+              ),
+            );
+      }
+    }
+  }
+
   ///Adds a new FaqQuestion and a fitting Controller adds them according to their list.
-  void addFaqQuestion({required List<FaqQuestionUsing> faqTrans}) {
+  void addFaqQuestionByUsing({required List<FaqQuestionUsing> faqTrans}) {
     //Adding new Question to List
     int newQuestionId = getHighestFaqQuestionId() + 1;
     int pos = faqQuestions.length;
@@ -137,7 +187,7 @@ class FaqService {
 
     //Adding Translations and Controller to List
     int highest = getHighestFaqQuestionTranslationId();
-    
+
     List<FaqControllerTranslation> controllerTrans = [];
 
     for (var lang in faqTrans) {

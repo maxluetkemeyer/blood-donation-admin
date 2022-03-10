@@ -17,7 +17,7 @@ class CreateFaqQuestionsHandler extends BackendHandler {
         "translationData": faqQuestionTranslations,
       }
     };
-
+    
     return outputMap;
   }
 
