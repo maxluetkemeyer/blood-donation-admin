@@ -5,7 +5,6 @@ import 'package:blooddonation_admin/services/settings/models/donation_controller
 import 'package:blooddonation_admin/services/settings/models/language_model.dart';
 import 'package:blooddonation_admin/settings_view/donation_question/new_donation_input_fields.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 ///Pop-up window to Add new [Language]s
@@ -61,7 +60,7 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
                   Expanded(
                     flex: 2,
                     child: Column(
-                      children: [
+                      children: const [
                         /*
                         Text(
                           "${AppLocalizations.of(context)!.correctAnswer}:",
