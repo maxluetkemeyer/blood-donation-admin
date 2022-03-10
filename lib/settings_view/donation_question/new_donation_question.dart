@@ -62,12 +62,14 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
                     flex: 2,
                     child: Column(
                       children: [
+                        /*
                         Text(
                           "${AppLocalizations.of(context)!.correctAnswer}:",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        
                         ListTile(
                           title: Text(AppLocalizations.of(context)!.yes),
                           leading: Radio<bool>(
@@ -91,7 +93,7 @@ class _NewDonationQuestionState extends State<NewDonationQuestion> {
                               });
                             },
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
