@@ -28,6 +28,7 @@ class FaqService {
   /// );
   ///]```
   final List<FaqQuestion> faqQuestions = [];
+
   ///Example:
   ///```[
   /// FaqQuestionTranslation(
@@ -39,6 +40,7 @@ class FaqService {
   /// );
   ///]```
   final List<FaqQuestionTranslation> faqQuestionTranslation = [];
+
   ///Example:
   ///```[
   /// FaqController(
@@ -127,37 +129,48 @@ class FaqService {
   */
 
   ///Adds a new FAQQuestion
-  void initFaqQuestion({required List<FaqQuestion> faqQuest, required List<FaqQuestionTranslation> faqTrans}){
+  void initFaqQuestion({required List<FaqQuestion> faqQuest, required List<FaqQuestionTranslation> faqTrans}) {
     faqQuestions.clear();
     faqQuestionTranslation.clear();
     _faqController.clear();
 
-    for(int i = 0; i<faqQuest.length;i++){
+    for (int i = 0; i < faqQuest.length; i++) {
       faqQuestions.add(faqQuest[i]);
     }
 
-    for(int i = 0; i<faqTrans.length;i++){
+    for (int i = 0; i < faqTrans.length; i++) {
       faqQuestionTranslation.add(faqTrans[i]);
     }
 
-    for(int i=0;i<faqQuestions.length;i++){
-      for(int j=0;i<faqQuestions.length;i++){
-        if(faqQuestions[j].position==i){
-          _faqController.add(
-            FaqController(question: faqQuestions[j].id, translations: [])
-          );
+    for (int i = 0; i < faqQuestions.length; i++) {
+      for (int j = 0; j < faqQuestions.length; j++) {
+        if (faqQuestions[j].position == i) {
+          _faqController.add(FaqController(question: faqQuestions[j].id, translations: []));
+          break;
         }
-        break;
+        
       }
     }
-
-    for(int i=0;i<faqQuestions.length;i++){
-      for(int j = 0; j<LanguageService().getLanguageListLength();j++){
-        _faqController[i].translations.add(FaqControllerTranslation(
-          bodyController: TextEditingController(text:getFaqQuestionsTranslation().where((element) => element.faqQuestion==faqQuestions[i].id&&element.language==LanguageService().getLanguages()[j].abbr).first.body),
-          headController: TextEditingController(text:getFaqQuestionsTranslation().where((element) => element.faqQuestion==faqQuestions[i].id&&element.language==LanguageService().getLanguages()[j].abbr).first.head),
-          lang: LanguageService().getLanguages()[i].abbr,
-        ));
+    print(_faqController);
+    for (int i = 0; i < faqQuestions.length; i++) {
+      for (int j = 0; j < LanguageService().getLanguageListLength(); j++) {
+        _faqController[i].translations.add(
+              FaqControllerTranslation(
+                bodyController: TextEditingController(
+                  text: getFaqQuestionsTranslation()
+                      .where((element) => element.faqQuestion == faqQuestions[i].id && element.language == LanguageService().getLanguages()[j].abbr)
+                      .first
+                      .body,
+                ),
+                headController: TextEditingController(
+                  text: getFaqQuestionsTranslation()
+                      .where((element) => element.faqQuestion == faqQuestions[i].id && element.language == LanguageService().getLanguages()[j].abbr)
+                      .first
+                      .head,
+                ),
+                lang: LanguageService().getLanguages()[j].abbr,
+              ),
+            );
       }
     }
   }
@@ -174,7 +187,7 @@ class FaqService {
 
     //Adding Translations and Controller to List
     int highest = getHighestFaqQuestionTranslationId();
-    
+
     List<FaqControllerTranslation> controllerTrans = [];
 
     for (var lang in faqTrans) {
