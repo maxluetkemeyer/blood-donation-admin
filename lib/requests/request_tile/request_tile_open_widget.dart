@@ -110,7 +110,7 @@ class RequestTileOpen extends StatelessWidget {
                             ),
                             TableRow(
                               children: [
-                                const Text("Geschlächt"),
+                                const Text("Geschlecht"),
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: genderIcon(appointment.person?.gender ?? ""),
