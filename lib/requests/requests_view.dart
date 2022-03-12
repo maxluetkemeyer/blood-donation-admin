@@ -60,10 +60,6 @@ class _RequestsState extends ConsumerState<Requests> {
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
-                /*const Positioned(
-                  top: 50,
-                  child: Text("Keine offenen Anfragen"),
-                ),*/
                 const Positioned(
                   bottom: 30,
                   child: Image(
@@ -76,7 +72,7 @@ class _RequestsState extends ConsumerState<Requests> {
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        "Today " + DateFormat("dd.MM.yyyy").format(DateTime.now()),
+                        "Heute " + DateFormat("dd.MM.yyyy").format(DateTime.now()),
                         style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w500,
@@ -87,7 +83,7 @@ class _RequestsState extends ConsumerState<Requests> {
                     const Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        "Requests",
+                        "Andere Tage",
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w500,

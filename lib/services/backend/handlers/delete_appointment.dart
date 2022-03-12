@@ -8,7 +8,7 @@ class DeleteAppointmentHandler extends BackendHandler {
   Map createSendMap([arg]) {
     Appointment appointment;
 
-    appointment = arg;
+    appointment = arg[0];
 
     //create map
     Map outputMap = {

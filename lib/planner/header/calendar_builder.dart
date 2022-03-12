@@ -41,7 +41,7 @@ CalendarBuilders plannerCalendarBuilder(DateTime monday) => CalendarBuilders(
         //today
         if (day.isAtSameMomentAs(extractDay(DateTime.now()))) {
           decoration = decoration.copyWith(
-            color: Colors.pink.shade200,
+            color: Colors.lightGreen.shade400,
           );
         }
 
@@ -87,7 +87,7 @@ CalendarBuilders plannerCalendarClosedBuilder(DateTime monday) => CalendarBuilde
         //today
         if (day.isAtSameMomentAs(extractDay(DateTime.now()))) {
           decoration = decoration.copyWith(
-            color: Colors.pink.shade200,
+            color: Colors.lightGreen.shade400,
           );
         }
 

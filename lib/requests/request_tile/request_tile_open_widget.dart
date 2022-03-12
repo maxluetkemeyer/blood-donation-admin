@@ -1,5 +1,6 @@
 import 'package:blooddonation_admin/misc/utils.dart';
 import 'package:blooddonation_admin/models/appointment_model.dart';
+import 'package:blooddonation_admin/models/person_model.dart';
 import 'package:blooddonation_admin/services/backend/handlers/update_appointment.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
@@ -54,11 +55,12 @@ class RequestTileOpen extends StatelessWidget {
 
     if (difference.inHours >= 24) return "";
 
-    return "Termin ist in " +
-        DateFormat("hh").format(DateTime.fromMillisecondsSinceEpoch(difference.inMilliseconds)) +
-        " Stunden und " +
-        DateFormat("mm").format(DateTime.fromMillisecondsSinceEpoch(difference.inMilliseconds)) +
-        " Minuten";
+    return "Termin ist in " + difference.inHours.toString() + " Stunden und " + difference.inMinutes.remainder(60).toString() + " Minuten";
+  }
+
+  String firstDonationString(Person person) {
+    if (person.firstDonation) return "Ja";
+    return "Nein";
   }
 
   Widget bottom() {
@@ -124,7 +126,7 @@ class RequestTileOpen extends StatelessWidget {
                             TableRow(
                               children: [
                                 const Text("Erste Blutspende"),
-                                Text(appointment.person?.firstDonation.toString() ?? ""),
+                                Text(appointment.person != null ? firstDonationString(appointment.person!) : ""),
                               ],
                             ),
                           ],
