@@ -300,6 +300,13 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
               ),
             ),
             CupertinoFormRow(
+              prefix: const Text("Telefon"),
+              child: CupertinoTextFormFieldRow(
+                enabled: false,
+                initialValue: widget.appointment.person?.telephoneNumber ?? "",
+              ),
+            ),
+            CupertinoFormRow(
               prefix: Text(AppLocalizations.of(context)!.gender),
               child: CupertinoTextFormFieldRow(
                 controller: personGenderController,
@@ -329,6 +336,13 @@ class _CalendarSidebarDetailsState extends ConsumerState<CalendarSidebarDetails>
                     ),
                   ],
                 ),
+              ),
+            ),
+            CupertinoFormRow(
+              prefix: const Text("Erstspende"),
+              child: CupertinoTextFormFieldRow(
+                enabled: false,
+                initialValue: widget.appointment.person?.firstDonation.toString() ?? "Nein",
               ),
             ),
           ],
