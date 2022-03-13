@@ -74,7 +74,7 @@ class _PlannerState extends ConsumerState<Planner> {
         children: [
           if (changed)
             FloatingActionButton.extended(
-              label: const Text("UPLOAD CHANGES"),
+              label: const Text("ÄNDERUNGEN SPEICHERN"),
               icon: const Icon(Icons.save),
               onPressed: () {
                 CreateCapacitiesHandler().send();
@@ -86,19 +86,19 @@ class _PlannerState extends ConsumerState<Planner> {
             children: [
               //from top to bottom
               FloatingActionButton.extended(
-                label: const Text("Reload from Server"),
+                label: const Text("Vom Server neu laden"),
                 icon: const Icon(Icons.refresh),
                 onPressed: () => reloadFromServer(),
               ),
               FloatingActionButton.extended(
-                label: const Text("Next week"),
+                label: const Text("Nächste Woche"),
                 icon: const Icon(Icons.arrow_forward),
                 onPressed: () => setState(() {
                   monday = monday.add(const Duration(days: 7));
                 }),
               ),
               FloatingActionButton.extended(
-                label: const Text("Pevious week"),
+                label: const Text("Vorherige Woche"),
                 icon: const Icon(Icons.arrow_back),
                 backgroundColor: previousWeekAvaiable ? Colors.grey : Theme.of(context).primaryColor,
                 onPressed: previousWeekAvaiable
@@ -108,12 +108,12 @@ class _PlannerState extends ConsumerState<Planner> {
                         }),
               ),
               FloatingActionButton.extended(
-                label: const Text("Copy previous week"),
+                label: const Text("Vorherige Woche kopieren"),
                 icon: const Icon(Icons.copy_all_outlined),
                 onPressed: () => copyPreviousWeek(monday),
               ),
               FloatingActionButton.extended(
-                label: const Text("Clear this week"),
+                label: const Text("Diese Woche leeren"),
                 icon: const Icon(Icons.delete_sweep_rounded),
                 onPressed: () => deleteThisWeek(monday),
               ),
