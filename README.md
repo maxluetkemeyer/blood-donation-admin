@@ -1,30 +1,27 @@
-# blooddonation_admin
+### Blood Donation Admin
+See [Blood Donation App](https://github.com/maxluetkemeyer/blood-donation-app) for full information.
+___
 
-A new Flutter project.
+This project was created in context of the project seminar “Hack Münster - Make Münster jovel!“ at the Westfälische Wilhelms-Universität Münster in the winter semester 2021/2022. 
 
-## Getting Started
+If you would like to thank us for creating this application, you are welcome to send one or more beer crates to the following address:
 
-This project is a starting point for a Flutter application that follows the
-[simple app state management
-tutorial](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple).
+    European Research Center for Information Systems (ERCIS)
+    z.H. Armin Stein
+    Leonardo-Campus 3
+    48149 Münster
+    Germany	
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---------------------------------------
 
-## Assets
+Dieses Projekt ist im Rahmen des Projektseminars „Hack Münster - Make Münster jovel!“ an der Westfälische Wilhelms-Universität Münster im Wintersemester 2021/2022 entstanden. 
 
-The `assets` directory houses images, fonts, and any other files you want to
-include with your application.
+Wenn Sie sich bei uns für die Erstellung der Anwendung bedanken möchten, können Sie gerne einen oder mehrere Kästen Bier an folgende Adresse senden:
 
-The `assets/images` directory contains [resolution-aware
-images](https://flutter.dev/docs/development/ui/assets-and-images#resolution-aware).
+    European Research Center for Information Systems (ERCIS)
+    z.H. Armin Stein
+    Leonardo-Campus 3
+    48149 Münster
+    Germany	
 
-## Localization
 
-This project generates localized messages based on arb files found in
-the `lib/src/localization` directory.
-
-To support additional languages, please visit the tutorial on
-[Internationalizing Flutter
-apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
