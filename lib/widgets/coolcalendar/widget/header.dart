@@ -23,10 +23,10 @@ class Header extends StatelessWidget {
         SizedBox(
           width: timeLineWidth + 5,
         ),
-        for (var item in headerTitles)
+        for (Widget title in headerTitles)
           SizedBox(
             width: eventGridEventWidth,
-            child: item,
+            child: title,
           ),
       ],
     );

@@ -1,4 +1,3 @@
-import 'package:blooddonation_admin/connection_view/connetion_view.dart';
 import 'package:blooddonation_admin/services/backend/backend_service.dart';
 import 'package:blooddonation_admin/services/logging_service.dart';
 import 'package:blooddonation_admin/services/settings/donation_service.dart';
@@ -12,6 +11,8 @@ import 'package:blooddonation_admin/misc/theme.dart';
 import 'package:blooddonation_admin/services/provider/provider_service.dart';
 import 'package:blooddonation_admin/services/calendar_service.dart';
 import 'package:blooddonation_admin/services/capacity_service.dart';
+
+import 'app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +52,8 @@ class MainWidget extends StatelessWidget {
           child: child!,
         ),
         locale: const Locale("de"),
-        home: const ConnectionView(),
+        //home: const ConnectionView(),
+        home: const App(),
       ),
     );
   }

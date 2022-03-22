@@ -54,7 +54,7 @@ class _CalendarOverviewState extends ConsumerState<CalendarOverview> {
           flex: 2,
           child: CoolCalendar(
             key: const PageStorageKey("calendar_overview"),
-            hourHeight: 120,
+            
             eventGridEventWidth: 140,
             eventGridLineColorHalfHour: Colors.grey.withOpacity(0.3),
             scrollController: calendarScrollController,
@@ -63,7 +63,6 @@ class _CalendarOverviewState extends ConsumerState<CalendarOverview> {
               appointmentLengthInMinutes: appointmentLengthInMinutes,
             ),
             animated: true,
-            eventGridColor: const Color.fromRGBO(227, 245, 255, 1),
           ),
         ),
         Flexible(

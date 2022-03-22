@@ -8,24 +8,16 @@ import 'widget/time_line.dart';
 export 'event_model/coolcalendar_event_model.dart';
 
 class CoolCalendar extends StatefulWidget {
-  /// All events which will be displayed.
-  final List<CoolCalendarEvent> events;
+  /// Height of one minute
+  final double minuteHeight;
 
-  /// Color in the Background of the Calendar.
-  /// Use eventGridColor or timeLineColor for specific styling.
-  final Color backgroundColor;
-
-  /// Height of one hour
-  final double hourHeight;
+  final Decoration? timeLineDecoration;
 
   /// Width of the time line.
   final double timeLineWidth;
 
-  /// Background color of the time line.
-  final Color timeLineColor;
-
-  /// Background color of the event grid.
-  final Color eventGridColor;
+  /// All events which will be displayed.
+  final List<CoolCalendarEvent> events;
 
   /// Gridline color of full hours.
   final Color eventGridLineColorFullHour;
@@ -45,17 +37,15 @@ class CoolCalendar extends StatefulWidget {
   const CoolCalendar({
     Key? key,
     this.events = const [],
-    this.backgroundColor = Colors.white,
-    this.timeLineColor = Colors.white,
-    this.eventGridColor = Colors.lightBlueAccent,
-    required this.hourHeight,
     this.eventGridLineColorFullHour = Colors.black38,
     this.eventGridLineColorHalfHour = Colors.transparent,
     this.eventGridEventWidth = 220,
     this.headerTitles = const [],
-    this.timeLineWidth = 50,
     this.scrollController,
     this.animated = false,
+    this.minuteHeight = 2,
+    this.timeLineDecoration,
+    this.timeLineWidth = 50,
   }) : super(key: key);
 
   @override
@@ -63,57 +53,69 @@ class CoolCalendar extends StatefulWidget {
 }
 
 class _CoolCalendarState extends State<CoolCalendar> {
+  double eventGridEventWidth = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    eventGridEventWidth = widget.eventGridEventWidth;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: widget.backgroundColor,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Header(
-            eventGridEventWidth: widget.eventGridEventWidth,
-            headerTitles: widget.headerTitles,
-            timeLineWidth: widget.timeLineWidth,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              controller: widget.scrollController ?? ScrollController(),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 10,
-                  left: 5,
-                  right: 10,
-                  top: 10,
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      color: widget.timeLineColor,
-                      width: widget.timeLineWidth,
-                      child: TimeLine(
-                        hourHeight: widget.hourHeight,
-                      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SizedBox(
+              width: 200,
+              child: Slider(
+                value: eventGridEventWidth,
+                min: 20,
+                max: 500,
+                onChanged: (double value) => setState(() {
+                  eventGridEventWidth = value;
+                }),
+              ),
+            ),
+          ],
+        ),
+        Header(
+          eventGridEventWidth: eventGridEventWidth,
+          headerTitles: widget.headerTitles,
+          timeLineWidth: widget.timeLineWidth,
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            controller: widget.scrollController ?? ScrollController(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: widget.timeLineWidth / 7.5),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TimeLine(
+                    minuteHeight: widget.minuteHeight,
+                    decoration: widget.timeLineDecoration,
+                    timeLineWidth: widget.timeLineWidth,
+                  ),
+                  Expanded(
+                    child: EventStack(
+                      animated: widget.animated,
+                      eventGridEventWidth: eventGridEventWidth,
+                      eventGridLineColorFullHour: widget.eventGridLineColorFullHour,
+                      eventGridLineColorHalfHour: widget.eventGridLineColorHalfHour,
+                      events: widget.events,
+                      hourHeight: widget.minuteHeight * 30,
                     ),
-                    Expanded(
-                      child: Container(
-                        color: widget.eventGridColor,
-                        child: EventStack(
-                          animated: widget.animated,
-                          eventGridEventWidth: widget.eventGridEventWidth,
-                          eventGridLineColorFullHour: widget.eventGridLineColorFullHour,
-                          eventGridLineColorHalfHour: widget.eventGridLineColorHalfHour,
-                          events: widget.events,
-                          hourHeight: widget.hourHeight,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

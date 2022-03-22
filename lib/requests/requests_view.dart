@@ -140,12 +140,12 @@ class _RequestsState extends ConsumerState<Requests> {
                     Expanded(
                       child: CoolCalendar(
                         key: const PageStorageKey("request_view"),
-                        backgroundColor: Colors.white,
-                        timeLineColor: Colors.white,
-                        eventGridColor: const Color.fromRGBO(227, 245, 255, 1),
+                      
+                        
+                        
                         eventGridLineColorFullHour: Colors.black38.withOpacity(0.2),
                         eventGridLineColorHalfHour: Colors.transparent,
-                        hourHeight: hourHeight,
+                        
                         scrollController: calendarScrollController,
                         eventGridEventWidth: width * 0.05,
                         animated: true,

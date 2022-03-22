@@ -1,40 +1,43 @@
 import 'package:flutter/material.dart';
 
 class TimeLine extends StatelessWidget {
-  final double hourHeight;
+  final double minuteHeight;
+  final double timeLineWidth;
+  final Decoration? decoration;
 
   const TimeLine({
     Key? key,
-    required this.hourHeight,
+    required this.minuteHeight,
+    required this.timeLineWidth,
+    this.decoration,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: timeBoxes(),
+    double fontSize = timeLineWidth / 2.5;
+
+    return Container(
+      decoration: decoration,
+      padding: EdgeInsets.only(
+        right: fontSize / 3,
+      ),
+      child: Column(
+        children: [
+          for (int i = 0; i < 24; i++)
+            SizedBox(
+              height: minuteHeight * 30,
+              child: Transform.translate(
+                offset: Offset(0, -fontSize / 2),
+                child: Text(
+                  i < 10 ? "0$i:00" : "$i:00",
+                  style: TextStyle(
+                    fontSize: fontSize,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
-  }
-
-  List<Widget> timeBoxes() {
-    SizedBox timeBox(String text) => SizedBox(
-          width: double.infinity,
-          height: hourHeight / 2,
-          child: Transform.translate(
-            offset: const Offset(0, -8),
-            child: Text(text),
-          ),
-        );
-
-    List<Widget> items = [];
-
-    for (int i = 0; i < 24; i++) {
-      String time = i < 10 ? "0$i" : "$i";
-
-      items.add(timeBox("$time:00"));
-      //items.add(timeBox("$time:30"));
-      items.add(timeBox(""));
-    }
-
-    return items;
   }
 }
